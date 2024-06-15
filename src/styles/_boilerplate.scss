@@ -35,6 +35,12 @@ button {
   cursor: pointer;
   color: inherit;
   background-color: inherit;
+  transition: all var(--transition);
+}
+
+a {
+  cursor: pointer;
+  transition: all var(--transition);
 }
 
 a:visited {

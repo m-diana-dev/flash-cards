@@ -4,13 +4,13 @@ import clsx from 'clsx'
 
 import s from './button.module.scss'
 
-export type ButtonProps<T extends ElementType = 'button'> = {
+export type ButtonProps<T extends ElementType> = {
   as?: T
   fullWidth?: boolean
-  variant?: 'icon' | 'link' | 'primary' | 'secondary'
+  variant?: 'link' | 'primary' | 'secondary'
 } & ComponentPropsWithoutRef<T>
 
-export const Button = <T extends ElementType = 'button'>(props: ButtonProps<T>) => {
+export const Button = <T extends ElementType>(props: ButtonProps<T>) => {
   const {
     as: Component = 'button',
     className,
@@ -18,7 +18,7 @@ export const Button = <T extends ElementType = 'button'>(props: ButtonProps<T>) 
     variant = 'primary',
     ...rest
   } = props
-  const buttonClass = clsx(s.button, s[variant], fullWidth && s.fullWidth)
+  const buttonStyles = clsx(s.button, s[variant], fullWidth && s.fullWidth, className)
 
-  return <Component className={`${buttonClass} ${className}`} {...rest} />
+  return <Component className={buttonStyles} {...rest} />
 }
