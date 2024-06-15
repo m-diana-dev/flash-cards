@@ -1,47 +1,50 @@
-import { FC } from 'react'
+import { ReactNode } from 'react'
 
+import { Typography } from '@/components/ui/typography'
 import * as RadixTabs from '@radix-ui/react-tabs'
 
-import styles from './tabs.module.scss'
+import s from './tabs.module.scss'
 
 export type TabType = {
+  content: ReactNode
   disabled?: boolean
   title: string
-  // A unique value that associates the trigger with a content
   value: string
 }
 
 export type TabsProps = {
-  // use when you do not need to control the state of the tabs
   defaultValue?: string
-  // The value of the tab that should be active when initially rendered
-  // Event handler called when the value changes
-  onValueChange?: (value: string) => void
   tabs: TabType[]
-  // The controlled value of the tab to activate. Should be used in conjunction with onValueChange
-  value?: string
 }
 
-export const Tabs: FC<TabsProps> = ({ defaultValue, onValueChange, tabs, value }) => {
+export const Tabs = ({ defaultValue, tabs }: TabsProps) => {
   return (
-    <RadixTabs.Root
-      className={styles.RadixTabsRoot}
-      defaultValue={defaultValue}
-      onValueChange={onValueChange}
-      value={value}
-    >
-      <RadixTabs.List className={styles.RadixTabsList}>
-        {tabs.map(tab => (
-          <RadixTabs.Trigger
-            className={styles.RadixTabsTrigger}
-            disabled={tab.disabled}
-            key={tab.value}
+    <RadixTabs.Root className={s.TabsRoot} defaultValue={defaultValue || tabs[0].value}>
+      <RadixTabs.List className={s.TabsList}>
+        {tabs.map((tab, index) => {
+          return (
+            <RadixTabs.Trigger
+              className={s.TabsItem}
+              disabled={tab.disabled}
+              key={`${tab.value}-${index}`}
+              value={tab.value}
+            >
+              <Typography as={'span'}>{tab.title}</Typography>
+            </RadixTabs.Trigger>
+          )
+        })}
+      </RadixTabs.List>
+      {tabs.map((tab, index) => {
+        return (
+          <RadixTabs.Content
+            className={s.TabsItemContent}
+            key={`${tab.value}-${index}`}
             value={tab.value}
           >
-            {tab.title}
-          </RadixTabs.Trigger>
-        ))}
-      </RadixTabs.List>
+            {tab.content}
+          </RadixTabs.Content>
+        )
+      })}
     </RadixTabs.Root>
   )
 }

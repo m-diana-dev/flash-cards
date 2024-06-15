@@ -1,17 +1,13 @@
-.RadixTabsRoot {
-  display: flex;
+.TabsRoot {
 }
 
-.RadixTabsList {
+.TabsList {
   border: 1px solid var(--dark-300);
 }
 
-.RadixTabsTrigger {
+.TabsItem {
   padding: 6px 24px;
   border: 1px solid var(--color-dark-300);
-  line-height: 150%;
-  color: var(--light-100);
-  background: transparent;
   &:hover {
     cursor: pointer;
     border: 1px solid var(--color-dark-100);
@@ -22,9 +18,10 @@
     border: 1px solid var(--color-accent-500);
     border-right: 1px solid var(--color-accent-500);
     background: var(--color-accent-500);
+    pointer-events: none;
   }
   &:disabled {
-    cursor: default;
+    pointer-events: none;
     border: 1px solid var(--color-dark-300);
     background: var(--color-dark-700);
     color: var(--color-dark-300);
@@ -38,4 +35,8 @@
   &:not(:last-child) {
     border-right: none;
   }
+}
+
+.TabsItemContent {
+  padding-top: 20px;
 }
