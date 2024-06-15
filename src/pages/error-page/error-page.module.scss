@@ -1,0 +1,16 @@
+.ErrorPage {
+  padding-top: 125px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.ErrorPageImg {
+  max-width: 450px;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.ErrorPageText {
+  margin-bottom: 30px;
+}

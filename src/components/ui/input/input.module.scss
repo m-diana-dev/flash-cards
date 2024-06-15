@@ -1,0 +1,94 @@
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: black;
+  position: relative;
+  padding: 6px 12px;
+  gap: 5px;
+  border: 1px solid rgb(76, 76, 76);
+  height: 34px;
+  box-sizing: border-box;
+}
+
+.input {
+  color: rgb(255, 255, 255);
+  border: 0;
+  outline: none;
+  flex-grow: 1;
+  background: black;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.input:active::placeholder {
+  color: rgb(255, 255, 255);
+}
+
+.input::placeholder {
+  font-size: 14px;
+}
+
+.inputWrapper:disabled {
+  border-color: rgb(76, 76, 76);
+  outline: none;
+  border-radius: 2px;
+  box-sizing: border-box;
+}
+
+.inputWrapper:hover {
+  outline: none;
+  border-color: rgb(128, 128, 128);
+  border-radius: 2px;
+  box-sizing: border-box;
+}
+.inputWrapper:active {
+  border-color: rgb(255, 255, 255);
+  border-radius: 2px;
+  box-sizing: border-box;
+}
+
+.inputWrapper:focus {
+  border-color: rgb(47, 104, 204);
+  outline: none;
+  border-radius: 2px;
+  box-sizing: border-box;
+}
+.inputWrapper:focus-within {
+  border-color: rgb(47, 104, 204);
+  outline: none;
+  border-radius: 2px;
+  box-sizing: border-box;
+}
+
+.password {
+  border: 1px solid rgb(76, 76, 76);
+  border-radius: 2px;
+  box-sizing: border-box;
+}
+
+.inputError {
+  border-color: rgb(242, 61, 97);
+  outline: none;
+  box-sizing: border-box;
+}
+.inputError .input {
+  color: rgb(242, 61, 97);
+}
+
+.label {
+  color: rgb(128, 128, 128);
+  font-size: 12px;
+}
+
+.error {
+  color: rgb(242, 61, 97);
+  font-size: 12px;
+}
+
+.search {
+  margin-right: 5px;
+}
+.icon {
+  box-sizing: border-box;
+}

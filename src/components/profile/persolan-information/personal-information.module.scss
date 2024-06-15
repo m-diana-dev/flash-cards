@@ -1,0 +1,25 @@
+.PersonalInformation {
+  padding: 33px 36px 40px;
+  align-items: center;
+}
+.Title {
+  margin-bottom: 27px;
+}
+
+.ButtonEdit {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  width: 24px;
+  height: 24px;
+  background-color: var(--color-dark-300);
+  transition: all 0.3s;
+  &.ButtonEditTransparent {
+    background-color: transparent;
+  }
+  &:hover {
+    background-color: var(--color-accent-500);
+  }
+}

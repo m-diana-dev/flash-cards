@@ -1,0 +1,17 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 36px;
+  justify-content: center;
+  max-width: 420px;
+  border-radius: 2px;
+  border: 1px solid var(--color-dark-500);
+}
+
+.dark {
+  background: var(--color-dark-700);
+}
+
+.light {
+  background: var(--color-light-700);
+}

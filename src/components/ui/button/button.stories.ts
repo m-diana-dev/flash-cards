@@ -3,6 +3,12 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { Button } from './'
 
 const meta = {
+  argTypes: {
+    variant: {
+      control: { type: 'radio' },
+      options: ['primary', 'secondary', 'link', 'icon'],
+    },
+  },
   component: Button,
   tags: ['autodocs'],
   title: 'Components/Button',
@@ -13,7 +19,7 @@ type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {
   args: {
-    children: 'Primary Button',
+    children: 'Primary Card',
     disabled: false,
     variant: 'primary',
   },
@@ -21,7 +27,7 @@ export const Primary: Story = {
 
 export const Secondary: Story = {
   args: {
-    children: 'Secondary Button',
+    children: 'Secondary Card',
     disabled: false,
     variant: 'secondary',
   },
@@ -29,7 +35,7 @@ export const Secondary: Story = {
 
 export const FullWidth: Story = {
   args: {
-    children: 'Full Width Primary Button',
+    children: 'Hello',
     disabled: false,
     fullWidth: true,
     variant: 'primary',
@@ -39,7 +45,8 @@ export const FullWidth: Story = {
 export const AsLink: Story = {
   args: {
     as: 'a',
-    children: 'Link',
-    variant: 'primary',
+    children: 'Link that',
+    to: 'https://google.com',
+    variant: 'link',
   },
 }

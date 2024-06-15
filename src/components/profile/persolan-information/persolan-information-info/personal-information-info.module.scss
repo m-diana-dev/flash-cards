@@ -1,0 +1,13 @@
+.Name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .ButtonEdit {
+    margin-left: 5px;
+  }
+}
+
+.Email {
+  color: var(--color-dark-100);
+  margin-bottom: 13px;
+}
