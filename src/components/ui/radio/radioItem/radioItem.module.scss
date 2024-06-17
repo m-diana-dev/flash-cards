@@ -1,0 +1,82 @@
+.RadioItem {
+  display: flex;
+  align-items: center;
+  position: relative;
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
+  &.RadioItemDisabled {
+    pointer-events: none;
+  }
+  &:hover {
+    .RadioItemIcon {
+      &::before {
+        background-color: var(--color-dark-500);
+      }
+    }
+  }
+  &:focus {
+    .RadioItemIcon {
+      &::before {
+        background-color: var(--color-dark-700);
+      }
+    }
+  }
+  &:active {
+    .RadioItemIcon {
+      &::before {
+        background-color: var(--color-accent-900);
+      }
+    }
+  }
+}
+.RadioItemIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--color-accent-500);
+  margin-right: 12px;
+  position: relative;
+  &:focus {
+    outline: none;
+    &::before {
+      background-color: var(--color-dark-700);
+    }
+  }
+  &:disabled {
+    border: 2px solid var(--color-accent-900);
+    .RadioItemIndicator {
+      background-color: var(--color-accent-900);
+    }
+    + .RadioItemLabel {
+      color: var(--color-light-900);
+    }
+  }
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: transparent;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    z-index: -1;
+    pointer-events: none;
+    transition: all 0.3s;
+  }
+}
+.RadioItemLabel {
+  cursor: pointer;
+}
+.RadioItemIndicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-accent-500);
+  transition: all var(--transition);
+}
