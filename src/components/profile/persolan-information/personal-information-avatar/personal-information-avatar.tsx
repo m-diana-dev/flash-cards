@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react'
 
-import Edit from '@/images/icons/Edit'
+import Edit from '@/assets/images/icons/Edit'
 import clsx from 'clsx'
 
 import scommon from '../personal-information.module.scss'

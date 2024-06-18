@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef, useId } from 'react'
 
+import Check from '@/assets/images/icons/Check'
 import { Typography } from '@/components/ui/typography'
-import Check from '@/images/icons/Check'
 import * as CheckboxRadix from '@radix-ui/react-checkbox'
 import clsx from 'clsx'
 

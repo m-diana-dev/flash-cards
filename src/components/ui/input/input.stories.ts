@@ -6,7 +6,6 @@ const meta = {
   argTypes: {
     error: { control: 'text' },
     label: { control: 'text' },
-    spanClassName: { control: 'text' },
     type: {
       control: { type: 'select' },
       options: ['text', 'password', 'email'],
@@ -14,49 +13,69 @@ const meta = {
     value: { control: 'text' },
   },
   component: TextField,
-  title: 'Components/SuperInputText',
+  title: 'Components/Input',
 } satisfies Meta<typeof TextField>
 
 export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const PasswordInput: Story = {
+export const InputDefault: Story = {
+  args: {},
+}
+export const InputWithLabel: Story = {
   args: {
-    id: 'super-input-password',
+    label: 'Label',
+  },
+}
+export const InputWithPlaceholder: Story = {
+  args: {
+    placeholder: 'Placeholder',
+  },
+}
+export const InputPassword: Story = {
+  args: {
     label: 'Password',
-    type: 'password',
+    variant: 'password',
   },
 }
 
-export const EmailInput: Story = {
+export const InputSearch: Story = {
   args: {
-    id: 'super-input-email',
-    label: 'Email',
-    type: 'email',
-  },
-}
-
-export const SearchInput: Story = {
-  args: {
-    disabled: true,
-    id: 'super-input-search',
     onReset: () => {},
-    type: 'text',
+    variant: 'search',
+  },
+}
+
+export const InputSearchWithValue: Story = {
+  args: {
+    onReset: () => {},
+    value: 'js',
+    variant: 'search',
   },
 }
 
 export const InputWithError: Story = {
   args: {
     error: 'Error',
-    id: 'super-input-error',
-    type: 'text',
   },
 }
-export const InputDisable: Story = {
+
+export const InputDisabled: Story = {
   args: {
     disabled: true,
-    id: 'super-input-error',
-    type: 'text',
+  },
+}
+
+export const InputPasswordDisabled: Story = {
+  args: {
+    disabled: true,
+    variant: 'password',
+  },
+}
+export const InputSearchDisabled: Story = {
+  args: {
+    disabled: true,
+    variant: 'search',
   },
 }

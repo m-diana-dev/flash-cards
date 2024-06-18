@@ -1,8 +1,8 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef, useId } from 'react'
 
+import ArrowDown from '@/assets/images/icons/ArrowDown'
+import ArrowTop from '@/assets/images/icons/ArrowTop'
 import { Typography } from '@/components/ui/typography'
-import ArrowDown from '@/images/icons/ArrowDown'
-import ArrowTop from '@/images/icons/ArrowTop'
 import * as SelectRadix from '@radix-ui/react-select'
 import clsx from 'clsx'
 

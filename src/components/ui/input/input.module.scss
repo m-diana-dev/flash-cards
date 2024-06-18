@@ -1,94 +1,105 @@
 .inputWrapper {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: black;
   position: relative;
-  padding: 6px 12px;
-  gap: 5px;
-  border: 1px solid rgb(76, 76, 76);
-  height: 34px;
-  box-sizing: border-box;
+  &.password {
+    .input {
+      padding: 0 40px 0 12px;
+    }
+  }
+  &.inputError {
+    .input {
+      border-color: var(--color-danger-300);
+      outline: none;
+      color: var(--color-danger-300);
+    }
+  }
+  &.search {
+    .input {
+      padding: 0 40px;
+    }
+    .iconSearch {
+      svg {
+        path {
+          fill: var(--color-dark-100);
+        }
+      }
+    }
+  }
 }
 
 .input {
-  color: rgb(255, 255, 255);
-  border: 0;
-  outline: none;
-  flex-grow: 1;
-  background: black;
-  font-size: 16px;
-  box-sizing: border-box;
-}
-
-.input:active::placeholder {
-  color: rgb(255, 255, 255);
-}
-
-.input::placeholder {
-  font-size: 14px;
-}
-
-.inputWrapper:disabled {
-  border-color: rgb(76, 76, 76);
-  outline: none;
+  color: var(--color-light-100);
+  padding: 0 12px;
+  border: 1px solid var(--color-dark-300);
   border-radius: 2px;
-  box-sizing: border-box;
-}
-
-.inputWrapper:hover {
+  height: 34px;
   outline: none;
-  border-color: rgb(128, 128, 128);
-  border-radius: 2px;
-  box-sizing: border-box;
+  background-color: transparent;
+  font-size: var(--font-size-m);
+  width: 100%;
+  transition: all var(--transition);
+  &:hover {
+    background-color: var(--color-dark-700);
+  }
+  &:focus {
+    outline: 2px solid var(--color-info-700);
+    border-color: transparent;
+  }
+  &:active {
+    border-color: var(--color-light-100);
+    &::placeholder {
+      color: var(--color-light-100);
+    }
+    .iconSearch:has(+ &) {
+      svg {
+        path {
+          fill: var(--color-light-100);
+        }
+      }
+    }
+  }
+  &:disabled {
+    pointer-events: none;
+    &::placeholder {
+      color: var(--color-dark-300);
+    }
+    .iconSearch:has(+ &) {
+      pointer-events: none;
+      svg {
+        path {
+          fill: var(--color-dark-300);
+        }
+      }
+    }
+    & + .icon {
+      pointer-events: none;
+      svg {
+        path {
+          fill: var(--color-dark-300);
+        }
+      }
+    }
+  }
 }
-.inputWrapper:active {
-  border-color: rgb(255, 255, 255);
-  border-radius: 2px;
-  box-sizing: border-box;
-}
-
-.inputWrapper:focus {
-  border-color: rgb(47, 104, 204);
-  outline: none;
-  border-radius: 2px;
-  box-sizing: border-box;
-}
-.inputWrapper:focus-within {
-  border-color: rgb(47, 104, 204);
-  outline: none;
-  border-radius: 2px;
-  box-sizing: border-box;
-}
-
-.password {
-  border: 1px solid rgb(76, 76, 76);
-  border-radius: 2px;
-  box-sizing: border-box;
-}
-
-.inputError {
-  border-color: rgb(242, 61, 97);
-  outline: none;
-  box-sizing: border-box;
-}
-.inputError .input {
-  color: rgb(242, 61, 97);
+.error {
+  color: var(--color-danger-300);
+  margin-top: 5px;
 }
 
 .label {
-  color: rgb(128, 128, 128);
-  font-size: 12px;
+  color: var(--color-dark-100);
 }
 
-.error {
-  color: rgb(242, 61, 97);
-  font-size: 12px;
-}
-
-.search {
-  margin-right: 5px;
-}
 .icon {
-  box-sizing: border-box;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+}
+
+.iconSearch {
+  right: auto;
+  left: 12px;
 }

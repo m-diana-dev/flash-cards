@@ -1,3 +1,6 @@
+import Delete from '@/assets/images/icons/Delete'
+import Edit from '@/assets/images/icons/Edit'
+import Play from '@/assets/images/icons/Play'
 import { Button } from '@/components/ui/button'
 import {
   Table,
@@ -7,9 +10,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/tables/tables'
-import { DeleteIcons } from '@/images/icons/Table/DeleteIcons'
-import { EditIcons } from '@/images/icons/Table/EditIcons'
-import { PlayCircleIcons } from '@/images/icons/Table/PlayCircleIcons'
 
 type ItemsProps = {
   by: string
@@ -44,13 +44,13 @@ export const TableForStorybook = ({ items }: Props) => {
               <TableDataCell>{items.by}</TableDataCell>
               <TableDataCell>
                 <Button variant={'icon'}>
-                  <PlayCircleIcons />
+                  <Play />
                 </Button>
                 <Button variant={'icon'}>
-                  <EditIcons />
+                  <Edit />
                 </Button>
                 <Button variant={'icon'}>
-                  <DeleteIcons />
+                  <Delete />
                 </Button>
               </TableDataCell>
             </TableRow>

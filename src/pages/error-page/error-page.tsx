@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom'
 
+import Error404 from '@/assets/images/404/404.svg'
 import { Button } from '@/components/ui/button'
 import { Page } from '@/components/ui/page/page'
 import { Typography } from '@/components/ui/typography'
-import Error404 from '@/images/404/404.svg'
 
 import s from './error-page.module.scss'
 

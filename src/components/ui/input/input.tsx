@@ -1,112 +1,80 @@
 import React, { ChangeEvent, ComponentPropsWithoutRef, ReactNode, useId, useState } from 'react'
 
-import { Button } from '@/components/ui/button'
+import Close from '@/assets/images/icons/Close'
+import Eye from '@/assets/images/icons/Eye'
+import EyeClose from '@/assets/images/icons/EyeClose'
+import Search from '@/assets/images/icons/Search'
 import { Typography } from '@/components/ui/typography'
+import clsx from 'clsx'
 
 import s from './input.module.scss'
 
-import search from '../../../images/icons/input/Search.svg'
-import deleteIcon from '../../../images/icons/input/close-outline.svg'
-import eysClose from '../../../images/icons/input/eye-off-outline.svg'
-import eysOpen from '../../../images/icons/input/eye-outline.svg'
-
-export type SuperInputTextPropsType = {
+export type TextFieldProps = {
   error?: ReactNode
-  inputType?: string
   label?: string
-  onChangeText?: (value: string) => void
-  onEnter?: () => void
   onReset?: () => void
-  spanClassName?: string
-  variant?: 'email' | 'normal' | 'password'
+  variant?: 'normal' | 'password' | 'search'
 } & ComponentPropsWithoutRef<'input'>
 
-export const TextField = React.forwardRef<HTMLInputElement, SuperInputTextPropsType>(
+export const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
   (
-    {
-      className,
-      disabled,
-      error,
-      id,
-      inputType,
-      label,
-      onChange,
-      onChangeText,
-      onEnter,
-      onReset,
-      spanClassName,
-      type = 'text',
-      value,
-      variant = 'normal',
-      ...restProps
-    },
+    { className, error, label, onChange, onReset, value, variant = 'normal', ...restProps },
     ref
   ) => {
-    const finalId = useLabelId(id)
     const [isVisible, setIsVisible] = useState(false)
-    const onChangeCallback = (e: ChangeEvent<HTMLInputElement>) => {
+    const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
       onChange?.(e)
-      onChangeText?.(e.currentTarget.value)
     }
-
-    const finalSpanClassName = s.error + (spanClassName ? ' ' + spanClassName : '')
-
-    const inputClasses = [s.inputWrapper, s[variant]]
-
-    if (error) {
-      inputClasses.push(s.inputError)
-    }
-    if (type === 'password') {
-      inputClasses.push(s.password)
-    }
+    const id = useId()
 
     return (
-      <div>
+      <div className={className}>
         {label && (
-          <Typography as={'label'} className={s.label} htmlFor={finalId} variant={'body2'}>
+          <Typography as={'label'} className={s.label} htmlFor={id} variant={'body2'}>
             {label}
           </Typography>
         )}
-        <div className={inputClasses.join(' ')}>
-          {onReset && <img className={s.search} src={search} />}
+        <div
+          className={clsx(
+            s.inputWrapper,
+            s[variant],
+            error ? s.inputError : '',
+            variant === 'password' ? s.password : '',
+            variant === 'search' ? s.search : ''
+          )}
+        >
+          {variant === 'search' && (
+            <button className={clsx(s.icon, s.iconSearch)}>
+              <Search />
+            </button>
+          )}
           <input
+            autoComplete={'off'}
             className={s.input}
-            disabled={disabled}
-            id={finalId}
-            onChange={onChangeCallback}
-            placeholder={error ? 'Error' : 'Input'}
+            id={id}
+            onChange={changeHandler}
             ref={ref}
-            type={type === 'password' && isVisible ? 'text' : type}
+            type={variant === 'password' && !isVisible ? 'password' : 'text'}
             value={value}
             {...restProps}
           />
-          {type === 'password' && (
-            <img
-              className={s.icon}
-              onClick={() => setIsVisible(!isVisible)}
-              src={isVisible ? eysClose : eysOpen}
-            />
+          {variant === 'password' && (
+            <button className={s.icon} onClick={() => setIsVisible(!isVisible)}>
+              {isVisible ? <EyeClose /> : <Eye />}
+            </button>
           )}
           {onReset && !!value && (
-            <Button onClick={onReset}>
-              <img src={deleteIcon} />
-            </Button>
+            <button className={s.icon} onClick={onReset}>
+              <Close />
+            </button>
           )}
         </div>
-        <Typography as={'div'} className={finalSpanClassName}>
-          {error}
-        </Typography>
+        {error && (
+          <Typography as={'div'} className={s.error} variant={'caption'}>
+            {error}
+          </Typography>
+        )}
       </div>
     )
   }
 )
-
-export function useLabelId(id?: string) {
-  const generatedId = useId()
-
-  if (!id) {
-    return generatedId
-  }
-
-  return id
-}

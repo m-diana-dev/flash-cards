@@ -1,7 +1,7 @@
+import Edit from '@/assets/images/icons/Edit'
+import Logout from '@/assets/images/icons/Logout'
 import { Button } from '@/components/ui/button'
 import { Typography } from '@/components/ui/typography'
-import Edit from '@/images/icons/Edit'
-import Logout from '@/images/icons/Logout'
 import clsx from 'clsx'
 
 import scommon from '../personal-information.module.scss'

@@ -25,6 +25,11 @@ export function DecksPage() {
     setSearchParams(searchParams)
   }
 
+  const removeSearchParam = () => {
+    searchParams.delete('search')
+    setSearchParams(searchParams)
+  }
+
   const [countCards, setCountCards] = useState<number[]>([0, 10])
 
   const { data, error, isLoading } = useGetDecksQuery({
@@ -50,19 +55,24 @@ export function DecksPage() {
         <Button>Add New Deck</Button>
       </div>
       <div className={s.PageFilters}>
-        <TextField onChange={handleSearch} value={search} />
-        <Tabs
-          tabs={[
-            {
-              title: 'My Cards',
-              value: 'My Cards',
-            },
-            {
-              title: 'All Cards',
-              value: 'All Cards',
-            },
-          ]}
+        <TextField
+          onChange={handleSearch}
+          onReset={removeSearchParam}
+          value={search}
+          variant={'search'}
         />
+        {/*<Tabs*/}
+        {/*  tabs={[*/}
+        {/*    {*/}
+        {/*      title: 'My Cards',*/}
+        {/*      value: 'My Cards',*/}
+        {/*    },*/}
+        {/*    {*/}
+        {/*      title: 'All Cards',*/}
+        {/*      value: 'All Cards',*/}
+        {/*    },*/}
+        {/*  ]}*/}
+        {/*/>*/}
         <SliderApp setValue={setCountCards} value={countCards} />
         <Button variant={'secondary'}>Clear Filter</Button>
       </div>
