@@ -1,0 +1,16 @@
+.DialogTitle {
+  position: relative;
+  width: calc(100% - 30px);
+  &:not(:last-child) {
+    padding-bottom: 18px;
+    &::before {
+      content: '';
+      position: absolute;
+      width: calc(100% + 78px);
+      height: 1px;
+      left: -24px;
+      bottom: 0;
+      background-color: var(--color-dark-500);
+    }
+  }
+}
