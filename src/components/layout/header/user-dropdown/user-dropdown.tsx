@@ -1,11 +1,11 @@
-import { DropDownItem } from '@/components/ui/dropDown/dropDownItem'
-import { DropDownMenu } from '@/components/ui/dropDown/dropDownMenu'
-import { DropDownSeparator } from '@/components/ui/dropDown/dropDownSeparator'
+import { DropDownMenu } from '@/components/ui/dropdown/dropDownMenu'
+import { DropDownSeparator } from '@/components/ui/dropdown/dropDownSeparator'
+import { DropDownItem } from '@/components/ui/dropdown/dropdownItem/dropdownItem'
 import { Typography } from '@/components/ui/typography'
 import { ProfleSvg } from '@/images/icons/dropDown/ProfleSvg'
 import { SingOutSvg } from '@/images/icons/dropDown/SingOutSvg'
 
-import s from '@/components/ui/dropDown/dropDownMenu.module.scss'
+import s from '@/components/ui/dropdown/dropDownMenu.module.scss'
 
 export type UserDropdownProps = {
   email: null | string
