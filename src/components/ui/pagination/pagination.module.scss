@@ -1,39 +1,49 @@
+.pagination {
+  display: flex;
+  align-items: center;
+}
+
 .paginationButton,
 .navigationButton,
-.ellipsis {
-  background-color: black;
-  color: white;
-  border: none;
-  height: 24px;
-  width: 24px;
-  cursor: pointer;
-  margin: 0 6px;
+.paginationEllipsis {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  border-radius: 2px;
+  height: 24px;
+  width: 24px;
+  &:not(:last-child) {
+    margin-right: 12px;
+  }
 }
 .activePageButton {
-  background-color: white;
-  color: black;
-  border-radius: 2px;
+  background-color: var(--color-light-100);
+  color: var(--color-dark-900);
+  pointer-events: none;
 }
 
-.paginationButton:hover,
-.navigationButton:hover {
-  background-color: gray;
+.paginationButton,
+.navigationButton {
+  cursor: pointer;
+  &:hover {
+    background-color: var(--color-dark-500);
+  }
+  &:focus {
+    outline: 2px solid var(--color-info-900);
+  }
 }
 
-.paginationButton:active:not(:disabled),
-.paginationButton:focus:not(:disabled),
-.navigationButton:active {
-  background-color: white;
-  color: black;
-  outline: none;
-  border-radius: 2px;
+.navigationButton {
+  &:disabled {
+    pointer-events: none;
+    svg {
+      path {
+        fill: var(--color-dark-100);
+      }
+    }
+  }
 }
 
-.navigationButton:disabled {
-  background: transparent;
-  color: grey;
-  cursor: not-allowed;
+.paginationSelect {
+  margin: 0 10px;
 }

@@ -12,11 +12,12 @@ import sItem from './selectItem/selectItem.module.scss'
 import { SelectItem } from './selectItem/selectItem'
 
 type selectItem = {
-  title: string
+  title: number | string
   value: string
 }
 
 export type SelectProps = {
+  className: string
   disabled?: boolean
   items: selectItem[]
   label?: string
@@ -25,11 +26,22 @@ export type SelectProps = {
 } & ComponentPropsWithoutRef<typeof SelectRadix.Root>
 
 export const Select = forwardRef<ElementRef<typeof SelectRadix.Root>, SelectProps>(
-  ({ disabled, items, label, placeholder, variant = 'large', ...restProps }: SelectProps, ref) => {
+  (
+    {
+      className,
+      disabled,
+      items,
+      label,
+      placeholder,
+      variant = 'large',
+      ...restProps
+    }: SelectProps,
+    ref
+  ) => {
     const id = useId()
 
     return (
-      <div className={clsx(s.SelectWrapp, variant === 'small' ? s.SelectSmall : '')}>
+      <div className={clsx(s.SelectWrapp, variant === 'small' ? s.SelectSmall : '', className)}>
         {label && (
           <Typography
             as={'label'}

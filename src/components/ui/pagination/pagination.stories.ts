@@ -13,7 +13,9 @@ type Story = StoryObj<typeof meta>
 
 export const PaginationDefault: Story = {
   args: {
-    totalItems: 100,
+    currentPage: 5,
     itemsPerPage: 5,
+    totalItems: 100,
+    totalPages: 20,
   },
 }
