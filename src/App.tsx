@@ -1,6 +1,6 @@
 import { Provider } from 'react-redux'
 
-import { Layout } from '@/components/layout/layout'
+import { Layout } from '@/components/ui/layout/layout'
 import { Router } from '@/router'
 import { store } from '@/services/store'
 

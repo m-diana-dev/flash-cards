@@ -1,9 +1,10 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
-import { Header } from '@/components/layout/header'
 import { Container } from '@/components/ui/container/container'
 
 import s from './laylout.module.scss'
+
+import { Header } from '../header'
 
 type Props = ComponentPropsWithoutRef<'div'>
 export const Layout = forwardRef<ElementRef<'div'>, Props>(({ children, ...restProps }, ref) => {
