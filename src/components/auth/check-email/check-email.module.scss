@@ -1,0 +1,24 @@
+.Card {
+  padding: 36px 36px 44px;
+}
+.Title {
+  text-align: center;
+  margin-bottom: 26px;
+}
+
+.Img {
+  display: block;
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  margin: 0 auto 20px;
+}
+
+.Letter {
+  max-width: 250px;
+  width: 100%;
+  margin: 0 auto 65px;
+  color: var(--color-light-900);
+  opacity: 0.5;
+  text-align: center;
+}
