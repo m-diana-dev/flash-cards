@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
@@ -32,13 +33,7 @@ export const ForgotPassword = ({ onSubmit }: Props) => {
         Forgot your password?
       </Typography>
       <form onSubmit={onSubmitForm}>
-        <FormInput
-          autoComplete={'email'}
-          control={control}
-          label={'Email'}
-          name={'email'}
-          placeholder={''}
-        />
+        <FormInput autoComplete={'email'} control={control} label={'Email'} name={'email'} />
         <Typography as={'div'} className={s.Label} variant={'body2'}>
           Enter your email address and we will send you further instructions
         </Typography>
@@ -49,9 +44,9 @@ export const ForgotPassword = ({ onSubmit }: Props) => {
       <Typography as={'div'} className={s.Note} variant={'body2'}>
         Did you remember your password?
       </Typography>
-      <Button as={'a'} className={s.Link} href={'#'} variant={'link'}>
+      <Typography as={Link} className={s.Link} to={'/sign-in'} variant={'link1'}>
         Try logging in
-      </Button>
+      </Typography>
     </Card>
   )
 }
