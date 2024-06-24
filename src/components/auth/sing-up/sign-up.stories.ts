@@ -1,20 +1,22 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { SignUp, SignUpFormType } from '@/components/auth/sing-up/sing-up'
+import { FormValues, SignUp } from '@/components/auth/sing-up/sign-up'
+import { withRouter } from 'storybook-addon-remix-react-router'
 
 const meta = {
   component: SignUp,
+  decorators: [withRouter],
   tags: ['autodocs'],
-  title: 'Auth/userRegistration',
+  title: 'Auth/SignUp',
 } satisfies Meta<typeof SignUp>
 
 export default meta
 type Story = StoryObj<typeof meta>
-const handleSignUp = (data: SignUpFormType) => {
+const handleSignUp = (data: FormValues) => {
   console.log('Form Data:', data)
 }
 
-export const SingUp: Story = {
+export const SignUpForm: Story = {
   args: {
     onSubmit: handleSignUp,
   },

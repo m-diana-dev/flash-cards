@@ -44,7 +44,7 @@ export const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
           )}
         >
           {variant === 'search' && (
-            <button className={clsx(s.icon, s.iconSearch)}>
+            <button className={clsx(s.icon, s.iconSearch)} type={'button'}>
               <Search />
             </button>
           )}
@@ -59,12 +59,12 @@ export const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
             {...restProps}
           />
           {variant === 'password' && (
-            <button className={s.icon} onClick={() => setIsVisible(!isVisible)}>
+            <button className={s.icon} onClick={() => setIsVisible(!isVisible)} type={'button'}>
               {isVisible ? <EyeClose /> : <Eye />}
             </button>
           )}
           {onReset && !!value && (
-            <button className={s.icon} onClick={onReset}>
+            <button className={s.icon} onClick={onReset} type={'button'}>
               <Close />
             </button>
           )}

@@ -2,7 +2,10 @@ import { FieldValues, UseControllerProps, useController } from 'react-hook-form'
 
 import { Radio, RadioProps } from '@/components/ui/radio'
 
-type Props<T extends FieldValues> = Omit<RadioProps, 'name' | 'onBlur' | 'onChange' | 'ref'> &
+type Props<T extends FieldValues> = Omit<
+  RadioProps,
+  'name' | 'onBlur' | 'onChange' | 'onValueChange' | 'ref'
+> &
   UseControllerProps<T>
 export const FormRadio = <T extends FieldValues>({
   control,
@@ -12,7 +15,9 @@ export const FormRadio = <T extends FieldValues>({
   shouldUnregister,
   ...restProps
 }: Props<T>) => {
-  const { field: radioField } = useController({
+  const {
+    field: { onChange, ...radioField },
+  } = useController({
     control,
     defaultValue,
     name,
@@ -20,5 +25,5 @@ export const FormRadio = <T extends FieldValues>({
     shouldUnregister,
   })
 
-  return <Radio {...restProps} {...radioField} />
+  return <Radio {...restProps} onValueChange={onChange} {...radioField} />
 }

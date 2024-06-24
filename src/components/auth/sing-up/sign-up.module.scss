@@ -1,18 +1,5 @@
 .card {
-  width: 100%;
-  max-width: 413px;
   padding: 33px 36px 25px 36px;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  width: 100%;
-}
-
-.checkbox {
-  margin-bottom: 6px;
 }
 
 .title {
@@ -20,9 +7,12 @@
   text-align: center;
 }
 
-.subtitle {
-  margin-bottom: 7px;
-  text-align: center;
+.input {
+  margin-bottom: 12px;
+}
+
+.checkbox {
+  margin-bottom: 6px;
 }
 
 .button {
@@ -37,9 +27,9 @@
 }
 
 .signIn {
-  display: flex;
-  justify-content: center;
-  font-size: var(--font-size-m);
+  display: block;
+  width: fit-content;
+  margin: 0 auto;
   font-weight: var(--font-weight-bold);
   color: var(--color-accent-500);
 }

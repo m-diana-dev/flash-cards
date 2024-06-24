@@ -3,29 +3,33 @@ import { Link } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import { FormCheckbox } from '@/components/ui/form/form-checkbox'
 import { FormInput } from '@/components/ui/form/form-input'
 import { Typography } from '@/components/ui/typography'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import s from './sign-in.module.scss'
+import s from './sign-up.module.scss'
 
-const loginSchema = z.object({
-  email: z.string().email('Invalid email address'),
-  password: z.string().min(3),
-  rememberMe: z.boolean().optional().default(false),
-})
+const signUpSchema = z
+  .object({
+    confirmPassword: z.string().min(3, 'Password has to be at least 3 characters long'),
+    email: z.string().email('Invalid email address'),
+    password: z.string().min(3, 'Password has to be at least 3 characters long'),
+  })
+  .refine(data => data.password === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  })
 
-export type FormValues = z.infer<typeof loginSchema>
+export type FormValues = z.infer<typeof signUpSchema>
 
 type Props = {
   onSubmit: (data: FormValues) => void
 }
 
-export const SignIn = ({ onSubmit }: Props) => {
+export const SignUp = ({ onSubmit }: Props) => {
   const { control, handleSubmit } = useForm<FormValues>({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(signUpSchema),
   })
 
   const onSubmitForm = handleSubmit(data => {
@@ -35,8 +39,8 @@ export const SignIn = ({ onSubmit }: Props) => {
   return (
     <>
       <Card className={s.card}>
-        <Typography as={'h1'} className={s.title} variant={'h1'}>
-          Sign In
+        <Typography className={s.title} variant={'h1'}>
+          Sign Up
         </Typography>
         <form onSubmit={onSubmitForm}>
           <FormInput className={s.input} control={control} label={'Email'} name={'email'} />
@@ -47,29 +51,22 @@ export const SignIn = ({ onSubmit }: Props) => {
             name={'password'}
             variant={'password'}
           />
-          <FormCheckbox
-            className={s.checkbox}
+          <FormInput
+            className={s.input}
             control={control}
-            label={'Remember me'}
-            name={'rememberMe'}
+            label={'Confirm Password'}
+            name={'confirmPassword'}
+            variant={'password'}
           />
-          <Typography
-            as={Link}
-            className={s.recoverPassword}
-            to={'/forgot-password'}
-            variant={'body2'}
-          >
-            Forgot Password?
-          </Typography>
           <Button className={s.button} fullWidth type={'submit'}>
-            Sign In
+            Sign Up
           </Button>
         </form>
         <Typography className={s.caption} variant={'body2'}>
-          {`Don't have an account?`}
+          Already have an account?
         </Typography>
-        <Typography as={Link} className={s.signUp} to={'/sign-up'} variant={'link1'}>
-          Sign Up
+        <Typography as={Link} className={s.signIn} to={'/sign-in'} variant={'link1'}>
+          Sign In
         </Typography>
       </Card>
     </>

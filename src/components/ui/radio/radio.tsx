@@ -1,4 +1,4 @@
-import { ElementRef, forwardRef } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
 import { RadioItem, RadioItemType } from '@/components/ui/radio/radioItem/radioItem'
 import * as RadioGroup from '@radix-ui/react-radio-group'
@@ -10,14 +10,15 @@ export type RadioProps = {
   className?: string
   defaultValue?: string
   items: RadioItemType[]
-}
+} & ComponentPropsWithoutRef<typeof RadioGroup.Root>
 
 export const Radio = forwardRef<ElementRef<typeof RadioGroup.Root>, RadioProps>(
-  ({ className, defaultValue, items }, ref) => (
+  ({ className, defaultValue, items, ...restProps }, ref) => (
     <RadioGroup.Root
       className={clsx(s.RadioGroup, className)}
       defaultValue={defaultValue || items[0].value}
       ref={ref}
+      {...restProps}
     >
       {items.map((item, index) => (
         <RadioItem
