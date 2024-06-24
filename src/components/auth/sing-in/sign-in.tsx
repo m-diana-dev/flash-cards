@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
@@ -8,62 +9,54 @@ import { Typography } from '@/components/ui/typography'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import s from './sing-in.module.scss'
+import s from './sign-in.module.scss'
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email address'),
   password: z.string().min(3),
-  rememberMe: z.boolean().default(false),
+  rememberMe: z.boolean().optional().default(false),
 })
 
-export type FormType = z.infer<typeof loginSchema>
+export type FormValues = z.infer<typeof loginSchema>
 
 type Props = {
-  onSubmit: (data: FormType) => void
+  onSubmit: (data: FormValues) => void
 }
 
 export const SignIn = (props: Props) => {
-  const {
-    control,
-    formState: { errors },
-    handleSubmit,
-  } = useForm<FormType>({
+  const { control, handleSubmit } = useForm<FormValues>({
     resolver: zodResolver(loginSchema),
   })
 
-  const handleFormSubmitted = handleSubmit(props.onSubmit)
+  const onSubmitForm = handleSubmit(props.onSubmit)
 
   return (
     <>
       <Card className={s.card}>
-        <Typography className={s.title} variant={'h1'}>
+        <Typography as={'h1'} className={s.title} variant={'h1'}>
           Sign In
         </Typography>
-        <form onSubmit={handleFormSubmitted}>
-          <div className={s.form}>
-            <FormInput
-              control={control}
-              error={errors.email?.message}
-              label={'Email'}
-              name={'email'}
-              placeholder={'Email'}
-            />
-            <FormInput
-              control={control}
-              error={errors.password?.message}
-              label={'Password'}
-              name={'password'}
-              placeholder={'Password'}
-              type={'password'}
-            />
-          </div>
+        <form onSubmit={onSubmitForm}>
+          <FormInput className={s.input} control={control} label={'Email'} name={'email'} />
+          <FormInput
+            className={s.input}
+            control={control}
+            label={'Password'}
+            name={'password'}
+            type={'password'}
+          />
           <FormCheckbox
             className={s.checkbox}
             control={control}
             label={'Remember me'}
             name={'rememberMe'}
           />
-          <Typography className={s.recoverPassword} variant={'body2'}>
+          <Typography
+            as={Link}
+            className={s.recoverPassword}
+            to={'/forgot-password'}
+            variant={'body2'}
+          >
             Forgot Password?
           </Typography>
           <Button className={s.button} fullWidth type={'submit'}>
@@ -73,7 +66,7 @@ export const SignIn = (props: Props) => {
         <Typography className={s.caption} variant={'body2'}>
           {`Don't have an account?`}
         </Typography>
-        <Typography className={s.signUp} variant={'link1'}>
+        <Typography as={Link} className={s.signUp} to={'/sign-up'} variant={'link1'}>
           Sign Up
         </Typography>
       </Card>

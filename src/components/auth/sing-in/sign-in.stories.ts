@@ -2,21 +2,23 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { SubmitHandler } from 'react-hook-form'
 
-import { FormType, SignIn } from '@/components/auth/sing-in/sing-in'
+import { FormValues, SignIn } from '@/components/auth/sing-in/sign-in'
+import { withRouter } from 'storybook-addon-remix-react-router'
 
 const meta = {
   component: SignIn,
+  decorators: [withRouter],
   tags: ['autodocs'],
-  title: 'Auth/LoginForm',
+  title: 'Auth/SignIn',
 } satisfies Meta<typeof SignIn>
 
 export default meta
 type Story = StoryObj<typeof meta>
-const handleSignIn: SubmitHandler<FormType> = data => {
+const handleSignIn: SubmitHandler<FormValues> = data => {
   console.log('Form Data:', data)
 }
 
-export const SingIn: Story = {
+export const SignInForm: Story = {
   args: {
     onSubmit: handleSignIn,
   },

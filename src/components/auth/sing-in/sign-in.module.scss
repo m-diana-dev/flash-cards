@@ -1,0 +1,40 @@
+.card {
+  padding: 33px 36px 25px;
+}
+
+.title {
+  margin-bottom: 27px;
+  text-align: center;
+}
+
+.input {
+  margin-bottom: 12px;
+}
+
+.checkbox {
+  margin-bottom: 12px;
+}
+
+.recoverPassword {
+  display: block;
+  margin: 0 0 66px auto;
+  width: fit-content;
+}
+
+.button {
+  margin-bottom: 20px;
+}
+
+.caption {
+  margin-bottom: 11px;
+  color: var(--color-light-900);
+  text-align: center;
+}
+
+.signUp {
+  display: block;
+  width: fit-content;
+  margin: 0 auto;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-accent-500);
+}
