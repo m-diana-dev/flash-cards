@@ -19,11 +19,9 @@ const profileSchema = z.object({
 })
 
 export const PersonalInformationForm = ({ name, onSubmit }: Props) => {
-  const {
-    control,
-    formState: { errors },
-    handleSubmit,
-  } = useForm<ProfileEditValues>({ resolver: zodResolver(profileSchema) })
+  const { control, handleSubmit } = useForm<ProfileEditValues>({
+    resolver: zodResolver(profileSchema),
+  })
 
   const onSubmitForm = handleSubmit(data => {
     onSubmit(data)
@@ -34,7 +32,6 @@ export const PersonalInformationForm = ({ name, onSubmit }: Props) => {
       <FormInput
         control={control}
         defaultValue={name}
-        error={errors.name?.message}
         label={'Nickname'}
         name={'name'}
         placeholder={''}
