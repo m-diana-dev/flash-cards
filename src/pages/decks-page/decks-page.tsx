@@ -1,11 +1,22 @@
 import { ChangeEvent, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
+import ArrowTop from '@/assets/images/icons/ArrowTop'
+import Delete from '@/assets/images/icons/Delete'
+import Edit from '@/assets/images/icons/Edit'
+import Play from '@/assets/images/icons/Play'
 import { Button } from '@/components/ui/button'
 import { TextField } from '@/components/ui/input'
 import { Page } from '@/components/ui/page/page'
 import { SliderApp } from '@/components/ui/slider'
-import { Tabs } from '@/components/ui/tabs'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHeadCell,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
 import { Typography } from '@/components/ui/typography'
 import { useGetDecksQuery } from '@/services/flashcards-api'
 
@@ -56,50 +67,67 @@ export function DecksPage() {
       </div>
       <div className={s.PageFilters}>
         <TextField
+          className={s.PageInput}
           onChange={handleSearch}
           onReset={removeSearchParam}
           value={search}
           variant={'search'}
         />
-        {/*<Tabs*/}
-        {/*  tabs={[*/}
-        {/*    {*/}
-        {/*      title: 'My Cards',*/}
-        {/*      value: 'My Cards',*/}
-        {/*    },*/}
-        {/*    {*/}
-        {/*      title: 'All Cards',*/}
-        {/*      value: 'All Cards',*/}
-        {/*    },*/}
-        {/*  ]}*/}
-        {/*/>*/}
-        <SliderApp setValue={setCountCards} value={countCards} />
-        <Button variant={'secondary'}>Clear Filter</Button>
+        <div className={s.PageTabs}>
+          <Typography as={'label'} className={s.PageFiltersLabel} variant={'body2'}>
+            Show decks cards
+          </Typography>
+        </div>
+        <div className={s.PageSlider}>
+          <Typography as={'label'} className={s.PageFiltersLabel} variant={'body2'}>
+            Number of cards
+          </Typography>
+          <SliderApp setValue={setCountCards} value={countCards} />
+        </div>
+        <Button variant={'secondary'}>
+          <Delete />
+          Clear Filter
+        </Button>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Cards</th>
-            <th>Last Updated</th>
-            <th>Created By</th>
-          </tr>
-        </thead>
-        <tbody>
+      <Table className={s.PageTable}>
+        <TableHeader>
+          <TableRow>
+            <TableHeadCell className={s.PageTableCell}>Name</TableHeadCell>
+            <TableHeadCell className={s.PageTableCell}>Cards</TableHeadCell>
+            <TableHeadCell className={s.PageTableCell}>
+              Last Updated
+              <ArrowTop height={10} width={8} />
+            </TableHeadCell>
+            <TableHeadCell className={s.PageTableCell}>Created By</TableHeadCell>
+            <TableHeadCell className={s.PageTableCell}></TableHeadCell>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
           {data?.items.map(deck => {
             const updatedAt = new Date(deck.updated).toLocaleDateString('ru-RU')
 
             return (
-              <tr key={deck.id}>
-                <td>{deck.name}</td>
-                <td>{deck.cardsCount}</td>
-                <td>{updatedAt}</td>
-                <td>{deck.author.name}</td>
-              </tr>
+              <TableRow key={deck.id}>
+                <TableCell className={s.PageTableCell}>{deck.name}</TableCell>
+                <TableCell className={s.PageTableCell}>{deck.cardsCount}</TableCell>
+                <TableCell className={s.PageTableCell}>{updatedAt}</TableCell>
+                <TableCell className={s.PageTableCell}>{deck.author.name}</TableCell>
+                <TableCell className={s.PageTableCell}>
+                  <button>
+                    <Play />
+                  </button>
+                  <button>
+                    <Edit />
+                  </button>
+                  <button>
+                    <Delete />
+                  </button>
+                </TableCell>
+              </TableRow>
             )
           })}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
     </Page>
   )
 }
