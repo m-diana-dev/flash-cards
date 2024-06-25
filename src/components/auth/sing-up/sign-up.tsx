@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
+import { emailSchema, passwordSchema } from '@/components/auth/forms-schems'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { FormInput } from '@/components/ui/form/form-input'
@@ -12,9 +13,9 @@ import s from './sign-up.module.scss'
 
 const signUpSchema = z
   .object({
-    confirmPassword: z.string().min(3, 'Password has to be at least 3 characters long'),
-    email: z.string().email('Invalid email address'),
-    password: z.string().min(3, 'Password has to be at least 3 characters long'),
+    confirmPassword: passwordSchema,
+    email: emailSchema,
+    password: passwordSchema,
   })
   .refine(data => data.password === data.confirmPassword, {
     message: 'Passwords do not match',

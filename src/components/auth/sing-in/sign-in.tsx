@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
+import { emailSchema, passwordSchema, rememberMeSchema } from '@/components/auth/forms-schems'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { FormCheckbox } from '@/components/ui/form/form-checkbox'
@@ -12,9 +13,9 @@ import { z } from 'zod'
 import s from './sign-in.module.scss'
 
 const loginSchema = z.object({
-  email: z.string().email('Invalid email address'),
-  password: z.string().min(3),
-  rememberMe: z.boolean().optional().default(false),
+  email: emailSchema,
+  password: passwordSchema,
+  rememberMe: rememberMeSchema,
 })
 
 export type FormValues = z.infer<typeof loginSchema>

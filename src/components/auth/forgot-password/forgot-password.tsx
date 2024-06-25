@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
+import { emailSchema } from '@/components/auth/forms-schems'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { FormInput } from '@/components/ui/form/form-input'
@@ -9,10 +10,11 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 import s from './forgot-password.module.scss'
+
 export type FormValues = z.infer<typeof passwordFormSchema>
 
 const passwordFormSchema = z.object({
-  email: z.string().email(),
+  email: emailSchema,
 })
 
 type Props = {

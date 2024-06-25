@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form'
 
+import { passwordSchema } from '@/components/auth/forms-schems'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { FormInput } from '@/components/ui/form/form-input'
@@ -12,7 +13,7 @@ import s from './create-password.module.scss'
 export type FormValues = z.infer<typeof createPasswordFormSchema>
 
 const createPasswordFormSchema = z.object({
-  password: z.string().min(3),
+  password: passwordSchema,
 })
 
 type Props = {
