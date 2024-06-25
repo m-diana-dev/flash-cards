@@ -6,6 +6,7 @@ import {
   createBrowserRouter,
 } from 'react-router-dom'
 
+import { Layout } from '@/components/ui/layout/layout'
 import { DecksPage } from '@/pages/decks-page/decks-page'
 import { ErrorPage } from '@/pages/error-page/error-page'
 
@@ -25,13 +26,18 @@ const privateRoutes: RouteObject[] = [
 
 const router = createBrowserRouter([
   {
-    children: privateRoutes,
-    element: <PrivateRoutes />,
-  },
-  ...publicRoutes,
-  {
-    element: <ErrorPage />,
-    path: '*',
+    children: [
+      {
+        children: privateRoutes,
+        element: <PrivateRoutes />,
+      },
+      ...publicRoutes,
+      {
+        element: <ErrorPage />,
+        path: '*',
+      },
+    ],
+    element: <Layout />,
   },
 ])
 

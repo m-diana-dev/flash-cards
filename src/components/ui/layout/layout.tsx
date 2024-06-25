@@ -1,4 +1,5 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
+import { Outlet } from 'react-router-dom'
 
 import { Container } from '@/components/ui/container/container'
 
@@ -12,7 +13,9 @@ export const Layout = forwardRef<ElementRef<'div'>, Props>(({ children, ...restP
     <div ref={ref} {...restProps}>
       <Header isAuthenticated={false} />
       <main className={s.Main}>
-        <Container>{children}</Container>
+        <Container>
+          <Outlet />
+        </Container>
       </main>
     </div>
   )
