@@ -17,7 +17,7 @@ type selectItem = {
 }
 
 export type SelectProps = {
-  className: string
+  className?: string
   disabled?: boolean
   items: selectItem[]
   label?: string
