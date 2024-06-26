@@ -30,13 +30,3 @@
   max-width: 250px;
   width: 100%;
 }
-
-.PageTable {
-  margin-bottom: 24px;
-  &Cell {
-    width: 20%;
-    &:last-child {
-      text-align: right;
-    }
-  }
-}
