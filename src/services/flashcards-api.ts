@@ -17,9 +17,15 @@ export const flashcardsApi = createApi({
           url: `v2/decks`,
         }),
       }),
+      getMinMaxCards: builder.query<any, any | void>({
+        query: args => ({
+          params: args ?? undefined,
+          url: `v2/decks/min-max-cards`,
+        }),
+      }),
     }
   },
   reducerPath: 'flashcardsApi',
 })
 
-export const { useGetDecksQuery } = flashcardsApi
+export const { useGetDecksQuery, useGetMinMaxCardsQuery } = flashcardsApi
