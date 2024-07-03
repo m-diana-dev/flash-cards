@@ -2,6 +2,7 @@ import Delete from '@/assets/images/icons/Delete'
 import { Button } from '@/components/ui/button'
 import { TextField } from '@/components/ui/input'
 import { Page } from '@/components/ui/page/page'
+import { Pagination } from '@/components/ui/pagination'
 import { SliderApp } from '@/components/ui/slider'
 import { Typography } from '@/components/ui/typography'
 import { DecksTable } from '@/pages/decks-page/decks-table/decks-table'
@@ -63,6 +64,15 @@ export function DecksPage() {
         </Button>
       </div>
       <DecksTable decks={data?.items} />
+      <div>
+        <Pagination
+          currentPage={100}
+          handlePageChange={() => {}}
+          itemsPerPage={5}
+          totalItems={1000}
+          totalPages={100}
+        />
+      </div>
     </Page>
   )
 }
