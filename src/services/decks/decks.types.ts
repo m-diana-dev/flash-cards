@@ -37,3 +37,8 @@ export interface GetDecksArgs {
   name?: string
   orderBy?: string
 }
+
+export interface MinMaxCardsCount {
+  max: number
+  min: number
+}
