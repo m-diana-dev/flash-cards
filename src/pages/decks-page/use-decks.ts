@@ -1,10 +1,7 @@
-import { ChangeEvent } from 'react'
+import { ChangeEvent, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
-import { useGetMinMaxCardsQuery } from '@/services/flashcards-api'
-
 export const useDecks = () => {
-  const { data } = useGetMinMaxCardsQuery({})
   const [searchParams, setSearchParams] = useSearchParams()
 
   const search = searchParams.get('search') ?? ''
@@ -24,7 +21,7 @@ export const useDecks = () => {
   }
 
   const minCount = searchParams.get('minCount') ?? ''
-  const maxCount = searchParams.get('maxCount') ?? data?.max
+  const maxCount = searchParams.get('maxCount') ?? '10'
   const setCountParam = (value: number[]) => {
     const minCount = value[0]
     const maxCount = value[1]
@@ -43,12 +40,16 @@ export const useDecks = () => {
     setSearchParams(searchParams)
   }
 
+  const [rangeValue, setRangeValue] = useState([+minCount, +maxCount])
+
   return {
     maxCount,
     minCount,
+    rangeValue,
     removeSearchParam,
     search,
     setCountParam,
+    setRangeValue,
     setSearchParam,
   }
 }

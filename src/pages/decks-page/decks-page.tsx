@@ -3,24 +3,38 @@ import { Button } from '@/components/ui/button'
 import { TextField } from '@/components/ui/input'
 import { Page } from '@/components/ui/page/page'
 import { Pagination } from '@/components/ui/pagination'
-import { SliderApp } from '@/components/ui/slider'
+import { Slider } from '@/components/ui/slider'
 import { Typography } from '@/components/ui/typography'
 import { DecksTable } from '@/pages/decks-page/decks-table/decks-table'
-import { useGetDecksQuery } from '@/services/flashcards-api'
+import { useGetDecksQuery, useGetMinMaxCardsQuery } from '@/services/flashcards-api'
 
 import s from './decks-page.module.scss'
 
 import { useDecks } from './use-decks'
 
 export function DecksPage() {
-  const { maxCount, minCount, removeSearchParam, search, setCountParam, setSearchParam } =
-    useDecks()
+  const {
+    maxCount,
+    minCount,
+    rangeValue,
+    removeSearchParam,
+    search,
+    setCountParam,
+    setRangeValue,
+    setSearchParam,
+  } = useDecks()
 
   const { data, error, isLoading } = useGetDecksQuery({
     maxCardsCount: +maxCount,
     minCardsCount: +minCount,
     name: search,
   })
+
+  const { data: minMaxCountData } = useGetMinMaxCardsQuery({})
+
+  const handleSliderCommitted = (value: number[]) => {
+    setCountParam([value[0], value[1]])
+  }
 
   if (isLoading) {
     return <h1>Loading...</h1>
@@ -56,7 +70,13 @@ export function DecksPage() {
           <Typography as={'label'} className={s.PageFiltersLabel} variant={'body2'}>
             Number of cards
           </Typography>
-          <SliderApp max={+maxCount} setValue={setCountParam} value={[+minCount, +maxCount]} />
+          <Slider
+            max={minMaxCountData?.max || 0}
+            min={minMaxCountData?.min || 0}
+            onValueChange={setRangeValue}
+            onValueCommit={handleSliderCommitted}
+            value={rangeValue}
+          />
         </div>
         <Button variant={'secondary'}>
           <Delete />

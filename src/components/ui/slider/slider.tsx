@@ -1,38 +1,29 @@
+import { ComponentPropsWithoutRef } from 'react'
+
 import { Typography } from '@/components/ui/typography'
-import * as Slider from '@radix-ui/react-slider'
+import * as SliderRadix from '@radix-ui/react-slider'
 
 import s from './slider.module.scss'
 
-export type SliderType = {
-  max?: number
-  setValue?: (value: number[]) => void
-  step?: number
-  value: number[]
-}
+export type SliderType = ComponentPropsWithoutRef<typeof SliderRadix.Root>
 
-export const SliderApp = (props: SliderType) => {
-  const { max = 99, setValue, step = 1, value } = props
+export const Slider = (props: SliderType) => {
+  const { value, ...rest } = props
 
   return (
     <div className={s.sliderContainer}>
       <Typography as={'div'} className={s.sliderValue}>
-        {value[0]}
+        {value?.[0]}
       </Typography>
-      <Slider.Root
-        className={s.SliderRoot}
-        max={max}
-        onValueChange={setValue}
-        step={step}
-        value={value}
-      >
-        <Slider.Track className={s.SliderTrack}>
-          <Slider.Range className={s.SliderRange} />
-        </Slider.Track>
-        <Slider.Thumb aria-label={'Lower value'} className={s.SliderThumb} />
-        <Slider.Thumb aria-label={'Higher value'} className={s.SliderThumb} />
-      </Slider.Root>
+      <SliderRadix.Root className={s.SliderRoot} value={value} {...rest}>
+        <SliderRadix.Track className={s.SliderTrack}>
+          <SliderRadix.Range className={s.SliderRange} />
+        </SliderRadix.Track>
+        <SliderRadix.Thumb aria-label={'Lower value'} className={s.SliderThumb} />
+        <SliderRadix.Thumb aria-label={'Higher value'} className={s.SliderThumb} />
+      </SliderRadix.Root>
       <Typography as={'div'} className={s.sliderValue}>
-        {value[1]}
+        {value?.[1]}
       </Typography>
     </div>
   )
