@@ -30,7 +30,7 @@ export function DecksPage() {
     name: search,
   })
 
-  const { data: minMaxCountData } = useGetMinMaxCardsQuery({})
+  const { data: minMaxCountData } = useGetMinMaxCardsQuery()
 
   const handleSliderCommitted = (value: number[]) => {
     setCountParam([value[0], value[1]])
