@@ -11,7 +11,7 @@
   display: flex;
   align-items: center;
   width: calc(100% - 60px);
-  padding: 0 12px;
+  margin: 0 12px;
 }
 
 .SliderTrack {
@@ -34,6 +34,7 @@
   height: 16px;
   background-color: var(--color-accent-500);
   border-radius: 50%;
+  cursor: pointer;
   &::after {
     content: '';
     width: 8px;
