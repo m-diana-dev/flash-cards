@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ComponentPropsWithoutRef } from 'react'
 
 import { Typography } from '@/components/ui/typography'
 import * as RadixTabs from '@radix-ui/react-tabs'
@@ -6,7 +6,6 @@ import * as RadixTabs from '@radix-ui/react-tabs'
 import s from './tabs.module.scss'
 
 export type TabType = {
-  content: ReactNode
   disabled?: boolean
   title: string
   value: string
@@ -15,11 +14,10 @@ export type TabType = {
 export type TabsProps = {
   defaultValue?: string
   tabs: TabType[]
-}
-
-export const Tabs = ({ defaultValue, tabs }: TabsProps) => {
+} & ComponentPropsWithoutRef<typeof RadixTabs.Root>
+export const Tabs = ({ tabs, ...rest }: TabsProps) => {
   return (
-    <RadixTabs.Root className={s.TabsRoot} defaultValue={defaultValue || tabs[0].value}>
+    <RadixTabs.Root className={s.TabsRoot} {...rest}>
       <RadixTabs.List className={s.TabsList}>
         {tabs.map((tab, index) => {
           return (
@@ -34,17 +32,6 @@ export const Tabs = ({ defaultValue, tabs }: TabsProps) => {
           )
         })}
       </RadixTabs.List>
-      {tabs.map((tab, index) => {
-        return (
-          <RadixTabs.Content
-            className={s.TabsItemContent}
-            key={`${tab.value}-${index}`}
-            value={tab.value}
-          >
-            {tab.content}
-          </RadixTabs.Content>
-        )
-      })}
     </RadixTabs.Root>
   )
 }

@@ -4,6 +4,7 @@ import { TextField } from '@/components/ui/input'
 import { Page } from '@/components/ui/page/page'
 import { Pagination } from '@/components/ui/pagination'
 import { Slider } from '@/components/ui/slider'
+import { Tabs } from '@/components/ui/tabs'
 import { Typography } from '@/components/ui/typography'
 import { DecksTable } from '@/pages/decks-page/decks-table/decks-table'
 import { useGetDecksQuery, useGetMinMaxCardsQuery } from '@/services/flashcards-api'
@@ -22,9 +23,14 @@ export function DecksPage() {
     setCountParam,
     setRangeValue,
     setSearchParam,
+    setShowParam,
+    show,
   } = useDecks()
 
+  const authorId = show === 'my' ? 'f2be95b9-4d07-4751-a775-bd612fc9553a' : undefined
+
   const { data, error, isLoading } = useGetDecksQuery({
+    authorId: authorId,
     maxCardsCount: +maxCount,
     minCardsCount: +minCount,
     name: search,
@@ -65,6 +71,14 @@ export function DecksPage() {
           <Typography as={'label'} className={s.PageFiltersLabel} variant={'body2'}>
             Show decks cards
           </Typography>
+          <Tabs
+            defaultValue={show}
+            onValueChange={setShowParam}
+            tabs={[
+              { title: 'My Cards', value: 'my' },
+              { title: 'All Cards', value: '' },
+            ]}
+          />
         </div>
         <div className={s.PageSlider}>
           <Typography as={'label'} className={s.PageFiltersLabel} variant={'body2'}>

@@ -42,6 +42,16 @@ export const useDecks = () => {
 
   const [rangeValue, setRangeValue] = useState([+minCount, +maxCount])
 
+  const show = searchParams.get('show') ?? ''
+  const setShowParam = (value: string) => {
+    if (value.length) {
+      searchParams.set('show', value)
+    } else {
+      searchParams.delete('show')
+    }
+    setSearchParams(searchParams)
+  }
+
   return {
     maxCount,
     minCount,
@@ -51,5 +61,7 @@ export const useDecks = () => {
     setCountParam,
     setRangeValue,
     setSearchParam,
+    setShowParam,
+    show,
   }
 }
