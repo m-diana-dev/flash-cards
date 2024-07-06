@@ -1,6 +1,8 @@
 import { ChangeEvent, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
+import { DEFAULT_MAX_COUNT } from '@/pages/decks-page/decks-page'
+
 export const useDecks = () => {
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -21,7 +23,7 @@ export const useDecks = () => {
   }
 
   const minCount = searchParams.get('minCount') ?? ''
-  const maxCount = searchParams.get('maxCount') ?? '10'
+  const maxCount = searchParams.get('maxCount') ?? DEFAULT_MAX_COUNT
   const setCountParam = (value: number[]) => {
     const minCount = value[0]
     const maxCount = value[1]

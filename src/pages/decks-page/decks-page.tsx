@@ -13,6 +13,8 @@ import s from './decks-page.module.scss'
 
 import { useDecks } from './use-decks'
 
+export const DEFAULT_MAX_COUNT = '10'
+
 export function DecksPage() {
   const {
     maxCount,
@@ -40,6 +42,13 @@ export function DecksPage() {
 
   const handleSliderCommitted = (value: number[]) => {
     setCountParam([value[0], value[1]])
+  }
+
+  const handleCleanFilter = () => {
+    setRangeValue([0, +DEFAULT_MAX_COUNT])
+    setCountParam([0, 0])
+    setShowParam('')
+    removeSearchParam()
   }
 
   if (isLoading) {
@@ -72,12 +81,12 @@ export function DecksPage() {
             Show decks cards
           </Typography>
           <Tabs
-            defaultValue={show}
             onValueChange={setShowParam}
             tabs={[
               { title: 'My Cards', value: 'my' },
               { title: 'All Cards', value: '' },
             ]}
+            value={show}
           />
         </div>
         <div className={s.PageSlider}>
@@ -92,7 +101,7 @@ export function DecksPage() {
             value={rangeValue}
           />
         </div>
-        <Button variant={'secondary'}>
+        <Button onClick={handleCleanFilter} variant={'secondary'}>
           <Delete />
           Clear Filter
         </Button>
