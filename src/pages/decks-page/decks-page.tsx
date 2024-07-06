@@ -13,12 +13,16 @@ import { useDecks } from './use-decks'
 
 export function DecksPage() {
   const {
+    currentPage,
+    itemsPerPage,
     maxCount,
     minCount,
     rangeValue,
     removeSearchParam,
     search,
     setCountParam,
+    setCurrentPage,
+    setItemsPerPage,
     setRangeValue,
     setSearchParam,
     setShowParam,
@@ -29,10 +33,17 @@ export function DecksPage() {
 
   const { data, error, isLoading } = useGetDecksQuery({
     authorId: authorId,
+    currentPage: +currentPage,
+    itemsPerPage: +itemsPerPage,
     maxCardsCount: +maxCount,
     minCardsCount: +minCount,
     name: search,
   })
+
+  const handleItemPerPage = (count: string) => {
+    setItemsPerPage(count)
+    setCurrentPage(null)
+  }
 
   if (isLoading) {
     return <Preloader />
@@ -55,6 +66,7 @@ export function DecksPage() {
         removeSearchParam={removeSearchParam}
         search={search}
         setCountParam={setCountParam}
+        setCurrentPage={setCurrentPage}
         setRangeValue={setRangeValue}
         setSearchParam={setSearchParam}
         setShowParam={setShowParam}
@@ -62,11 +74,12 @@ export function DecksPage() {
       />
       <DecksTable decks={data?.items} />
       <Pagination
-        currentPage={100}
-        handlePageChange={() => {}}
-        itemsPerPage={5}
-        totalItems={1000}
-        totalPages={100}
+        changeItemsPerPage={handleItemPerPage}
+        currentPage={+currentPage}
+        handlePageChange={setCurrentPage}
+        itemsPerPage={+itemsPerPage}
+        totalItems={data?.pagination.totalItems}
+        totalPages={data?.pagination.totalPages}
       />
     </Page>
   )

@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react'
+import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { DEFAULT_MAX_COUNT } from '@/pages/decks-page/decks-filters/decks-filters'
@@ -7,9 +7,7 @@ export const useDecks = () => {
   const [searchParams, setSearchParams] = useSearchParams()
 
   const search = searchParams.get('search') ?? ''
-  const setSearchParam = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.currentTarget.value
-
+  const setSearchParam = (value: string) => {
     if (value.length) {
       searchParams.set('search', value)
     } else {
@@ -54,13 +52,37 @@ export const useDecks = () => {
     setSearchParams(searchParams)
   }
 
+  const itemsPerPage = searchParams.get('itemsPerPage') ?? '5'
+  const setItemsPerPage = (value: string) => {
+    if (value) {
+      searchParams.set('itemsPerPage', value)
+    } else {
+      searchParams.delete('itemsPerPage')
+    }
+    setSearchParams(searchParams)
+  }
+
+  const currentPage = searchParams.get('currentPage') ?? '1'
+  const setCurrentPage = (value: null | number) => {
+    if (value) {
+      searchParams.set('currentPage', value.toString())
+    } else {
+      searchParams.delete('currentPage')
+    }
+    setSearchParams(searchParams)
+  }
+
   return {
+    currentPage,
+    itemsPerPage,
     maxCount,
     minCount,
     rangeValue,
     removeSearchParam,
     search,
     setCountParam,
+    setCurrentPage,
+    setItemsPerPage,
     setRangeValue,
     setSearchParam,
     setShowParam,
