@@ -17,8 +17,9 @@ type Props = {
   removeSearchParam: () => void
   search: string
   setCountParam: (count: number[]) => void
+  setCurrentPage: (value: null | number) => void
   setRangeValue: (value: number[]) => void
-  setSearchParam: (event: ChangeEvent<HTMLInputElement>) => void
+  setSearchParam: (value: string) => void
   setShowParam: (value: string) => void
   show: string
 }
@@ -28,6 +29,7 @@ export const DecksFilters = ({
   removeSearchParam,
   search,
   setCountParam,
+  setCurrentPage,
   setRangeValue,
   setSearchParam,
   setShowParam,
@@ -37,21 +39,38 @@ export const DecksFilters = ({
 
   const handleSliderCommitted = (value: number[]) => {
     setCountParam([value[0], value[1]])
+    setCurrentPage(0)
   }
 
   const handleCleanFilter = () => {
     setRangeValue([0, +DEFAULT_MAX_COUNT])
     setCountParam([0, 0])
     setShowParam('')
+    setCurrentPage(null)
     removeSearchParam()
+  }
+
+  const handleChangeTabs = (value: string) => {
+    setShowParam(value)
+    setCurrentPage(null)
+  }
+
+  const handleTextField = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchParam(e.currentTarget.value)
+    setCurrentPage(null)
+  }
+
+  const handleResetTextField = () => {
+    removeSearchParam()
+    setCurrentPage(null)
   }
 
   return (
     <div className={s.PageFilters}>
       <TextField
         className={s.PageInput}
-        onChange={setSearchParam}
-        onReset={removeSearchParam}
+        onChange={handleTextField}
+        onReset={handleResetTextField}
         placeholder={'Search deck'}
         value={search}
         variant={'search'}
@@ -61,7 +80,7 @@ export const DecksFilters = ({
           Show decks cards
         </Typography>
         <Tabs
-          onValueChange={setShowParam}
+          onValueChange={handleChangeTabs}
           tabs={[
             { title: 'My Cards', value: 'my' },
             { title: 'All Cards', value: '' },
