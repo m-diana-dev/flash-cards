@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
-import { DEFAULT_MAX_COUNT } from '@/pages/decks-page/decks-page'
+import { DEFAULT_MAX_COUNT } from '@/pages/decks-page/decks-filters/decks-filters'
 
 export const useDecks = () => {
   const [searchParams, setSearchParams] = useSearchParams()
