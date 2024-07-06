@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button'
 import { TextField } from '@/components/ui/input'
 import { Page } from '@/components/ui/page/page'
 import { Pagination } from '@/components/ui/pagination'
+import { Preloader } from '@/components/ui/preloader'
 import { Slider } from '@/components/ui/slider'
 import { Tabs } from '@/components/ui/tabs'
 import { Typography } from '@/components/ui/typography'
@@ -52,7 +53,7 @@ export function DecksPage() {
   }
 
   if (isLoading) {
-    return <h1>Loading...</h1>
+    return <Preloader />
   }
 
   if (error) {
