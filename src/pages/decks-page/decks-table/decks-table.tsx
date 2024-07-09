@@ -38,7 +38,14 @@ export const DecksTable = ({ decks }: Props) => {
 
           return (
             <TableRow key={deck.id}>
-              <TableCell className={s.PageTableCell}>{deck.name}</TableCell>
+              <TableCell className={s.PageTableCell}>
+                <a className={s.PageTableCellLink} href={''}>
+                  {deck.cover && (
+                    <img alt={'cover'} className={s.PageTableCover} src={deck.cover} />
+                  )}
+                  <span>{deck.name}</span>
+                </a>
+              </TableCell>
               <TableCell className={s.PageTableCell}>{deck.cardsCount}</TableCell>
               <TableCell className={s.PageTableCell}>{updatedAt}</TableCell>
               <TableCell className={s.PageTableCell}>{deck.author.name}</TableCell>
