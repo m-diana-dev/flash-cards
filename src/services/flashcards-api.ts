@@ -1,4 +1,10 @@
-import { DecksListResponse, GetDecksArgs, MinMaxCardsCount } from '@/services/decks/decks.types'
+import {
+  CreateDeckArgs,
+  Deck,
+  DecksListResponse,
+  GetDecksArgs,
+  MinMaxCardsCount,
+} from '@/services/decks/decks.types'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const flashcardsApi = createApi({
@@ -11,7 +17,16 @@ export const flashcardsApi = createApi({
   }),
   endpoints: builder => {
     return {
+      createDeck: builder.mutation<Deck, CreateDeckArgs>({
+        invalidatesTags: ['Decks'],
+        query: args => ({
+          body: args,
+          method: 'POST',
+          url: `v1/decks`,
+        }),
+      }),
       getDecks: builder.query<DecksListResponse, GetDecksArgs | void>({
+        providesTags: ['Decks'],
         query: args => ({
           params: args ?? undefined,
           url: `v2/decks`,
@@ -23,6 +38,7 @@ export const flashcardsApi = createApi({
     }
   },
   reducerPath: 'flashcardsApi',
+  tagTypes: ['Decks'],
 })
 
-export const { useGetDecksQuery, useGetMinMaxCardsQuery } = flashcardsApi
+export const { useCreateDeckMutation, useGetDecksQuery, useGetMinMaxCardsQuery } = flashcardsApi

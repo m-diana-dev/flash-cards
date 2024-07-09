@@ -14,9 +14,13 @@ export const ModalFooter = forwardRef<ElementRef<typeof Dialog.Title>, ModalFoot
   ({ buttonTitle, onClick }, ref) => (
     <div className={s.DialogFooter} ref={ref}>
       <Dialog.Close>
-        <Button variant={'secondary'}>Cancel</Button>
+        <Button as={'span'} variant={'secondary'}>
+          Cancel
+        </Button>
       </Dialog.Close>
-      <Button onClick={onClick}>{buttonTitle}</Button>
+      <Button onClick={onClick} type={'submit'}>
+        {buttonTitle}
+      </Button>
     </div>
   )
 )

@@ -8,6 +8,7 @@
   line-height: var(--line-height-m);
   color: var(--color-light-100);
   border-radius: 4px;
+  transition: all var(--transition);
   &:focus-visible {
     outline: 2px solid var(--color-info-500);
   }

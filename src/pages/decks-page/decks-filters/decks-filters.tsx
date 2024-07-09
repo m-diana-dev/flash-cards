@@ -13,6 +13,7 @@ import s from './decks-filters.module.scss'
 export const DEFAULT_MAX_COUNT = '10'
 
 type Props = {
+  cleanFilter: () => void
   rangeValue: number[]
   removeSearchParam: () => void
   search: string
@@ -25,6 +26,7 @@ type Props = {
 }
 
 export const DecksFilters = ({
+  cleanFilter,
   rangeValue,
   removeSearchParam,
   search,
@@ -40,14 +42,6 @@ export const DecksFilters = ({
   const handleSliderCommitted = (value: number[]) => {
     setCountParam([value[0], value[1]])
     setCurrentPage(0)
-  }
-
-  const handleCleanFilter = () => {
-    setRangeValue([0, +DEFAULT_MAX_COUNT])
-    setCountParam([0, 0])
-    setShowParam('')
-    setCurrentPage(null)
-    removeSearchParam()
   }
 
   const handleChangeTabs = (value: string) => {
@@ -100,7 +94,7 @@ export const DecksFilters = ({
           value={rangeValue}
         />
       </div>
-      <Button onClick={handleCleanFilter} variant={'secondary'}>
+      <Button onClick={cleanFilter} variant={'secondary'}>
         <Delete />
         Clear Filter
       </Button>

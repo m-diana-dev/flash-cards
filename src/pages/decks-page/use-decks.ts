@@ -72,7 +72,16 @@ export const useDecks = () => {
     setSearchParams(searchParams)
   }
 
+  const cleanFilter = () => {
+    setRangeValue([0, +DEFAULT_MAX_COUNT])
+    setCountParam([0, 0])
+    setShowParam('')
+    setCurrentPage(null)
+    removeSearchParam()
+  }
+
   return {
+    cleanFilter,
     currentPage,
     itemsPerPage,
     maxCount,
