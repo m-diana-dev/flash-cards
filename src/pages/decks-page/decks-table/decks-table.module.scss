@@ -2,8 +2,28 @@
   margin-bottom: 24px;
   &Cell {
     width: 20%;
+    &:nth-child(1) {
+      width: 30%;
+    }
+    &:nth-child(2) {
+      width: 10%;
+    }
     &:last-child {
       text-align: right;
+    }
+    &Link {
+      display: flex;
+      width: fit-content;
+      align-items: center;
+    }
+  }
+  &Cover {
+    min-width: 118px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 2px;
+    &:not(:last-child) {
+      margin-right: 10px;
     }
   }
 }
