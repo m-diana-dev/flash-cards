@@ -1,9 +1,9 @@
-import { Button } from '@/components/ui/button'
 import { Page } from '@/components/ui/page/page'
 import { Pagination } from '@/components/ui/pagination'
 import { Preloader } from '@/components/ui/preloader'
 import { Typography } from '@/components/ui/typography'
 import { DecksFilters } from '@/pages/decks-page/decks-filters/decks-filters'
+import { DecksModal } from '@/pages/decks-page/decks-modal/decks-modal'
 import { DecksTable } from '@/pages/decks-page/decks-table/decks-table'
 import { useGetDecksQuery } from '@/services/flashcards-api'
 
@@ -13,6 +13,7 @@ import { useDecks } from './use-decks'
 
 export function DecksPage() {
   const {
+    cleanFilter,
     currentPage,
     itemsPerPage,
     maxCount,
@@ -59,9 +60,10 @@ export function DecksPage() {
         <Typography as={'h1'} variant={'h1'}>
           Decks list
         </Typography>
-        <Button>Add New Deck</Button>
+        <DecksModal cleanFilter={cleanFilter} />
       </div>
       <DecksFilters
+        cleanFilter={cleanFilter}
         rangeValue={rangeValue}
         removeSearchParam={removeSearchParam}
         search={search}

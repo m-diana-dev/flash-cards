@@ -42,3 +42,9 @@ export interface MinMaxCardsCount {
   max: number
   min: number
 }
+
+export interface CreateDeckArgs {
+  cover?: string
+  isPrivate?: boolean
+  name: string
+}
