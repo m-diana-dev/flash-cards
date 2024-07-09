@@ -23,6 +23,7 @@ export const PaginationForStorybook = ({
 
   return (
     <Pagination
+      changeItemsPerPage={() => {}}
       currentPage={currentPageState}
       handlePageChange={handlePageChange}
       itemsPerPage={itemsPerPage}
