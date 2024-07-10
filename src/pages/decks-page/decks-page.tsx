@@ -5,7 +5,7 @@ import { Typography } from '@/components/ui/typography'
 import { DecksFilters } from '@/pages/decks-page/decks-filters/decks-filters'
 import { DecksModal } from '@/pages/decks-page/decks-modal/decks-modal'
 import { DecksTable } from '@/pages/decks-page/decks-table/decks-table'
-import { useGetDecksQuery } from '@/services/flashcards-api'
+import { useGetDecksQuery } from '@/services/decks/decks.service'
 
 import s from './decks-page.module.scss'
 

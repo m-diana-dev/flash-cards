@@ -9,8 +9,8 @@ import s from './modal.module.scss'
 type ModalProps = {
   buttonTriggerTitle: string
 } & ComponentPropsWithoutRef<typeof Dialog.Root>
-export const Modal = ({ buttonTriggerTitle, children }: ModalProps) => (
-  <Dialog.Root>
+export const Modal = ({ buttonTriggerTitle, children, ...rest }: ModalProps) => (
+  <Dialog.Root {...rest}>
     <Dialog.Trigger asChild>
       <Button>{buttonTriggerTitle}</Button>
     </Dialog.Trigger>

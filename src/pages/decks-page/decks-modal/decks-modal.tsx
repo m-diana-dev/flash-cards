@@ -7,7 +7,7 @@ import { Modal } from '@/components/ui/modal'
 import { ModalFooter } from '@/components/ui/modal/modalFooter/modalFooter'
 import { ModalMain } from '@/components/ui/modal/modalMain/modalMain'
 import { ModalTitle } from '@/components/ui/modal/modalTitle/modalTitle'
-import { useCreateDeckMutation } from '@/services/flashcards-api'
+import { useCreateDeckMutation } from '@/services/decks/decks.service'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
