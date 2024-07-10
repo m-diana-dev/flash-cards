@@ -6,7 +6,7 @@ import { TextField } from '@/components/ui/input'
 import { Slider } from '@/components/ui/slider'
 import { Tabs } from '@/components/ui/tabs'
 import { Typography } from '@/components/ui/typography'
-import { useGetMinMaxCardsQuery } from '@/services/flashcards-api'
+import { useGetMinMaxCardsQuery } from '@/services/decks/decks.service'
 
 import s from './decks-filters.module.scss'
 
