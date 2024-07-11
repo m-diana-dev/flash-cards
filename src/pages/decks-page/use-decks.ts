@@ -80,9 +80,12 @@ export const useDecks = () => {
     removeSearchParam()
   }
 
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
+
   return {
     cleanFilter,
     currentPage,
+    isOpenModal,
     itemsPerPage,
     maxCount,
     minCount,
@@ -91,6 +94,7 @@ export const useDecks = () => {
     search,
     setCountParam,
     setCurrentPage,
+    setIsOpenModal,
     setItemsPerPage,
     setRangeValue,
     setSearchParam,

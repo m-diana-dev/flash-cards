@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button'
 import { Page } from '@/components/ui/page/page'
 import { Pagination } from '@/components/ui/pagination'
 import { Preloader } from '@/components/ui/preloader'
@@ -15,6 +16,7 @@ export function DecksPage() {
   const {
     cleanFilter,
     currentPage,
+    isOpenModal,
     itemsPerPage,
     maxCount,
     minCount,
@@ -23,6 +25,7 @@ export function DecksPage() {
     search,
     setCountParam,
     setCurrentPage,
+    setIsOpenModal,
     setItemsPerPage,
     setRangeValue,
     setSearchParam,
@@ -60,7 +63,8 @@ export function DecksPage() {
         <Typography as={'h1'} variant={'h1'}>
           Decks list
         </Typography>
-        <DecksModal cleanFilter={cleanFilter} />
+        <Button onClick={() => setIsOpenModal(true)}>Add New Deck</Button>
+        <DecksModal cleanFilter={cleanFilter} onOpenChange={setIsOpenModal} open={isOpenModal} />
       </div>
       <DecksFilters
         cleanFilter={cleanFilter}

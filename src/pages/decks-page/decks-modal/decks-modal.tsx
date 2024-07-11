@@ -1,3 +1,4 @@
+import { ComponentPropsWithoutRef } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { nameDeckSchema, privatePackSchema } from '@/components/auth/forms-schems'
@@ -22,9 +23,9 @@ const addDeckSchema = z.object({
 
 type Props = {
   cleanFilter: () => void
-}
+} & ComponentPropsWithoutRef<typeof Modal>
 
-export const DecksModal = ({ cleanFilter }: Props) => {
+export const DecksModal = ({ cleanFilter, onOpenChange, ...rest }: Props) => {
   const [createDeck] = useCreateDeckMutation()
   const { control, handleSubmit, reset } = useForm<addDeckEditValues>({
     resolver: zodResolver(addDeckSchema),
@@ -33,10 +34,11 @@ export const DecksModal = ({ cleanFilter }: Props) => {
   const onSubmitForm = handleSubmit(data => {
     createDeck(data)
     reset()
+    onOpenChange?.(false)
   })
 
   return (
-    <Modal buttonTriggerTitle={'Add New Deck'}>
+    <Modal {...rest} onOpenChange={onOpenChange}>
       <form onSubmit={onSubmitForm}>
         <ModalTitle title={'Add New Deck'} />
         <ModalMain>
