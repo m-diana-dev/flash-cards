@@ -37,8 +37,13 @@ export const DecksModal = ({ cleanFilter, onOpenChange, ...rest }: Props) => {
     onOpenChange?.(false)
   })
 
+  const onClose = () => {
+    reset()
+    onOpenChange?.(false)
+  }
+
   return (
-    <Modal {...rest} onOpenChange={onOpenChange}>
+    <Modal {...rest} onClose={onClose} onOpenChange={onOpenChange}>
       <form onSubmit={onSubmitForm}>
         <ModalTitle title={'Add New Deck'} />
         <ModalMain>
@@ -50,7 +55,7 @@ export const DecksModal = ({ cleanFilter, onOpenChange, ...rest }: Props) => {
           />
           <FormCheckbox control={control} label={'Private pack'} name={'isPrivate'} />
         </ModalMain>
-        <ModalFooter buttonTitle={'Add New Pack'} onClick={cleanFilter} />
+        <ModalFooter buttonTitle={'Add New Pack'} onClick={cleanFilter} onClose={onClose} />
       </form>
     </Modal>
   )

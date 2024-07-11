@@ -8,16 +8,15 @@ import s from './modalFooter.module.scss'
 type ModalFooterProps = {
   buttonTitle: string
   onClick?: () => void
+  onClose?: () => void
 } & ComponentPropsWithoutRef<'div'>
 
 export const ModalFooter = forwardRef<ElementRef<typeof Dialog.Title>, ModalFooterProps>(
-  ({ buttonTitle, onClick }, ref) => (
+  ({ buttonTitle, onClick, onClose }, ref) => (
     <div className={s.DialogFooter} ref={ref}>
-      <Dialog.Close>
-        <Button as={'span'} variant={'secondary'}>
-          Cancel
-        </Button>
-      </Dialog.Close>
+      <Button as={'button'} onClick={onClose} type={'button'} variant={'secondary'}>
+        Cancel
+      </Button>
       <Button onClick={onClick}>{buttonTitle}</Button>
     </div>
   )
