@@ -17,7 +17,6 @@ type Story = StoryObj<typeof meta>
 
 export const ModalFull: Story = {
   args: {
-    buttonTriggerTitle: 'Add New Deck',
     children: (
       <>
         <ModalTitle title={'Add New Deck'} />
@@ -28,31 +27,32 @@ export const ModalFull: Story = {
         <ModalFooter buttonTitle={'Add New Pack'} />
       </>
     ),
+    open: true,
   },
 }
 
 export const ModalWithTitleOnly: Story = {
   args: {
-    buttonTriggerTitle: 'Add New Deck',
     children: <ModalTitle title={'Add New Deck'} />,
+    open: true,
   },
 }
 
 export const ModalWithMainOnly: Story = {
   args: {
-    buttonTriggerTitle: 'Add New Deck',
     children: (
       <ModalMain>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
         labore et dolore magna aliqua. Ut enim ad minim veniamdsa
       </ModalMain>
     ),
+    open: true,
   },
 }
 
 export const ModalWithFooterOnly: Story = {
   args: {
-    buttonTriggerTitle: 'Add New Deck',
     children: <ModalFooter buttonTitle={'Add New Pack'} />,
+    open: true,
   },
 }

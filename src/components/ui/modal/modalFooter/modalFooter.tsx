@@ -11,16 +11,12 @@ type ModalFooterProps = {
 } & ComponentPropsWithoutRef<'div'>
 
 export const ModalFooter = forwardRef<ElementRef<typeof Dialog.Title>, ModalFooterProps>(
-  ({ buttonTitle, onClick }, ref) => (
+  ({ buttonTitle, onClick, setIsOpen }, ref) => (
     <div className={s.DialogFooter} ref={ref}>
-      <Dialog.Close>
-        <Button as={'span'} variant={'secondary'}>
-          Cancel
-        </Button>
-      </Dialog.Close>
-      <Button onClick={onClick} type={'submit'}>
-        {buttonTitle}
+      <Button as={'span'} onClick={() => setIsOpen?.(false)} variant={'secondary'}>
+        Cancel
       </Button>
+      <Button onClick={onClick}>{buttonTitle}</Button>
     </div>
   )
 )
