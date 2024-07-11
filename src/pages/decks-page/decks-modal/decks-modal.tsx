@@ -28,6 +28,10 @@ type Props = {
 export const DecksModal = ({ cleanFilter, onOpenChange, ...rest }: Props) => {
   const [createDeck] = useCreateDeckMutation()
   const { control, handleSubmit, reset } = useForm<addDeckEditValues>({
+    defaultValues: {
+      isPrivate: true,
+      name: '',
+    },
     resolver: zodResolver(addDeckSchema),
   })
 
