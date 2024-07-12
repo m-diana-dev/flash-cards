@@ -1,7 +1,9 @@
 export const generatePagination = (currentPage: number, totalPages: number) => {
   let pages = []
 
-  if (totalPages <= 7) {
+  if (currentPage > totalPages) {
+    pages = [1]
+  } else if (totalPages <= 7) {
     for (let i = 1; i <= totalPages; i++) {
       pages.push(i)
     }
