@@ -67,7 +67,7 @@ export const Pagination = ({
       )}
       <button
         className={s.navigationButton}
-        disabled={currentPage === totalPages}
+        disabled={currentPage === totalPages || currentPage > totalPages}
         onClick={() => handlePageChange(currentPage + 1)}
       >
         <ArrowRight />

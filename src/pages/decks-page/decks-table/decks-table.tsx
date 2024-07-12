@@ -1,4 +1,4 @@
-import ArrowTop from '@/assets/images/icons/ArrowTop'
+import ArrowDown from '@/assets/images/icons/ArrowDown'
 import Delete from '@/assets/images/icons/Delete'
 import Edit from '@/assets/images/icons/Edit'
 import Play from '@/assets/images/icons/Play'
@@ -11,24 +11,74 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Deck } from '@/services/decks/decks.types'
+import clsx from 'clsx'
 
 import s from './decks-table.module.scss'
 
 type Props = {
   decks: Deck[] | undefined
+  setSorting: (value: string) => void
+  sorting: null | string
 }
-export const DecksTable = ({ decks }: Props) => {
+export const DecksTable = ({ decks, setSorting, sorting }: Props) => {
+  const handleSort = (sort: string) => {
+    if (sorting?.indexOf('asc') === -1 || sorting === null) {
+      setSorting(sort + '-' + 'asc')
+    } else {
+      setSorting(sort + '-' + 'desc')
+    }
+  }
+
+  const cellStyle = sorting?.indexOf('asc') === -1 || sorting === null ? s.asc : ''
+
   return (
     <Table className={s.PageTable}>
-      <TableHeader>
+      <TableHeader className={s.PageTableHeader}>
         <TableRow>
-          <TableHeadCell className={s.PageTableCell}>Name</TableHeadCell>
-          <TableHeadCell className={s.PageTableCell}>Cards</TableHeadCell>
-          <TableHeadCell className={s.PageTableCell}>
-            Last Updated
-            <ArrowTop height={10} width={8} />
+          <TableHeadCell
+            className={clsx(
+              s.PageTableCell,
+              cellStyle,
+              sorting?.indexOf('name') !== -1 && sorting !== null ? s.active : ''
+            )}
+            onClick={() => handleSort('name')}
+          >
+            Name
+            <ArrowDown height={10} width={8} />
           </TableHeadCell>
-          <TableHeadCell className={s.PageTableCell}>Created By</TableHeadCell>
+          <TableHeadCell
+            className={clsx(
+              s.PageTableCell,
+              cellStyle,
+              sorting?.indexOf('cardsCount') !== -1 && sorting !== null ? s.active : ''
+            )}
+            onClick={() => handleSort('cardsCount')}
+          >
+            Cards
+            <ArrowDown height={10} width={8} />
+          </TableHeadCell>
+          <TableHeadCell
+            className={clsx(
+              s.PageTableCell,
+              cellStyle,
+              sorting?.indexOf('updated') !== -1 ? s.active : ''
+            )}
+            onClick={() => handleSort('updated')}
+          >
+            Last Updated
+            <ArrowDown height={10} width={8} />
+          </TableHeadCell>
+          <TableHeadCell
+            className={clsx(
+              s.PageTableCell,
+              cellStyle,
+              sorting?.indexOf('author.name') !== -1 && sorting !== null ? s.active : ''
+            )}
+            onClick={() => handleSort('author.name')}
+          >
+            Created By
+            <ArrowDown height={10} width={8} />
+          </TableHeadCell>
           <TableHeadCell className={s.PageTableCell}></TableHeadCell>
         </TableRow>
       </TableHeader>

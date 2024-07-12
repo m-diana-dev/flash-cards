@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button'
 import { Page } from '@/components/ui/page/page'
 import { Pagination } from '@/components/ui/pagination'
 import { Preloader } from '@/components/ui/preloader'
@@ -15,6 +16,7 @@ export function DecksPage() {
   const {
     cleanFilter,
     currentPage,
+    isOpenModal,
     itemsPerPage,
     maxCount,
     minCount,
@@ -23,11 +25,14 @@ export function DecksPage() {
     search,
     setCountParam,
     setCurrentPage,
+    setIsOpenModal,
     setItemsPerPage,
     setRangeValue,
     setSearchParam,
     setShowParam,
+    setSorting,
     show,
+    sorting,
   } = useDecks()
 
   const authorId = show === 'my' ? 'f2be95b9-4d07-4751-a775-bd612fc9553a' : undefined
@@ -39,6 +44,7 @@ export function DecksPage() {
     maxCardsCount: +maxCount,
     minCardsCount: +minCount,
     name: search,
+    orderBy: sorting,
   })
 
   const handleItemPerPage = (count: string) => {
@@ -60,7 +66,8 @@ export function DecksPage() {
         <Typography as={'h1'} variant={'h1'}>
           Decks list
         </Typography>
-        <DecksModal cleanFilter={cleanFilter} />
+        <Button onClick={() => setIsOpenModal(true)}>Add New Deck</Button>
+        <DecksModal cleanFilter={cleanFilter} onOpenChange={setIsOpenModal} open={isOpenModal} />
       </div>
       <DecksFilters
         cleanFilter={cleanFilter}
@@ -74,7 +81,7 @@ export function DecksPage() {
         setShowParam={setShowParam}
         show={show}
       />
-      <DecksTable decks={data?.items} />
+      <DecksTable decks={data?.items} setSorting={setSorting} sorting={sorting} />
       <Pagination
         changeItemsPerPage={handleItemPerPage}
         currentPage={+currentPage}

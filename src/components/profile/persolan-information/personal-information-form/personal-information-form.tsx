@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form'
 
+import { nameUserSchema } from '@/components/auth/forms-schems'
 import { Button } from '@/components/ui/button'
 import { FormInput } from '@/components/ui/form/form-input'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -15,7 +16,7 @@ type Props = {
 export type ProfileEditValues = z.infer<typeof profileSchema>
 
 const profileSchema = z.object({
-  name: z.string().min(2),
+  name: nameUserSchema,
 })
 
 export const PersonalInformationForm = ({ name, onSubmit }: Props) => {

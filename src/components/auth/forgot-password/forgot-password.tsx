@@ -22,6 +22,9 @@ type Props = {
 }
 export const ForgotPassword = ({ onSubmit }: Props) => {
   const { control, handleSubmit } = useForm<FormValues>({
+    defaultValues: {
+      email: '',
+    },
     resolver: zodResolver(passwordFormSchema),
   })
 

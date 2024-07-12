@@ -1,6 +1,5 @@
 export interface DecksListResponse {
   items: Deck[]
-  maxCardsCount: number
   pagination: Pagination
 }
 
@@ -35,7 +34,7 @@ export interface GetDecksArgs {
   maxCardsCount?: number
   minCardsCount?: number
   name?: string
-  orderBy?: string
+  orderBy?: null | string
 }
 
 export interface MinMaxCardsCount {
@@ -44,7 +43,7 @@ export interface MinMaxCardsCount {
 }
 
 export interface CreateDeckArgs {
-  cover?: string
+  cover?: File | null
   isPrivate?: boolean
   name: string
 }
