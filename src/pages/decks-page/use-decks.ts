@@ -72,12 +72,23 @@ export const useDecks = () => {
     setSearchParams(searchParams)
   }
 
+  const sorting = searchParams.get('sorting') ?? null
+  const setSorting = (value: null | string) => {
+    if (value) {
+      searchParams.set('sorting', value)
+    } else {
+      searchParams.delete('sorting')
+    }
+    setSearchParams(searchParams)
+  }
+
   const cleanFilter = () => {
     setRangeValue([0, +DEFAULT_MAX_COUNT])
     setCountParam([0, 0])
     setShowParam('')
     setCurrentPage(null)
     removeSearchParam()
+    setSorting(null)
   }
 
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
@@ -99,6 +110,8 @@ export const useDecks = () => {
     setRangeValue,
     setSearchParam,
     setShowParam,
+    setSorting,
     show,
+    sorting,
   }
 }

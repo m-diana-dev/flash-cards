@@ -30,7 +30,9 @@ export function DecksPage() {
     setRangeValue,
     setSearchParam,
     setShowParam,
+    setSorting,
     show,
+    sorting,
   } = useDecks()
 
   const authorId = show === 'my' ? 'f2be95b9-4d07-4751-a775-bd612fc9553a' : undefined
@@ -42,6 +44,7 @@ export function DecksPage() {
     maxCardsCount: +maxCount,
     minCardsCount: +minCount,
     name: search,
+    orderBy: sorting,
   })
 
   const handleItemPerPage = (count: string) => {
@@ -78,7 +81,7 @@ export function DecksPage() {
         setShowParam={setShowParam}
         show={show}
       />
-      <DecksTable decks={data?.items} />
+      <DecksTable decks={data?.items} setSorting={setSorting} sorting={sorting} />
       <Pagination
         changeItemsPerPage={handleItemPerPage}
         currentPage={+currentPage}
