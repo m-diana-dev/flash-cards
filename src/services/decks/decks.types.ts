@@ -43,7 +43,7 @@ export interface MinMaxCardsCount {
 }
 
 export interface CreateDeckArgs {
-  cover?: string
+  cover?: File | null
   isPrivate?: boolean
   name: string
 }
