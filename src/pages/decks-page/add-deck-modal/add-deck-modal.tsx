@@ -15,7 +15,7 @@ import { useCreateDeckMutation } from '@/services/decks/decks.service'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import s from './decks-modal.module.scss'
+import s from './add-deck-modal.module.scss'
 
 export type addDeckEditValues = { cover?: File | null } & z.infer<typeof addDeckSchema>
 
@@ -28,7 +28,7 @@ type Props = {
   cleanFilter: () => void
 } & ComponentPropsWithoutRef<typeof Modal>
 
-export const DecksModal = ({ cleanFilter, onOpenChange, ...rest }: Props) => {
+export const AddDeckModal = ({ cleanFilter, onOpenChange, ...rest }: Props) => {
   const [cover, setCover] = useState<File | null>(null)
   const [preview, setPreview] = useState<string>('')
 
