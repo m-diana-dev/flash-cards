@@ -49,7 +49,7 @@ export interface CreateDeckArgs {
 }
 
 export interface DeleteDeckArgs {
-  id: string
+  id: string | undefined
 }
 
 export type UpdateDeckArgs = {
