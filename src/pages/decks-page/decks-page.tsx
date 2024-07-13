@@ -3,8 +3,8 @@ import { Page } from '@/components/ui/page/page'
 import { Pagination } from '@/components/ui/pagination'
 import { Preloader } from '@/components/ui/preloader'
 import { Typography } from '@/components/ui/typography'
+import { AddDeckModal } from '@/pages/decks-page/add-deck-modal/add-deck-modal'
 import { DecksFilters } from '@/pages/decks-page/decks-filters/decks-filters'
-import { DecksModal } from '@/pages/decks-page/decks-modal/decks-modal'
 import { DecksTable } from '@/pages/decks-page/decks-table/decks-table'
 import { useGetDecksQuery } from '@/services/decks/decks.service'
 
@@ -67,7 +67,7 @@ export function DecksPage() {
           Decks list
         </Typography>
         <Button onClick={() => setIsOpenModal(true)}>Add New Deck</Button>
-        <DecksModal cleanFilter={cleanFilter} onOpenChange={setIsOpenModal} open={isOpenModal} />
+        <AddDeckModal cleanFilter={cleanFilter} onOpenChange={setIsOpenModal} open={isOpenModal} />
       </div>
       <DecksFilters
         cleanFilter={cleanFilter}
