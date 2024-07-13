@@ -10,6 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { isStringIncludeValue } from '@/helpers/isStringIncludeValue'
 import { Deck } from '@/services/decks/decks.types'
 import clsx from 'clsx'
 
@@ -20,16 +21,17 @@ type Props = {
   setSorting: (value: string) => void
   sorting: null | string
 }
+
 export const DecksTable = ({ decks, setSorting, sorting }: Props) => {
   const handleSort = (sort: string) => {
-    if (sorting?.indexOf('asc') === -1 || sorting === null) {
+    if (!isStringIncludeValue(sorting, 'asc') || sorting === null) {
       setSorting(sort + '-' + 'asc')
     } else {
       setSorting(sort + '-' + 'desc')
     }
   }
 
-  const cellStyle = sorting?.indexOf('asc') === -1 || sorting === null ? s.asc : ''
+  const cellStyle = !isStringIncludeValue(sorting, 'asc') || sorting === null ? s.asc : ''
 
   return (
     <Table className={s.PageTable}>
@@ -39,7 +41,11 @@ export const DecksTable = ({ decks, setSorting, sorting }: Props) => {
             className={clsx(
               s.PageTableCell,
               cellStyle,
-              sorting?.indexOf('name') !== -1 && sorting !== null ? s.active : ''
+              isStringIncludeValue(sorting, 'name') &&
+                !isStringIncludeValue(sorting, 'author') &&
+                sorting !== null
+                ? s.active
+                : ''
             )}
             onClick={() => handleSort('name')}
           >
@@ -50,7 +56,7 @@ export const DecksTable = ({ decks, setSorting, sorting }: Props) => {
             className={clsx(
               s.PageTableCell,
               cellStyle,
-              sorting?.indexOf('cardsCount') !== -1 && sorting !== null ? s.active : ''
+              isStringIncludeValue(sorting, 'cardsCount') && sorting !== null ? s.active : ''
             )}
             onClick={() => handleSort('cardsCount')}
           >
@@ -61,7 +67,7 @@ export const DecksTable = ({ decks, setSorting, sorting }: Props) => {
             className={clsx(
               s.PageTableCell,
               cellStyle,
-              sorting?.indexOf('updated') !== -1 ? s.active : ''
+              isStringIncludeValue(sorting, 'updated') ? s.active : ''
             )}
             onClick={() => handleSort('updated')}
           >
@@ -72,7 +78,7 @@ export const DecksTable = ({ decks, setSorting, sorting }: Props) => {
             className={clsx(
               s.PageTableCell,
               cellStyle,
-              sorting?.indexOf('author.name') !== -1 && sorting !== null ? s.active : ''
+              isStringIncludeValue(sorting, 'author.name') && sorting !== null ? s.active : ''
             )}
             onClick={() => handleSort('author.name')}
           >
