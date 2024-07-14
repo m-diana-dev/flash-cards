@@ -81,7 +81,12 @@ export function DecksPage() {
         setShowParam={setShowParam}
         show={show}
       />
-      <DecksTable decks={data?.items} setSorting={setSorting} sorting={sorting} />
+      <DecksTable
+        cleanFilter={cleanFilter}
+        decks={data?.items}
+        setSorting={setSorting}
+        sorting={sorting}
+      />
       <Pagination
         changeItemsPerPage={handleItemPerPage}
         currentPage={+currentPage}

@@ -14,19 +14,22 @@ import {
 } from '@/components/ui/table'
 import { isStringIncludeValue } from '@/helpers/isStringIncludeValue'
 import { DeleteDecksModal } from '@/pages/decks-page/delete-deck-modal/delete-decks-modal'
+import { UpdateDeckModal } from '@/pages/decks-page/update-deck-modal/update-deck-modal'
 import { Deck } from '@/services/decks/decks.types'
 import clsx from 'clsx'
 
 import s from './decks-table.module.scss'
 
 type Props = {
+  cleanFilter: () => void
   decks: Deck[] | undefined
   setSorting: (value: string) => void
   sorting: null | string
 }
 
-export const DecksTable = ({ decks, setSorting, sorting }: Props) => {
+export const DecksTable = ({ cleanFilter, decks, setSorting, sorting }: Props) => {
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false)
+  const [openUpdateModal, setOpenUpdateModal] = useState<boolean>(false)
   const [activeDeck, setActiveDeck] = useState<Deck | null>(null)
 
   const handleSort = (sort: string) => {
@@ -44,12 +47,24 @@ export const DecksTable = ({ decks, setSorting, sorting }: Props) => {
     setActiveDeck(deck)
   }
 
+  const updateDeckHandler = (deck: Deck) => {
+    setOpenUpdateModal(true)
+    setActiveDeck(deck)
+  }
+
   return (
     <>
       <DeleteDecksModal
         deck={activeDeck}
         onOpenChange={setOpenDeleteModal}
         open={openDeleteModal}
+      />
+
+      <UpdateDeckModal
+        cleanFilter={cleanFilter}
+        deck={activeDeck}
+        onOpenChange={setOpenUpdateModal}
+        open={openUpdateModal}
       />
       <Table className={s.PageTable}>
         <TableHeader className={s.PageTableHeader}>
@@ -127,7 +142,7 @@ export const DecksTable = ({ decks, setSorting, sorting }: Props) => {
                     <Play />
                   </button>
                   <button>
-                    <Edit />
+                    <Edit onClick={() => updateDeckHandler(deck)} />
                   </button>
                   <button>
                     <Delete onClick={() => deleteDeckHandler(deck)} />

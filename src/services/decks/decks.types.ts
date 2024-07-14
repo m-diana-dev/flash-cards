@@ -53,5 +53,5 @@ export interface DeleteDeckArgs {
 }
 
 export type UpdateDeckArgs = {
-  id: string
+  id: string | undefined
 } & Partial<CreateDeckArgs>
