@@ -7,3 +7,8 @@ export type User = {
   name: string
   updated: string
 }
+
+export type UserUpdate = {
+  avatar?: File | null
+  name: string
+}
