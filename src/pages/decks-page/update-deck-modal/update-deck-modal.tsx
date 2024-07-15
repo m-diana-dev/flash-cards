@@ -30,7 +30,7 @@ type Props = {
   deck: Deck | null
 } & ComponentPropsWithoutRef<typeof Modal>
 
-export const UpdateDeckModal = ({ cleanFilter, deck, onOpenChange, ...rest }: Props) => {
+export const UpdateDeckModal = ({ cleanFilter, deck, onOpenChange, open, ...rest }: Props) => {
   const [cover, setCover] = useState<File | null>(null)
   const [preview, setPreview] = useState<string>('')
 
@@ -38,8 +38,20 @@ export const UpdateDeckModal = ({ cleanFilter, deck, onOpenChange, ...rest }: Pr
   useEffect(() => {
     if (deck?.cover) {
       setPreview(deck?.cover)
+    } else {
+      setPreview('')
     }
-  }, [deck?.cover])
+    if (deck) {
+      // setValue('isPrivate', deck.isPrivate)
+      //  setValue('name', deck.name)
+
+      reset({
+        isPrivate: deck.isPrivate,
+        name: deck.name,
+      })
+    }
+  }, [deck, open])
+
   useEffect(() => {
     if (cover) {
       const newPreview = URL.createObjectURL(cover)
@@ -54,11 +66,7 @@ export const UpdateDeckModal = ({ cleanFilter, deck, onOpenChange, ...rest }: Pr
   }, [cover])
 
   const [updateDeck] = useUpdateDeckMutation()
-  const { control, handleSubmit, reset } = useForm<updateDeckEditValues>({
-    defaultValues: {
-      isPrivate: deck?.isPrivate,
-      name: deck?.name,
-    },
+  const { control, handleSubmit, reset, setValue } = useForm<updateDeckEditValues>({
     resolver: zodResolver(updateDeckSchema),
   })
 
@@ -74,7 +82,7 @@ export const UpdateDeckModal = ({ cleanFilter, deck, onOpenChange, ...rest }: Pr
   }
 
   return (
-    <Modal {...rest} onClose={onClose} onOpenChange={onOpenChange}>
+    <Modal {...rest} onClose={onClose} onOpenChange={onOpenChange} open={open}>
       <form onSubmit={onSubmitForm}>
         <ModalTitle title={'Update Deck'} />
         <ModalMain>
@@ -116,3 +124,28 @@ export const UpdateDeckModal = ({ cleanFilter, deck, onOpenChange, ...rest }: Pr
     </Modal>
   )
 }
+
+// option to create a universal component for forms in a modal window
+
+// interface IProps<TForm extends FieldValues> {
+//   children: ReactNode
+//   defaultValues?: DefaultValues<TForm>
+//   schema: ZodType<TForm>
+// }
+//
+// const FormModal = <TForm extends FieldValues>({
+//   children,
+//   defaultValues,
+//   schema,
+// }: IProps<TForm>) => {
+//   const methods = useForm<TForm>({
+//     defaultValues,
+//     resolver: zodResolver(schema),
+//   })
+//
+//   return (
+//     <FormProvider {...methods}>
+//       <Modal>{children}</Modal>
+//     </FormProvider>
+//   )
+// }
