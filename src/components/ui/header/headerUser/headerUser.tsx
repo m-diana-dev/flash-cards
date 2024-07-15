@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom'
 
 import Logout from '@/assets/images/icons/Logout'
 import Persone from '@/assets/images/icons/Persone'
-import Avatar from '@/assets/images/profile/avatar.png'
 import { Dropdown } from '@/components/ui/dropdown'
 import { DropdownDesc } from '@/components/ui/dropdown/dropdownDesc/dropdownDesc'
 import { DropdownItem } from '@/components/ui/dropdown/dropdownItem/dropdownItem'
@@ -31,7 +30,7 @@ export const HeaderUser = ({ avatar, email, name }: Props) => {
           </DropdownTrigger>
         }
       >
-        <DropdownDesc avatar={Avatar} email={email} name={name} />
+        <DropdownDesc avatar={avatar} email={email} name={name} />
         <DropdownItem as={Link} icon={<Persone />} title={'My Profile'} to={'/'} />
         <DropdownItem icon={<Logout />} title={'Sign Out'} />
       </Dropdown>

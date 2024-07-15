@@ -12,17 +12,17 @@ type PropsBase = {
 }
 
 type AuthenticatedProps = {
-  avatar: string
-  email: string
+  avatar: string | undefined
+  email: string | undefined
   isAuthenticated: true
-  name: string
+  name: string | undefined
 } & PropsBase
 
 type UnauthenticatedProps = {
-  avatar?: string
-  email?: string
+  avatar?: string | undefined
+  email?: string | undefined
   isAuthenticated: false
-  name?: string
+  name?: string | undefined
 } & PropsBase
 
 type Props = AuthenticatedProps | UnauthenticatedProps
