@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom'
 
 import Logout from '@/assets/images/icons/Logout'
 import Persone from '@/assets/images/icons/Persone'
-import Avatar from '@/assets/images/profile/avatar.png'
 import { Dropdown } from '@/components/ui/dropdown'
 import { DropdownDesc } from '@/components/ui/dropdown/dropdownDesc/dropdownDesc'
 import { DropdownItem } from '@/components/ui/dropdown/dropdownItem/dropdownItem'
@@ -12,9 +11,9 @@ import { Typography } from '@/components/ui/typography'
 import s from './headerUser.module.scss'
 
 type Props = {
-  avatar: string
-  email: string
-  name: string
+  avatar: string | undefined
+  email: string | undefined
+  name: string | undefined
 }
 export const HeaderUser = ({ avatar, email, name }: Props) => {
   return (
@@ -27,12 +26,20 @@ export const HeaderUser = ({ avatar, email, name }: Props) => {
       <Dropdown
         trigger={
           <DropdownTrigger>
-            <img alt={'Avatar'} src={avatar} />
+            {avatar ? (
+              <img alt={'Avatar'} src={avatar} />
+            ) : (
+              <div className={s.headerUserNoAvatar}>
+                <Typography as={'span'} variant={'h2'}>
+                  {name?.[0]}
+                </Typography>
+              </div>
+            )}
           </DropdownTrigger>
         }
       >
-        <DropdownDesc avatar={Avatar} email={email} name={name} />
-        <DropdownItem as={Link} icon={<Persone />} title={'My Profile'} to={'/'} />
+        <DropdownDesc avatar={avatar} email={email} name={name} />
+        <DropdownItem as={Link} icon={<Persone />} title={'My Profile'} to={'/profile'} />
         <DropdownItem icon={<Logout />} title={'Sign Out'} />
       </Dropdown>
     </div>

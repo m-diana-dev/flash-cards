@@ -1,0 +1,64 @@
+.PageFormInput,
+.PageFormButton,
+.PageFormImg {
+  margin-bottom: 24px;
+}
+.PageFormButton {
+  position: relative;
+}
+.PageFormButtonInput {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+.PageFormImg {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  border-radius: 2px;
+  overflow: hidden;
+  cursor: pointer;
+  &:hover {
+    img {
+      transform: scale(1.1);
+    }
+    &:before {
+      opacity: 1;
+    }
+    .PageFormImgDelete {
+      opacity: 1;
+    }
+  }
+  &:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(#171717, 0.5);
+    transition: all var(--transition);
+    opacity: 0;
+    z-index: 3;
+  }
+  img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    transition: all var(--transition);
+  }
+}
+.PageFormImgDelete {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  z-index: 4;
+  transition: all var(--transition);
+}

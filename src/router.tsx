@@ -9,6 +9,7 @@ import {
 import { Layout } from '@/components/ui/layout/layout'
 import { DecksPage } from '@/pages/decks-page/decks-page'
 import { ErrorPage } from '@/pages/error-page/error-page'
+import { ProfilePage } from '@/pages/profile-page'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -21,6 +22,10 @@ const privateRoutes: RouteObject[] = [
   {
     element: <DecksPage />,
     path: '/',
+  },
+  {
+    element: <ProfilePage />,
+    path: '/profile',
   },
 ]
 

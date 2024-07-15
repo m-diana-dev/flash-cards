@@ -1,6 +1,8 @@
-import { ChangeEvent, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import Edit from '@/assets/images/icons/Edit'
+import { Typography } from '@/components/ui/typography'
+import { UserUpdate } from '@/services/auth/auth.types'
 import clsx from 'clsx'
 
 import scommon from '../personal-information.module.scss'
@@ -9,31 +11,45 @@ import s from './personal-information-avatar.module.scss'
 type Props = {
   editMode: boolean
   img: string
+  name: string
+  updateUserHandler?: (data: UserUpdate) => void
 }
-export const PersonalInformationAvatar = ({ editMode, img }: Props) => {
-  const [imageSrc, setImageSrc] = useState<string>(img)
-  const onChangeInputFile = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
+export const PersonalInformationAvatar = ({ editMode, img, name, updateUserHandler }: Props) => {
+  const [avatar, setAvatar] = useState<File | null>(null)
+  const [preview, setPreview] = useState<string>(img)
 
-    if (file) {
-      const reader = new FileReader()
+  useEffect(() => {
+    if (avatar) {
+      const newPreview = URL.createObjectURL(avatar)
 
-      reader.onloadend = () => {
-        setImageSrc(reader.result as string)
+      updateUserHandler?.({ avatar: avatar, name })
+      if (preview) {
+        URL.revokeObjectURL(preview)
       }
-      reader.readAsDataURL(file)
+      setPreview(newPreview)
+
+      return () => URL.revokeObjectURL(newPreview)
     }
-  }
+  }, [avatar])
 
   return (
     <div className={s.Avatar}>
-      <img alt={'avatar'} src={imageSrc} />
+      {preview ? (
+        <img alt={'avatar'} src={preview} />
+      ) : (
+        <div className={s.NoAvatar}>
+          <Typography as={'span'} variant={'h1'}>
+            {name?.[0]}
+          </Typography>
+        </div>
+      )}
+
       {!editMode && (
         <button className={clsx(scommon.ButtonEdit, s.ButtonEdit)}>
           <input
             accept={'image/png, image/jpeg'}
             className={s.ButtonEditInput}
-            onChange={onChangeInputFile}
+            onChange={e => setAvatar(e.target.files?.[0] ?? null)}
             type={'file'}
           />
           <Edit />
