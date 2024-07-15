@@ -34,7 +34,6 @@ export const UpdateDeckModal = ({ cleanFilter, deck, onOpenChange, open, ...rest
   const [cover, setCover] = useState<File | null>(null)
   const [preview, setPreview] = useState<string>('')
 
-  console.log({ cover, preview })
   useEffect(() => {
     if (deck?.cover) {
       setPreview(deck?.cover)
@@ -42,9 +41,6 @@ export const UpdateDeckModal = ({ cleanFilter, deck, onOpenChange, open, ...rest
       setPreview('')
     }
     if (deck) {
-      // setValue('isPrivate', deck.isPrivate)
-      //  setValue('name', deck.name)
-
       reset({
         isPrivate: deck.isPrivate,
         name: deck.name,
@@ -66,12 +62,14 @@ export const UpdateDeckModal = ({ cleanFilter, deck, onOpenChange, open, ...rest
   }, [cover])
 
   const [updateDeck] = useUpdateDeckMutation()
-  const { control, handleSubmit, reset, setValue } = useForm<updateDeckEditValues>({
+  const { control, handleSubmit, reset } = useForm<updateDeckEditValues>({
     resolver: zodResolver(updateDeckSchema),
   })
 
   const onSubmitForm = handleSubmit(data => {
-    updateDeck({ id: deck?.id, ...data, cover })
+    if (deck) {
+      updateDeck({ id: deck.id, ...data, cover })
+    }
     reset()
     onOpenChange?.(false)
   })

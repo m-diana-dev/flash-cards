@@ -49,9 +49,9 @@ export interface CreateDeckArgs {
 }
 
 export interface DeleteDeckArgs {
-  id: string | undefined
+  id: string
 }
 
 export type UpdateDeckArgs = {
-  id: string | undefined
+  id: string
 } & Partial<CreateDeckArgs>
