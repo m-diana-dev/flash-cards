@@ -6,14 +6,15 @@ import {
   createBrowserRouter,
 } from 'react-router-dom'
 
-import { Layout } from '@/components/ui/layout/layout'
+import { Layout, useAuthContext } from '@/components/ui/layout/layout'
 import { DecksPage } from '@/pages/decks-page/decks-page'
 import { ErrorPage } from '@/pages/error-page/error-page'
+import { LoginPage } from '@/pages/login-page'
 import { ProfilePage } from '@/pages/profile-page'
 
 const publicRoutes: RouteObject[] = [
   {
-    element: <div>login</div>,
+    element: <LoginPage />,
     path: '/login',
   },
 ]
@@ -51,7 +52,7 @@ export function Router() {
 }
 
 function PrivateRoutes() {
-  const isAuthenticated = true
+  const { isAuthenticated } = useAuthContext()
 
   return isAuthenticated ? <Outlet /> : <Navigate to={'/login'} />
 }

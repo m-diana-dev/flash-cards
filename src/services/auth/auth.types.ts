@@ -12,3 +12,14 @@ export type UserUpdate = {
   avatar?: File | null
   name: string
 }
+
+export type LoginArgs = {
+  email: string
+  password: string
+  rememberMe: boolean
+}
+
+export type LoginResponse = {
+  accessToken: string
+  refreshToken: string
+}

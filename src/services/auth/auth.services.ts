@@ -1,9 +1,27 @@
-import { User, UserUpdate } from '@/services/auth/auth.types'
+import { LoginArgs, LoginResponse, User, UserUpdate } from '@/services/auth/auth.types'
 import { flashcardsApi } from '@/services/flashcards-api'
 
 export const authService = flashcardsApi.injectEndpoints({
   endpoints: builder => {
     return {
+      login: builder.mutation<LoginResponse, LoginArgs>({
+        invalidatesTags: ['Me'],
+        async onQueryStarted(_, { queryFulfilled }) {
+          const { data } = await queryFulfilled
+
+          if (!data) {
+            return
+          }
+
+          localStorage.setItem('accessToken', data.accessToken)
+          localStorage.setItem('refreshToken', data.refreshToken)
+        },
+        query: args => ({
+          body: args,
+          method: 'POST',
+          url: `v1/auth/login`,
+        }),
+      }),
       me: builder.query<User, void>({
         providesTags: ['Me'],
         query: () => `v1/auth/me`,
@@ -33,4 +51,4 @@ export const authService = flashcardsApi.injectEndpoints({
   },
 })
 
-export const { useMeQuery, useUserUpdateMutation } = authService
+export const { useLoginMutation, useMeQuery, useUserUpdateMutation } = authService
