@@ -6,6 +6,7 @@ import { Typography } from '@/components/ui/typography'
 import { AddDeckModal } from '@/pages/decks-page/add-deck-modal/add-deck-modal'
 import { DecksFilters } from '@/pages/decks-page/decks-filters/decks-filters'
 import { DecksTable } from '@/pages/decks-page/decks-table/decks-table'
+import { useMeQuery } from '@/services/auth/auth.services'
 import { useGetDecksQuery } from '@/services/decks/decks.service'
 
 import s from './decks-page.module.scss'
@@ -35,7 +36,9 @@ export function DecksPage() {
     sorting,
   } = useDecks()
 
-  const authorId = show === 'my' ? 'f2be95b9-4d07-4751-a775-bd612fc9553a' : undefined
+  const { data: me } = useMeQuery()
+
+  const authorId = show === 'my' ? me?.id : undefined
 
   const { data, error, isLoading } = useGetDecksQuery({
     authorId: authorId,
@@ -86,6 +89,7 @@ export function DecksPage() {
         decks={data?.items}
         setSorting={setSorting}
         sorting={sorting}
+        userId={me?.id}
       />
       <Pagination
         changeItemsPerPage={handleItemPerPage}

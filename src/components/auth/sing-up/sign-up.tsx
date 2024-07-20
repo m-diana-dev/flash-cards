@@ -25,7 +25,7 @@ const signUpSchema = z
 export type FormValues = z.infer<typeof signUpSchema>
 
 type Props = {
-  onSubmit: (data: FormValues) => void
+  onSubmit: (data: Omit<FormValues, 'confirmPassword'>) => void
 }
 
 export const SignUp = ({ onSubmit }: Props) => {
@@ -39,7 +39,7 @@ export const SignUp = ({ onSubmit }: Props) => {
   })
 
   const onSubmitForm = handleSubmit(data => {
-    onSubmit(data)
+    onSubmit({ email: data.email, password: data.password })
   })
 
   return (
@@ -71,7 +71,7 @@ export const SignUp = ({ onSubmit }: Props) => {
         <Typography className={s.caption} variant={'body2'}>
           Already have an account?
         </Typography>
-        <Typography as={Link} className={s.signIn} to={'/sign-in'} variant={'link1'}>
+        <Typography as={Link} className={s.signIn} to={'/login'} variant={'link1'}>
           Sign In
         </Typography>
       </Card>

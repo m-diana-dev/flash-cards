@@ -23,3 +23,8 @@ export type LoginResponse = {
   accessToken: string
   refreshToken: string
 }
+
+export type SignupArgs = {
+  email: string
+  password: string
+}

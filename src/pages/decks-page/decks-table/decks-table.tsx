@@ -25,9 +25,10 @@ type Props = {
   decks: Deck[] | undefined
   setSorting: (value: string) => void
   sorting: null | string
+  userId: string | undefined
 }
 
-export const DecksTable = ({ cleanFilter, decks, setSorting, sorting }: Props) => {
+export const DecksTable = ({ cleanFilter, decks, setSorting, sorting, userId }: Props) => {
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false)
   const [openUpdateModal, setOpenUpdateModal] = useState<boolean>(false)
   const [activeDeck, setActiveDeck] = useState<Deck | null>(null)
@@ -141,12 +142,16 @@ export const DecksTable = ({ cleanFilter, decks, setSorting, sorting }: Props) =
                   <button>
                     <Play />
                   </button>
-                  <button>
-                    <Edit onClick={() => updateDeckHandler(deck)} />
-                  </button>
-                  <button>
-                    <Delete onClick={() => deleteDeckHandler(deck)} />
-                  </button>
+                  {userId === deck.author.id && (
+                    <>
+                      <button>
+                        <Edit onClick={() => updateDeckHandler(deck)} />
+                      </button>
+                      <button>
+                        <Delete onClick={() => deleteDeckHandler(deck)} />
+                      </button>
+                    </>
+                  )}
                 </TableCell>
               </TableRow>
             )
