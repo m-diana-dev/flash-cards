@@ -7,6 +7,7 @@ import { DropdownDesc } from '@/components/ui/dropdown/dropdownDesc/dropdownDesc
 import { DropdownItem } from '@/components/ui/dropdown/dropdownItem/dropdownItem'
 import { DropdownTrigger } from '@/components/ui/dropdown/dropdownTrigger/dropdownTrigger'
 import { Typography } from '@/components/ui/typography'
+import { useLogoutMutation } from '@/services/auth/auth.services'
 
 import s from './headerUser.module.scss'
 
@@ -16,6 +17,8 @@ type Props = {
   name: string | undefined
 }
 export const HeaderUser = ({ avatar, email, name }: Props) => {
+  const [logout] = useLogoutMutation()
+
   return (
     <div className={s.headerUser}>
       <Link className={s.headerUserLink} to={'/profile'}>
@@ -40,7 +43,7 @@ export const HeaderUser = ({ avatar, email, name }: Props) => {
       >
         <DropdownDesc avatar={avatar} email={email} name={name} />
         <DropdownItem as={Link} icon={<Persone />} title={'My Profile'} to={'/profile'} />
-        <DropdownItem icon={<Logout />} title={'Sign Out'} />
+        <DropdownItem icon={<Logout />} onClick={() => logout()} title={'Sign Out'} />
       </Dropdown>
     </div>
   )
