@@ -9,10 +9,15 @@ import s from './personal-information-info.module.scss'
 
 type Props = {
   email: string
+  logout?: () => void
   name: string
   setEditMode: (editMode: boolean) => void
 }
-export const PersonalInformationInfo = ({ email, name, setEditMode }: Props) => {
+export const PersonalInformationInfo = ({ email, logout, name, setEditMode }: Props) => {
+  const logoutHandler = () => {
+    logout?.()
+  }
+
   return (
     <>
       <div className={s.Name}>
@@ -29,7 +34,7 @@ export const PersonalInformationInfo = ({ email, name, setEditMode }: Props) => 
       <Typography as={'div'} className={s.Email} variant={'body2'}>
         {email}
       </Typography>
-      <Button variant={'secondary'}>
+      <Button onClick={logoutHandler} variant={'secondary'}>
         <Logout />
         <Typography as={'span'} variant={'subtitle2'}>
           Logout

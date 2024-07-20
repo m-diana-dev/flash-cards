@@ -17,6 +17,7 @@ type PersonalInformationProps = {
   editModeDefault?: boolean
   email: string
   img: string
+  logout?: () => void
   name: string
   updateUserHandler?: (data: UserUpdate) => void
 }
@@ -25,6 +26,7 @@ export const PersonalInformation = ({
   editModeDefault = false,
   email,
   img,
+  logout,
   name,
   updateUserHandler,
 }: PersonalInformationProps) => {
@@ -49,7 +51,12 @@ export const PersonalInformation = ({
       {editMode ? (
         <PersonalInformationForm name={name} onSubmit={onSubmit} />
       ) : (
-        <PersonalInformationInfo email={email} name={name} setEditMode={setEditMode} />
+        <PersonalInformationInfo
+          email={email}
+          logout={logout}
+          name={name}
+          setEditMode={setEditMode}
+        />
       )}
     </Card>
   )
