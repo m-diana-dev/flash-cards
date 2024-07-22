@@ -2,6 +2,7 @@ import {
   LoginArgs,
   LoginResponse,
   RecoverPasswordArgs,
+  ResetPasswordArgs,
   SignupArgs,
   User,
   UserUpdate,
@@ -56,6 +57,13 @@ export const authService = flashcardsApi.injectEndpoints({
           url: `v1/auth/recover-password`,
         }),
       }),
+      resetPassword: builder.mutation<void, ResetPasswordArgs>({
+        query: ({ token, ...args }) => ({
+          body: args,
+          method: 'POST',
+          url: `v1/auth/reset-password/${token}`,
+        }),
+      }),
       signup: builder.mutation<User, SignupArgs>({
         query: args => ({
           body: args,
@@ -93,6 +101,7 @@ export const {
   useLogoutMutation,
   useMeQuery,
   useRecoverPasswordMutation,
+  useResetPasswordMutation,
   useSignupMutation,
   useUserUpdateMutation,
 } = authService

@@ -12,6 +12,7 @@ import { DecksPage } from '@/pages/decks-page/decks-page'
 import { ErrorPage } from '@/pages/error-page/error-page'
 import { ForgotPasswordPage } from '@/pages/forgot-password-page'
 import { LoginPage } from '@/pages/login-page'
+import { NewPasswordPage } from '@/pages/new-password-page'
 import { ProfilePage } from '@/pages/profile-page'
 import { SignupPage } from '@/pages/signup-page'
 
@@ -33,7 +34,7 @@ export const publicRoutes: RouteObject[] = [
     path: '/check-email',
   },
   {
-    element: <div>new-password</div>,
+    element: <NewPasswordPage />,
     path: '/new-password/*',
   },
 ]
