@@ -28,3 +28,7 @@ export type SignupArgs = {
   email: string
   password: string
 }
+
+export type RecoverPasswordArgs = {
+  email: string
+}

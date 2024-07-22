@@ -7,8 +7,10 @@ import {
 } from 'react-router-dom'
 
 import { Layout, useAuthContext } from '@/components/ui/layout/layout'
+import { CheckEmailPage } from '@/pages/check-email-page'
 import { DecksPage } from '@/pages/decks-page/decks-page'
 import { ErrorPage } from '@/pages/error-page/error-page'
+import { ForgotPasswordPage } from '@/pages/forgot-password-page'
 import { LoginPage } from '@/pages/login-page'
 import { ProfilePage } from '@/pages/profile-page'
 import { SignupPage } from '@/pages/signup-page'
@@ -21,6 +23,18 @@ const publicRoutes: RouteObject[] = [
   {
     element: <SignupPage />,
     path: '/sign-up',
+  },
+  {
+    element: <ForgotPasswordPage />,
+    path: '/forgot-password-page',
+  },
+  {
+    element: <CheckEmailPage />,
+    path: '/check-email',
+  },
+  {
+    element: <div>new-password</div>,
+    path: '/new-password/*',
   },
 ]
 
