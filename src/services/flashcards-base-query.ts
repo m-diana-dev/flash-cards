@@ -1,4 +1,6 @@
-import { router } from '@/router'
+import { matchPath } from 'react-router-dom'
+
+import { publicRoutes, router } from '@/router'
 import {
   BaseQueryFn,
   FetchArgs,
@@ -64,7 +66,13 @@ export const baseQueryWithReauth: BaseQueryFn<
           // retry the initial query
           result = await baseQuery(args, api, extraOptions)
         } else {
-          router.navigate('/login')
+          const isPublicRoutes = publicRoutes.find(route =>
+            matchPath(route.path ?? '', window.location.pathname)
+          )
+
+          if (!isPublicRoutes) {
+            router.navigate('/login')
+          }
         }
       } finally {
         // release must be called once the mutex should be released again.

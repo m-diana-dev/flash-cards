@@ -15,7 +15,7 @@ import { LoginPage } from '@/pages/login-page'
 import { ProfilePage } from '@/pages/profile-page'
 import { SignupPage } from '@/pages/signup-page'
 
-const publicRoutes: RouteObject[] = [
+export const publicRoutes: RouteObject[] = [
   {
     element: <LoginPage />,
     path: '/login',
