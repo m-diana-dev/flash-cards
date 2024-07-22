@@ -62,7 +62,7 @@ export const SignIn = ({ onSubmit }: Props) => {
           <Typography
             as={Link}
             className={s.recoverPassword}
-            to={'/forgot-password'}
+            to={'/forgot-password-page'}
             variant={'body2'}
           >
             Forgot Password?

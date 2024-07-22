@@ -28,3 +28,12 @@ export type SignupArgs = {
   email: string
   password: string
 }
+
+export type RecoverPasswordArgs = {
+  email: string
+}
+
+export type ResetPasswordArgs = {
+  password: string
+  token: string
+}
