@@ -14,6 +14,27 @@ export const decksService = flashcardsApi.injectEndpoints({
     return {
       createDeck: builder.mutation<Deck, CreateDeckArgs>({
         invalidatesTags: ['Decks'],
+        async onQueryStarted(_, { dispatch, getState, queryFulfilled }) {
+          const invalidateBy = decksService.util.selectInvalidatedBy(getState(), ['Decks'])
+
+          try {
+            const { data } = await queryFulfilled
+
+            invalidateBy.forEach(({ originalArgs }) => {
+              dispatch(
+                decksService.util.updateQueryData('getDecks', originalArgs, draft => {
+                  if (originalArgs.currentPage !== 1) {
+                    return
+                  }
+                  draft.items.unshift(data)
+                  draft.items.pop()
+                })
+              )
+            })
+          } catch (e) {
+            console.log(e)
+          }
+        },
         query: args => {
           const formData = new FormData()
 

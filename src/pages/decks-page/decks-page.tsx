@@ -40,7 +40,7 @@ export function DecksPage() {
 
   const authorId = show === 'my' ? me?.id : undefined
 
-  const { data, error, isLoading } = useGetDecksQuery({
+  const { currentData, data, error, isLoading } = useGetDecksQuery({
     authorId: authorId,
     currentPage: +currentPage,
     itemsPerPage: +itemsPerPage,
@@ -49,6 +49,8 @@ export function DecksPage() {
     name: search,
     orderBy: sorting,
   })
+
+  const decks = currentData ?? data
 
   const handleItemPerPage = (count: string) => {
     setItemsPerPage(count)
@@ -86,7 +88,7 @@ export function DecksPage() {
       />
       <DecksTable
         cleanFilter={cleanFilter}
-        decks={data?.items}
+        decks={decks?.items}
         setSorting={setSorting}
         sorting={sorting}
         userId={me?.id}
@@ -96,8 +98,8 @@ export function DecksPage() {
         currentPage={+currentPage}
         handlePageChange={setCurrentPage}
         itemsPerPage={+itemsPerPage}
-        totalItems={data?.pagination.totalItems}
-        totalPages={data?.pagination.totalPages}
+        totalItems={decks?.pagination.totalItems}
+        totalPages={decks?.pagination.totalPages}
       />
     </Page>
   )
