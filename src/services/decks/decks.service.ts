@@ -57,6 +57,34 @@ export const decksService = flashcardsApi.injectEndpoints({
       }),
       deleteDeck: builder.mutation<void, DeleteDeckArgs>({
         invalidatesTags: ['Decks'],
+        async onQueryStarted({ id }, { dispatch, getState, queryFulfilled }) {
+          const invalidateBy = decksService.util.selectInvalidatedBy(getState(), ['Decks'])
+
+          const patchResults: any[] = []
+
+          invalidateBy.forEach(({ originalArgs }) => {
+            patchResults.push(
+              dispatch(
+                decksService.util.updateQueryData('getDecks', originalArgs, draft => {
+                  const itemToDelete = draft.items.findIndex(deck => deck.id === id)
+
+                  if (itemToDelete === -1) {
+                    return
+                  }
+                  draft.items.splice(itemToDelete, 1)
+                })
+              )
+            )
+          })
+
+          try {
+            await queryFulfilled
+          } catch (e) {
+            patchResults.forEach(patchResult => {
+              patchResult.undo()
+            })
+          }
+        },
         query: args => ({
           body: args,
           method: 'DELETE',
