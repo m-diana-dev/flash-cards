@@ -27,6 +27,15 @@ export interface Author {
   name: string
 }
 
+export type GetDeckArgs = {
+  id: string
+}
+
+export type AnswerCardArgs = {
+  cardId: string
+  grade: 1 | 2 | 3 | 4 | 5
+}
+
 export interface GetDecksArgs {
   authorId?: string
   currentPage?: number
@@ -55,3 +64,23 @@ export interface DeleteDeckArgs {
 export type UpdateDeckArgs = {
   id: string
 } & Partial<CreateDeckArgs>
+
+export type LearDeckArgs = {
+  id: string
+}
+
+export type Card = {
+  answer: string
+  answerImg: string
+  answerVideo: string
+  created: string
+  deckId: string
+  grade: number
+  id: string
+  question: string
+  questionImg: string
+  questionVideo: string
+  shots: number
+  updated: string
+  userId: string
+}
