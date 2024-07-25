@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import ArrowDown from '@/assets/images/icons/ArrowDown'
 import Delete from '@/assets/images/icons/Delete'
@@ -139,9 +140,12 @@ export const DecksTable = ({ cleanFilter, decks, setSorting, sorting, userId }: 
                 <TableCell className={s.PageTableCell}>{updatedAt}</TableCell>
                 <TableCell className={s.PageTableCell}>{deck.author.name}</TableCell>
                 <TableCell className={s.PageTableCell}>
-                  <button>
-                    <Play />
-                  </button>
+                  {deck.cardsCount !== 0 && (
+                    <Link to={`/decks/${deck.id}/learn`}>
+                      <Play />
+                    </Link>
+                  )}
+
                   {userId === deck.author.id && (
                     <>
                       <button>

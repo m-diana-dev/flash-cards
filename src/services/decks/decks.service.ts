@@ -1,9 +1,13 @@
 import {
+  AnswerCardArgs,
+  Card,
   CreateDeckArgs,
   Deck,
   DecksListResponse,
   DeleteDeckArgs,
+  GetDeckArgs,
   GetDecksArgs,
+  LearDeckArgs,
   MinMaxCardsCount,
   UpdateDeckArgs,
 } from '@/services/decks/decks.types'
@@ -12,6 +16,13 @@ import { flashcardsApi } from '@/services/flashcards-api'
 export const decksService = flashcardsApi.injectEndpoints({
   endpoints: builder => {
     return {
+      answerCard: builder.mutation<Card, AnswerCardArgs>({
+        query: args => ({
+          body: args,
+          method: 'POST',
+          url: `v1/decks/${args.cardId}/learn`,
+        }),
+      }),
       createDeck: builder.mutation<Deck, CreateDeckArgs>({
         invalidatesTags: ['Decks'],
         async onQueryStarted(_, { dispatch, getState, queryFulfilled }) {
@@ -91,6 +102,12 @@ export const decksService = flashcardsApi.injectEndpoints({
           url: `v1/decks/${args.id}`,
         }),
       }),
+      getCardLearn: builder.query<Card, LearDeckArgs>({
+        query: ({ id }) => `v1/decks/${id}/learn`,
+      }),
+      getDeck: builder.query<Deck, GetDeckArgs>({
+        query: ({ id }) => `v1/decks/${id}`,
+      }),
       getDecks: builder.query<DecksListResponse, GetDecksArgs | void>({
         providesTags: ['Decks'],
         query: args => ({
@@ -98,6 +115,7 @@ export const decksService = flashcardsApi.injectEndpoints({
           url: `v2/decks`,
         }),
       }),
+
       getMinMaxCards: builder.query<MinMaxCardsCount, void>({
         query: () => `v2/decks/min-max-cards`,
       }),
@@ -158,8 +176,11 @@ export const decksService = flashcardsApi.injectEndpoints({
 })
 
 export const {
+  useAnswerCardMutation,
   useCreateDeckMutation,
   useDeleteDeckMutation,
+  useGetCardLearnQuery,
+  useGetDeckQuery,
   useGetDecksQuery,
   useGetMinMaxCardsQuery,
   useUpdateDeckMutation,
