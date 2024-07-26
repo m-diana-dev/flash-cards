@@ -1,0 +1,14 @@
+.DeckPage {
+  padding: 25px 0 35px;
+  &Button {
+    margin-bottom: 35px;
+  }
+  &Empty {
+    margin-top: 70px;
+    text-align: center;
+    &Title {
+      margin-bottom: 30px;
+      color: var(--color-dark-100);
+    }
+  }
+}

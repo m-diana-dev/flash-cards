@@ -1,10 +1,12 @@
 import { ComponentPropsWithoutRef } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import { Modal } from '@/components/ui/modal'
 import { ModalFooter } from '@/components/ui/modal/modalFooter/modalFooter'
 import { ModalMain } from '@/components/ui/modal/modalMain/modalMain'
 import { ModalTitle } from '@/components/ui/modal/modalTitle/modalTitle'
 import { Typography } from '@/components/ui/typography'
+import { isStringIncludeValue } from '@/helpers/isStringIncludeValue'
 import { useDeleteDeckMutation } from '@/services/decks/decks.service'
 import { Deck } from '@/services/decks/decks.types'
 
@@ -13,6 +15,9 @@ type Props = {
 } & ComponentPropsWithoutRef<typeof Modal>
 
 export const DeleteDecksModal = ({ deck, onOpenChange, ...rest }: Props) => {
+  const location = useLocation()
+  const navigate = useNavigate()
+
   const [deleteDeck] = useDeleteDeckMutation()
   const onClose = () => {
     onOpenChange?.(false)
@@ -21,7 +26,11 @@ export const DeleteDecksModal = ({ deck, onOpenChange, ...rest }: Props) => {
   const DeleteDeckHandler = () => {
     onClose()
     if (deck) {
-      deleteDeck({ id: deck.id })
+      deleteDeck({ id: deck.id }).then(() => {
+        if (isStringIncludeValue(location.pathname, '/decks/')) {
+          navigate('/')
+        }
+      })
     }
   }
 

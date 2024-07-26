@@ -26,7 +26,7 @@ const updateDeckSchema = z.object({
 })
 
 type Props = {
-  cleanFilter: () => void
+  cleanFilter?: () => void
   deck: Deck | null
 } & ComponentPropsWithoutRef<typeof Modal>
 
