@@ -1,0 +1,28 @@
+.DeckPage {
+  &Top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    &Wrapp {
+      display: flex;
+      align-items: center;
+    }
+  }
+  &Name {
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+  &Cover {
+    width: 170px;
+    height: 107px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 2px;
+    margin-bottom: 25px;
+  }
+  &Search {
+    margin-bottom: 25px;
+  }
+}

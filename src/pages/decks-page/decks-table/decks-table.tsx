@@ -129,12 +129,12 @@ export const DecksTable = ({ cleanFilter, decks, setSorting, sorting, userId }: 
             return (
               <TableRow key={deck.id}>
                 <TableCell className={s.PageTableCell}>
-                  <a className={s.PageTableCellLink} href={''}>
+                  <Link className={s.PageTableCellLink} to={`/decks/${deck.id}`}>
                     {deck.cover && (
                       <img alt={'cover'} className={s.PageTableCover} src={deck.cover} />
                     )}
                     <span>{deck.name}</span>
-                  </a>
+                  </Link>
                 </TableCell>
                 <TableCell className={s.PageTableCell}>{deck.cardsCount}</TableCell>
                 <TableCell className={s.PageTableCell}>{updatedAt}</TableCell>

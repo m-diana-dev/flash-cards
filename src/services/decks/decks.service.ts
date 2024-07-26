@@ -106,6 +106,7 @@ export const decksService = flashcardsApi.injectEndpoints({
         query: ({ id }) => `v1/decks/${id}/learn`,
       }),
       getDeck: builder.query<Deck, GetDeckArgs>({
+        providesTags: ['Deck'],
         query: ({ id }) => `v1/decks/${id}`,
       }),
       getDecks: builder.query<DecksListResponse, GetDecksArgs | void>({
@@ -120,7 +121,7 @@ export const decksService = flashcardsApi.injectEndpoints({
         query: () => `v2/decks/min-max-cards`,
       }),
       updateDeck: builder.mutation<Deck, UpdateDeckArgs>({
-        invalidatesTags: ['Decks'],
+        invalidatesTags: ['Decks', 'Deck'],
         async onQueryStarted({ id, ...args }, { dispatch, getState, queryFulfilled }) {
           const invalidateBy = decksService.util.selectInvalidatedBy(getState(), ['Decks'])
 

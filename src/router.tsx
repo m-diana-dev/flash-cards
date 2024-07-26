@@ -8,6 +8,7 @@ import {
 
 import { Layout, useAuthContext } from '@/components/ui/layout/layout'
 import { CheckEmailPage } from '@/pages/check-email-page'
+import { DeckPage } from '@/pages/deck-page'
 import { DecksPage } from '@/pages/decks-page/decks-page'
 import { ErrorPage } from '@/pages/error-page/error-page'
 import { ForgotPasswordPage } from '@/pages/forgot-password-page'
@@ -41,6 +42,10 @@ export const publicRoutes: RouteObject[] = [
   {
     element: <LearnPage />,
     path: '/decks/:id/learn',
+  },
+  {
+    element: <DeckPage />,
+    path: '/decks/:id',
   },
 ]
 
