@@ -8,12 +8,19 @@ import scommon from '../personal-information.module.scss'
 import s from './personal-information-info.module.scss'
 
 type Props = {
+  deleteAccount?: () => void
   email: string
   logout?: () => void
   name: string
   setEditMode: (editMode: boolean) => void
 }
-export const PersonalInformationInfo = ({ email, logout, name, setEditMode }: Props) => {
+export const PersonalInformationInfo = ({
+  deleteAccount,
+  email,
+  logout,
+  name,
+  setEditMode,
+}: Props) => {
   const logoutHandler = () => {
     logout?.()
   }
@@ -40,6 +47,14 @@ export const PersonalInformationInfo = ({ email, logout, name, setEditMode }: Pr
           Logout
         </Typography>
       </Button>
+      <Typography
+        as={'button'}
+        className={s.DeleteAccount}
+        onClick={deleteAccount}
+        variant={'caption'}
+      >
+        Delete account
+      </Typography>
     </>
   )
 }

@@ -12,6 +12,19 @@ import { flashcardsApi } from '@/services/flashcards-api'
 export const authService = flashcardsApi.injectEndpoints({
   endpoints: builder => {
     return {
+      deleteMe: builder.mutation<void, void>({
+        invalidatesTags: ['Me'],
+        async onQueryStarted(_, { dispatch, queryFulfilled }) {
+          await queryFulfilled
+          localStorage.removeItem('accessToken')
+          localStorage.removeItem('refreshToken')
+          dispatch(authService.util.resetApiState())
+        },
+        query: () => ({
+          method: 'DELETE',
+          url: `v1/auth/me`,
+        }),
+      }),
       login: builder.mutation<LoginResponse, LoginArgs>({
         invalidatesTags: ['Me'],
         async onQueryStarted(_, { queryFulfilled }) {
@@ -97,6 +110,7 @@ export const authService = flashcardsApi.injectEndpoints({
 })
 
 export const {
+  useDeleteMeMutation,
   useLoginMutation,
   useLogoutMutation,
   useMeQuery,
