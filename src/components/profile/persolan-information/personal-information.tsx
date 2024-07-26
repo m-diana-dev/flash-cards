@@ -14,6 +14,7 @@ import {
 } from './personal-information-form/personal-information-form'
 
 type PersonalInformationProps = {
+  deleteAccount?: () => void
   editModeDefault?: boolean
   email: string
   img: string
@@ -23,6 +24,7 @@ type PersonalInformationProps = {
 }
 
 export const PersonalInformation = ({
+  deleteAccount,
   editModeDefault = false,
   email,
   img,
@@ -52,6 +54,7 @@ export const PersonalInformation = ({
         <PersonalInformationForm name={name} onSubmit={onSubmit} />
       ) : (
         <PersonalInformationInfo
+          deleteAccount={deleteAccount}
           email={email}
           logout={logout}
           name={name}

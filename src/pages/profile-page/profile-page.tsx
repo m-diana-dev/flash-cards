@@ -4,7 +4,12 @@ import ArrowBack from '@/assets/images/icons/ArrowBack'
 import { PersonalInformation } from '@/components/profile/persolan-information/personal-information'
 import { Button } from '@/components/ui/button'
 import { Preloader } from '@/components/ui/preloader'
-import { useLogoutMutation, useMeQuery, useUserUpdateMutation } from '@/services/auth/auth.services'
+import {
+  useDeleteMeMutation,
+  useLogoutMutation,
+  useMeQuery,
+  useUserUpdateMutation,
+} from '@/services/auth/auth.services'
 
 import s from './profile-page.module.scss'
 
@@ -12,6 +17,7 @@ export const ProfilePage = () => {
   const { data, error, isLoading } = useMeQuery()
   const [updateUser] = useUserUpdateMutation()
   const [logout] = useLogoutMutation()
+  const [deleteAccount] = useDeleteMeMutation()
 
   const navigate = useNavigate()
 
@@ -30,6 +36,7 @@ export const ProfilePage = () => {
         Back to Previous Page
       </Button>
       <PersonalInformation
+        deleteAccount={deleteAccount}
         email={data?.email || ''}
         img={data?.avatar || ''}
         logout={logout}
