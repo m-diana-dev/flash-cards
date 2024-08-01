@@ -4,10 +4,12 @@ import { useNavigate, useParams } from 'react-router-dom'
 import ArrowBack from '@/assets/images/icons/ArrowBack'
 import { Button } from '@/components/ui/button'
 import { Typography } from '@/components/ui/typography'
+import { CardsTable } from '@/pages/deck-page/cards-table'
 import { DeckPageTop } from '@/pages/deck-page/deck-page-top/deck-page-top'
 import { DeleteDecksModal } from '@/pages/decks-page/delete-deck-modal/delete-decks-modal'
 import { UpdateDeckModal } from '@/pages/decks-page/update-deck-modal/update-deck-modal'
 import { useMeQuery } from '@/services/auth/auth.services'
+import { useGetCardsQuery } from '@/services/cards/cards.service'
 import { useGetDeckQuery } from '@/services/decks/decks.service'
 
 import s from './deck-page.module.scss'
@@ -20,6 +22,9 @@ export const DeckPage = () => {
 
   const { data: deck } = useGetDeckQuery({ id: id || '' })
   const { data: me } = useMeQuery()
+  const { data: cards } = useGetCardsQuery({
+    id: id || '',
+  })
 
   const myPack = deck?.userId === me?.id
   const emptyPack = deck?.cardsCount === 0
@@ -56,7 +61,9 @@ export const DeckPage = () => {
             {myPack && <Button>Add New Card</Button>}
           </div>
         ) : (
-          <div>table with cards</div>
+          <>
+            <CardsTable cards={cards?.items} myPack={myPack} />
+          </>
         )}
       </div>
     </>

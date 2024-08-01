@@ -1,6 +1,6 @@
+import { Card } from '@/services/cards/cards.types'
 import {
   AnswerCardArgs,
-  Card,
   CreateDeckArgs,
   Deck,
   DecksListResponse,
@@ -105,6 +105,7 @@ export const decksService = flashcardsApi.injectEndpoints({
       getCardLearn: builder.query<Card, LearDeckArgs>({
         query: ({ id }) => `v1/decks/${id}/learn`,
       }),
+
       getDeck: builder.query<Deck, GetDeckArgs>({
         providesTags: ['Deck'],
         query: ({ id }) => `v1/decks/${id}`,
