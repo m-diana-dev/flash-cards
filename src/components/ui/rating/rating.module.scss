@@ -1,0 +1,9 @@
+.Rating {
+  display: flex;
+  align-items: center;
+  svg {
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+}
