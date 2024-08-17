@@ -1,20 +1,19 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { SliderApp } from './slider'
+
+import { Slider } from './slider'
 
 const meta = {
   argTypes: {},
-  component: SliderApp,
+  component: Slider,
   tags: ['autodocs'],
   title: 'Components/Slider',
-} satisfies Meta<typeof SliderApp>
+} satisfies Meta<typeof Slider>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Slider: Story = {
+export const SliderDemo: Story = {
   args: {
-    value: [20, 80],
-    step: 1,
-    max: 99,
+    value: [0, 80],
   },
 }

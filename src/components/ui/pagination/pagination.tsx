@@ -9,14 +9,21 @@ import { Typography } from '@/components/ui/typography'
 import s from './pagination.module.scss'
 
 type Props = {
-  currentPage: number
+  changeItemsPerPage: (count: string) => void
+  currentPage: number | undefined
   handlePageChange: (page: number) => void
   itemsPerPage: number
-  totalItems: number
-  totalPages: number
+  totalItems: number | undefined
+  totalPages: number | undefined
 }
 
-export const Pagination = ({ currentPage, handlePageChange, itemsPerPage, totalPages }: Props) => {
+export const Pagination = ({
+  changeItemsPerPage,
+  currentPage = 1,
+  handlePageChange,
+  itemsPerPage,
+  totalPages = 1,
+}: Props) => {
   const { pages } = useMemo(() => {
     return generatePagination(currentPage, totalPages)
   }, [currentPage, totalPages])
@@ -60,7 +67,7 @@ export const Pagination = ({ currentPage, handlePageChange, itemsPerPage, totalP
       )}
       <button
         className={s.navigationButton}
-        disabled={currentPage === totalPages}
+        disabled={currentPage === totalPages || currentPage > totalPages}
         onClick={() => handlePageChange(currentPage + 1)}
       >
         <ArrowRight />
@@ -76,6 +83,7 @@ export const Pagination = ({ currentPage, handlePageChange, itemsPerPage, totalP
           { title: '10', value: '10' },
           { title: '20', value: '20' },
         ]}
+        onValueChange={changeItemsPerPage}
         variant={'small'}
       />
       <Typography as={'span'} variant={'body2'}>

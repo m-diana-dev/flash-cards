@@ -1,0 +1,25 @@
+.Table {
+  &Cell {
+    width: 23%;
+    &:nth-child(3) {
+      width: 9%;
+    }
+    &:nth-child(4) {
+      width: 15%;
+    }
+    &:last-child {
+      text-align: right;
+      width: 10%;
+    }
+    &Img {
+      display: block;
+      width: 118px;
+      height: 48px;
+      object-fit: cover;
+      object-position: center;
+      &:not(:first-child) {
+        margin-top: 5px;
+      }
+    }
+  }
+}

@@ -8,8 +8,8 @@ import s from './radioItem.module.scss'
 
 export type RadioItemType = {
   disabled?: boolean
-  title: string
-  value: string
+  title: number | string
+  value: number | string
 }
 
 export const RadioItem = forwardRef<ElementRef<typeof RadioGroup.Item>, RadioItemType>(
@@ -23,7 +23,7 @@ export const RadioItem = forwardRef<ElementRef<typeof RadioGroup.Item>, RadioIte
           disabled={disabled}
           id={id}
           ref={ref}
-          value={value}
+          value={value.toString()}
         >
           <RadioGroup.Indicator className={s.RadioItemIndicator} />
         </RadioGroup.Item>

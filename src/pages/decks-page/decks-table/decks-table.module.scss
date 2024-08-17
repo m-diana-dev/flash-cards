@@ -1,0 +1,57 @@
+.PageTable {
+  margin-bottom: 24px;
+  &Header {
+    .PageTableCell {
+      &:not(:last-child) {
+        cursor: pointer;
+        transition: all var(--transition);
+        &:hover {
+          background-color: var(--color-dark-300);
+        }
+      }
+
+      &.asc {
+        svg {
+          transform: rotate(180deg);
+        }
+      }
+
+      &.active {
+        svg {
+          opacity: 1;
+        }
+      }
+
+      svg {
+        transition: all var(--transition);
+        opacity: 0;
+      }
+    }
+  }
+  &Cell {
+    width: 20%;
+    &:nth-child(1) {
+      width: 30%;
+    }
+    &:nth-child(2) {
+      width: 10%;
+    }
+    &:last-child {
+      text-align: right;
+    }
+    &Link {
+      display: flex;
+      width: fit-content;
+      align-items: center;
+    }
+  }
+  &Cover {
+    min-width: 118px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 2px;
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+}

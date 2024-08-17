@@ -26,6 +26,11 @@ type Props = {
 
 export const SignIn = ({ onSubmit }: Props) => {
   const { control, handleSubmit } = useForm<FormValues>({
+    defaultValues: {
+      email: '',
+      password: '',
+      rememberMe: false,
+    },
     resolver: zodResolver(loginSchema),
   })
 
@@ -57,7 +62,7 @@ export const SignIn = ({ onSubmit }: Props) => {
           <Typography
             as={Link}
             className={s.recoverPassword}
-            to={'/forgot-password'}
+            to={'/forgot-password-page'}
             variant={'body2'}
           >
             Forgot Password?

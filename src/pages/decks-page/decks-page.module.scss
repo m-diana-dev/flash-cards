@@ -4,39 +4,3 @@
   justify-content: space-between;
   margin-bottom: 10px;
 }
-
-.PageFilters {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  margin-bottom: 36px;
-  &Label {
-    display: block;
-    margin-bottom: 5px;
-  }
-}
-
-.PageInput {
-  max-width: 300px;
-  width: 100%;
-}
-
-.PageTabs {
-  max-width: 230px;
-  width: 100%;
-}
-
-.PageSlider {
-  max-width: 250px;
-  width: 100%;
-}
-
-.PageTable {
-  margin-bottom: 24px;
-  &Cell {
-    width: 20%;
-    &:last-child {
-      text-align: right;
-    }
-  }
-}

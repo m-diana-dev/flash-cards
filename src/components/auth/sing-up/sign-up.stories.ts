@@ -12,7 +12,7 @@ const meta = {
 
 export default meta
 type Story = StoryObj<typeof meta>
-const handleSignUp = (data: FormValues) => {
+const handleSignUp = (data: Omit<FormValues, 'confirmPassword'>) => {
   console.log('Form Data:', data)
 }
 

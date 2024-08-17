@@ -22,6 +22,9 @@ type Props = {
 }
 export const ForgotPassword = ({ onSubmit }: Props) => {
   const { control, handleSubmit } = useForm<FormValues>({
+    defaultValues: {
+      email: '',
+    },
     resolver: zodResolver(passwordFormSchema),
   })
 
@@ -46,7 +49,7 @@ export const ForgotPassword = ({ onSubmit }: Props) => {
       <Typography as={'div'} className={s.Note} variant={'body2'}>
         Did you remember your password?
       </Typography>
-      <Typography as={Link} className={s.Link} to={'/sign-in'} variant={'link1'}>
+      <Typography as={Link} className={s.Link} to={'/login'} variant={'link1'}>
         Try logging in
       </Typography>
     </Card>

@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { Card } from '@/components/ui/card'
 import { Typography } from '@/components/ui/typography'
+import { UserUpdate } from '@/services/auth/auth.types'
 
 import s from './personal-information.module.scss'
 
@@ -13,23 +14,28 @@ import {
 } from './personal-information-form/personal-information-form'
 
 type PersonalInformationProps = {
+  deleteAccount?: () => void
   editModeDefault?: boolean
   email: string
   img: string
+  logout?: () => void
   name: string
+  updateUserHandler?: (data: UserUpdate) => void
 }
 
 export const PersonalInformation = ({
+  deleteAccount,
   editModeDefault = false,
   email,
   img,
+  logout,
   name,
+  updateUserHandler,
 }: PersonalInformationProps) => {
   const [editMode, setEditMode] = useState<boolean>(editModeDefault)
-  const [nickname, setNickname] = useState<string>(name)
 
   const onSubmit = (data: ProfileEditValues) => {
-    setNickname(data.name)
+    updateUserHandler?.({ name: data.name })
     setEditMode(false)
   }
 
@@ -38,11 +44,22 @@ export const PersonalInformation = ({
       <Typography as={'h1'} className={s.Title} variant={'h1'}>
         Personal Information
       </Typography>
-      <PersonalInformationAvatar editMode={editMode} img={img} />
+      <PersonalInformationAvatar
+        editMode={editMode}
+        img={img}
+        name={name}
+        updateUserHandler={updateUserHandler}
+      />
       {editMode ? (
-        <PersonalInformationForm name={nickname} onSubmit={onSubmit} />
+        <PersonalInformationForm name={name} onSubmit={onSubmit} />
       ) : (
-        <PersonalInformationInfo email={email} name={nickname} setEditMode={setEditMode} />
+        <PersonalInformationInfo
+          deleteAccount={deleteAccount}
+          email={email}
+          logout={logout}
+          name={name}
+          setEditMode={setEditMode}
+        />
       )}
     </Card>
   )

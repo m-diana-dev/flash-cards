@@ -6,14 +6,46 @@ import {
   createBrowserRouter,
 } from 'react-router-dom'
 
-import { Layout } from '@/components/ui/layout/layout'
+import { Layout, useAuthContext } from '@/components/ui/layout/layout'
+import { CheckEmailPage } from '@/pages/check-email-page'
+import { DeckPage } from '@/pages/deck-page'
 import { DecksPage } from '@/pages/decks-page/decks-page'
 import { ErrorPage } from '@/pages/error-page/error-page'
+import { ForgotPasswordPage } from '@/pages/forgot-password-page'
+import { LearnPage } from '@/pages/learn-page'
+import { LoginPage } from '@/pages/login-page'
+import { NewPasswordPage } from '@/pages/new-password-page'
+import { ProfilePage } from '@/pages/profile-page'
+import { SignupPage } from '@/pages/signup-page'
 
-const publicRoutes: RouteObject[] = [
+export const publicRoutes: RouteObject[] = [
   {
-    element: <div>login</div>,
+    element: <LoginPage />,
     path: '/login',
+  },
+  {
+    element: <SignupPage />,
+    path: '/sign-up',
+  },
+  {
+    element: <ForgotPasswordPage />,
+    path: '/forgot-password-page',
+  },
+  {
+    element: <CheckEmailPage />,
+    path: '/check-email',
+  },
+  {
+    element: <NewPasswordPage />,
+    path: '/new-password/*',
+  },
+  {
+    element: <LearnPage />,
+    path: '/decks/:id/learn',
+  },
+  {
+    element: <DeckPage />,
+    path: '/decks/:id',
   },
 ]
 
@@ -22,9 +54,13 @@ const privateRoutes: RouteObject[] = [
     element: <DecksPage />,
     path: '/',
   },
+  {
+    element: <ProfilePage />,
+    path: '/profile',
+  },
 ]
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
   {
     children: [
       {
@@ -46,7 +82,7 @@ export function Router() {
 }
 
 function PrivateRoutes() {
-  const isAuthenticated = true
+  const { isAuthenticated } = useAuthContext()
 
   return isAuthenticated ? <Outlet /> : <Navigate to={'/login'} />
 }

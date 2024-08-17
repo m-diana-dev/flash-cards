@@ -1,0 +1,12 @@
+.Preloader {
+  position: relative;
+  height: calc(100vh - var(--header-height));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  svg {
+    width: 200px;
+  }
+}
