@@ -1,5 +1,6 @@
 import Delete from '@/assets/images/icons/Delete'
 import Edit from '@/assets/images/icons/Edit'
+import { Rating } from '@/components/ui/rating'
 import {
   Table,
   TableBody,
@@ -52,7 +53,9 @@ export const CardsTable = ({ cards, myPack }: Props) => {
                 )}
               </TableCell>
               <TableCell className={s.TableCell}>{updatedAt}</TableCell>
-              <TableCell className={s.TableCell}>{card.grade}</TableCell>
+              <TableCell className={s.TableCell}>
+                <Rating value={card.grade} />
+              </TableCell>
               {myPack && (
                 <TableCell className={s.TableCell}>
                   <button>
