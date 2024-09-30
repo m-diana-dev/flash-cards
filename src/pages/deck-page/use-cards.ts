@@ -37,6 +37,16 @@ export const useCards = () => {
     setSearchParams(searchParams)
   }
 
+  const sorting = searchParams.get('sorting') ?? null
+  const setSorting = (value: null | string) => {
+    if (value) {
+      searchParams.set('sorting', value)
+    } else {
+      searchParams.delete('sorting')
+    }
+    setSearchParams(searchParams)
+  }
+
   return {
     currentPage,
     itemsPerPage,
@@ -45,5 +55,7 @@ export const useCards = () => {
     setCurrentPage,
     setItemsPerPage,
     setSearchParam,
+    setSorting,
+    sorting,
   }
 }

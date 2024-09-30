@@ -30,6 +30,8 @@ export const DeckPage = () => {
     setCurrentPage,
     setItemsPerPage,
     setSearchParam,
+    setSorting,
+    sorting,
   } = useCards()
 
   const { data: deck } = useGetDeckQuery({ id: id || '' })
@@ -38,6 +40,7 @@ export const DeckPage = () => {
     currentPage: +currentPage,
     id: id || '',
     itemsPerPage: +itemsPerPage,
+    orderBy: sorting,
     question: search,
   })
 
@@ -86,7 +89,13 @@ export const DeckPage = () => {
           </div>
         ) : (
           <>
-            <CardsTable cards={cards?.items} className={s.CardTable} myPack={myPack} />
+            <CardsTable
+              cards={cards?.items}
+              className={s.CardTable}
+              myPack={myPack}
+              setSorting={setSorting}
+              sorting={sorting}
+            />
             <Pagination
               changeItemsPerPage={handleItemPerPage}
               currentPage={+currentPage}

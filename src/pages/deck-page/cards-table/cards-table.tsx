@@ -1,5 +1,6 @@
 import { ComponentPropsWithoutRef } from 'react'
 
+import ArrowDown from '@/assets/images/icons/ArrowDown'
 import Delete from '@/assets/images/icons/Delete'
 import Edit from '@/assets/images/icons/Edit'
 import { Rating } from '@/components/ui/rating'
@@ -12,24 +13,78 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Typography } from '@/components/ui/typography'
+import { isStringIncludeValue } from '@/helpers/isStringIncludeValue'
 import { Card } from '@/services/cards/cards.types'
+import clsx from 'clsx'
 
 import s from './cards-table.module.scss'
 
 type Props = {
   cards: Card[] | undefined
   myPack: boolean
+  setSorting: (sorting: string) => void
+  sorting: null | string
 } & ComponentPropsWithoutRef<'table'>
-export const CardsTable = ({ cards, className, myPack }: Props) => {
+export const CardsTable = ({ cards, className, myPack, setSorting, sorting }: Props) => {
+  const handleSort = (sort: string) => {
+    if (!isStringIncludeValue(sorting, 'asc') || sorting === null) {
+      setSorting(sort + '-' + 'asc')
+    } else {
+      setSorting(sort + '-' + 'desc')
+    }
+  }
+
+  const cellStyle = !isStringIncludeValue(sorting, 'asc') || sorting === null ? s.asc : ''
+
   return (
     <Table className={className}>
-      <TableHeader>
+      <TableHeader className={s.TableHeader}>
         <TableRow>
-          <TableHeadCell className={s.TableCell}>Question</TableHeadCell>
-          <TableHeadCell className={s.TableCell}>Answer</TableHeadCell>
-          <TableHeadCell className={s.TableCell}>Last Updated</TableHeadCell>
-          <TableHeadCell className={s.TableCell}>Grade</TableHeadCell>
-          {myPack && <TableHeadCell className={s.TableCell}></TableHeadCell>}
+          <TableHeadCell
+            className={clsx(
+              s.TableCell,
+              cellStyle,
+              isStringIncludeValue(sorting, 'question') && sorting !== null ? s.active : ''
+            )}
+            onClick={() => handleSort('question')}
+          >
+            Question
+            <ArrowDown height={10} width={8} />
+          </TableHeadCell>
+          <TableHeadCell
+            className={clsx(
+              s.TableCell,
+              cellStyle,
+              isStringIncludeValue(sorting, 'answer') && sorting !== null ? s.active : ''
+            )}
+            onClick={() => handleSort('answer')}
+          >
+            Answer
+            <ArrowDown height={10} width={8} />
+          </TableHeadCell>
+          <TableHeadCell
+            className={clsx(
+              s.TableCell,
+              cellStyle,
+              isStringIncludeValue(sorting, 'updated') ? s.active : ''
+            )}
+            onClick={() => handleSort('updated')}
+          >
+            Last Updated
+            <ArrowDown height={10} width={8} />
+          </TableHeadCell>
+          <TableHeadCell
+            className={clsx(
+              s.TableCell,
+              cellStyle,
+              isStringIncludeValue(sorting, 'grade') && sorting !== null ? s.active : ''
+            )}
+            onClick={() => handleSort('grade')}
+          >
+            Grade
+            <ArrowDown height={10} width={8} />
+          </TableHeadCell>
+          {myPack && <TableHeadCell className={clsx(s.TableCell, cellStyle)}></TableHeadCell>}
         </TableRow>
       </TableHeader>
       <TableBody>
