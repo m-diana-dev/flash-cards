@@ -1,3 +1,4 @@
+import { ChangeEvent } from 'react'
 import { Link } from 'react-router-dom'
 
 import Delete from '@/assets/images/icons/Delete'
@@ -18,16 +19,34 @@ type Props = {
   deck: Deck | undefined
   emptyPack: boolean
   myPack: boolean
+  removeSearchParam: () => void
+  search: string
+  setCurrentPage: (count: null | number) => void
   setOpenDeleteModal: (open: boolean) => void
   setOpenUpdateModal: (open: boolean) => void
+  setSearchParam: (value: string) => void
 }
 export const DeckPageTop = ({
   deck,
   emptyPack,
   myPack,
+  removeSearchParam,
+  search,
+  setCurrentPage,
   setOpenDeleteModal,
   setOpenUpdateModal,
+  setSearchParam,
 }: Props) => {
+  const handleTextField = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchParam(e.currentTarget.value)
+    setCurrentPage(null)
+  }
+
+  const handleResetTextField = () => {
+    removeSearchParam()
+    setCurrentPage(null)
+  }
+
   return (
     <>
       <div className={s.DeckPageTop}>
@@ -74,7 +93,16 @@ export const DeckPageTop = ({
             )}
       </div>
       {deck?.cover && <img alt={'cover'} className={s.DeckPageCover} src={deck?.cover} />}
-      {!emptyPack && <TextField className={s.DeckPageSearch} variant={'search'} />}
+      {!emptyPack && (
+        <TextField
+          className={s.DeckPageSearch}
+          onChange={handleTextField}
+          onReset={handleResetTextField}
+          placeholder={'Search card'}
+          value={search}
+          variant={'search'}
+        />
+      )}
     </>
   )
 }
