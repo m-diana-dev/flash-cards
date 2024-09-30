@@ -21,6 +21,7 @@ type Props = {
   myPack: boolean
   removeSearchParam: () => void
   search: string
+  setCurrentPage: (count: null | number) => void
   setOpenDeleteModal: (open: boolean) => void
   setOpenUpdateModal: (open: boolean) => void
   setSearchParam: (value: string) => void
@@ -31,16 +32,19 @@ export const DeckPageTop = ({
   myPack,
   removeSearchParam,
   search,
+  setCurrentPage,
   setOpenDeleteModal,
   setOpenUpdateModal,
   setSearchParam,
 }: Props) => {
   const handleTextField = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchParam(e.currentTarget.value)
+    setCurrentPage(null)
   }
 
   const handleResetTextField = () => {
     removeSearchParam()
+    setCurrentPage(null)
   }
 
   return (

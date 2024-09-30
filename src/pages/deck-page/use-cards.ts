@@ -17,9 +17,33 @@ export const useCards = () => {
     setSearchParams(searchParams)
   }
 
+  const itemsPerPage = searchParams.get('itemsPerPage') ?? '5'
+  const setItemsPerPage = (value: string) => {
+    if (value) {
+      searchParams.set('itemsPerPage', value)
+    } else {
+      searchParams.delete('itemsPerPage')
+    }
+    setSearchParams(searchParams)
+  }
+
+  const currentPage = searchParams.get('currentPage') ?? '1'
+  const setCurrentPage = (value: null | number) => {
+    if (value) {
+      searchParams.set('currentPage', value.toString())
+    } else {
+      searchParams.delete('currentPage')
+    }
+    setSearchParams(searchParams)
+  }
+
   return {
+    currentPage,
+    itemsPerPage,
     removeSearchParam,
     search,
+    setCurrentPage,
+    setItemsPerPage,
     setSearchParam,
   }
 }

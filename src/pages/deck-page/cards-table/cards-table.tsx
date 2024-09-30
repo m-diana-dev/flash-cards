@@ -1,3 +1,5 @@
+import { ComponentPropsWithoutRef } from 'react'
+
 import Delete from '@/assets/images/icons/Delete'
 import Edit from '@/assets/images/icons/Edit'
 import { Rating } from '@/components/ui/rating'
@@ -17,10 +19,10 @@ import s from './cards-table.module.scss'
 type Props = {
   cards: Card[] | undefined
   myPack: boolean
-}
-export const CardsTable = ({ cards, myPack }: Props) => {
+} & ComponentPropsWithoutRef<'table'>
+export const CardsTable = ({ cards, className, myPack }: Props) => {
   return (
-    <Table>
+    <Table className={className}>
       <TableHeader>
         <TableRow>
           <TableHeadCell className={s.TableCell}>Question</TableHeadCell>
