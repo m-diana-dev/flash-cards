@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Typography } from '@/components/ui/typography'
 import { CardsTable } from '@/pages/deck-page/cards-table'
 import { DeckPageTop } from '@/pages/deck-page/deck-page-top/deck-page-top'
+import { useCards } from '@/pages/deck-page/use-cards'
 import { DeleteDecksModal } from '@/pages/decks-page/delete-deck-modal/delete-decks-modal'
 import { UpdateDeckModal } from '@/pages/decks-page/update-deck-modal/update-deck-modal'
 import { useMeQuery } from '@/services/auth/auth.services'
@@ -20,10 +21,13 @@ export const DeckPage = () => {
   const [openUpdateModal, setOpenUpdateModal] = useState<boolean>(false)
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false)
 
+  const { removeSearchParam, search, setSearchParam } = useCards()
+
   const { data: deck } = useGetDeckQuery({ id: id || '' })
   const { data: me } = useMeQuery()
   const { data: cards } = useGetCardsQuery({
     id: id || '',
+    question: search,
   })
 
   const myPack = deck?.userId === me?.id
@@ -50,8 +54,11 @@ export const DeckPage = () => {
           deck={deck}
           emptyPack={emptyPack}
           myPack={myPack}
+          removeSearchParam={removeSearchParam}
+          search={search}
           setOpenDeleteModal={setOpenDeleteModal}
           setOpenUpdateModal={setOpenUpdateModal}
+          setSearchParam={setSearchParam}
         />
         {emptyPack ? (
           <div className={s.DeckPageEmpty}>
