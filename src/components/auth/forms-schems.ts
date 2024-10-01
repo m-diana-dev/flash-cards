@@ -13,3 +13,5 @@ export const gradeCardSchema = z.union([
   z.literal(4),
   z.literal(5),
 ])
+export const questionCardSchema = z.string().min(3).max(500)
+export const answerCardSchema = z.string().min(3).max(500)

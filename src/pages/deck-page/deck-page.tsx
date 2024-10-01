@@ -5,6 +5,7 @@ import ArrowBack from '@/assets/images/icons/ArrowBack'
 import { Button } from '@/components/ui/button'
 import { Pagination } from '@/components/ui/pagination'
 import { Typography } from '@/components/ui/typography'
+import { AddCardModal } from '@/pages/deck-page/add-card-modal/add-card-modal'
 import { CardsTable } from '@/pages/deck-page/cards-table'
 import { DeckPageTop } from '@/pages/deck-page/deck-page-top/deck-page-top'
 import { useCards } from '@/pages/deck-page/use-cards'
@@ -19,8 +20,9 @@ import s from './deck-page.module.scss'
 export const DeckPage = () => {
   const navigate = useNavigate()
   const { id } = useParams()
-  const [openUpdateModal, setOpenUpdateModal] = useState<boolean>(false)
-  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false)
+  const [openUpdateDeckModal, setOpenUpdateDeckModal] = useState<boolean>(false)
+  const [openDeleteDeckModal, setOpenDeleteDeckModal] = useState<boolean>(false)
+  const [openAddCardModal, setOpenAddCardModal] = useState<boolean>(false)
 
   const {
     currentPage,
@@ -56,14 +58,15 @@ export const DeckPage = () => {
     <>
       <UpdateDeckModal
         deck={deck ?? null}
-        onOpenChange={setOpenUpdateModal}
-        open={openUpdateModal}
+        onOpenChange={setOpenUpdateDeckModal}
+        open={openUpdateDeckModal}
       />
       <DeleteDecksModal
         deck={deck ?? null}
-        onOpenChange={setOpenDeleteModal}
-        open={openDeleteModal}
+        onOpenChange={setOpenDeleteDeckModal}
+        open={openDeleteDeckModal}
       />
+      <AddCardModal onOpenChange={setOpenAddCardModal} open={openAddCardModal} />
       <div className={s.DeckPage}>
         <Button className={s.DeckPageButton} onClick={() => navigate('/')} variant={'link'}>
           <ArrowBack />
@@ -76,8 +79,8 @@ export const DeckPage = () => {
           removeSearchParam={removeSearchParam}
           search={search}
           setCurrentPage={setCurrentPage}
-          setOpenDeleteModal={setOpenDeleteModal}
-          setOpenUpdateModal={setOpenUpdateModal}
+          setOpenDeleteModal={setOpenDeleteDeckModal}
+          setOpenUpdateModal={setOpenUpdateDeckModal}
           setSearchParam={setSearchParam}
         />
         {emptyPack ? (
@@ -85,7 +88,7 @@ export const DeckPage = () => {
             <Typography className={s.DeckPageEmptyTitle}>
               This pack is empty.{myPack && 'Click add new card to fill this pack'}
             </Typography>
-            {myPack && <Button>Add New Card</Button>}
+            {myPack && <Button onClick={() => setOpenAddCardModal(true)}>Add New Card</Button>}
           </div>
         ) : (
           <>
