@@ -22,10 +22,22 @@ import s from './cards-table.module.scss'
 type Props = {
   cards: Card[] | undefined
   myPack: boolean
+  setCurrentCard: (card: Card) => void
+  setOpenDeleteCardModal: (open: boolean) => void
+  setOpenUpdateCardModal: (open: boolean) => void
   setSorting: (sorting: string) => void
   sorting: null | string
 } & ComponentPropsWithoutRef<'table'>
-export const CardsTable = ({ cards, className, myPack, setSorting, sorting }: Props) => {
+export const CardsTable = ({
+  cards,
+  className,
+  myPack,
+  setCurrentCard,
+  setOpenDeleteCardModal,
+  setOpenUpdateCardModal,
+  setSorting,
+  sorting,
+}: Props) => {
   const handleSort = (sort: string) => {
     if (!isStringIncludeValue(sorting, 'asc') || sorting === null) {
       setSorting(sort + '-' + 'asc')
@@ -35,6 +47,16 @@ export const CardsTable = ({ cards, className, myPack, setSorting, sorting }: Pr
   }
 
   const cellStyle = !isStringIncludeValue(sorting, 'asc') || sorting === null ? s.asc : ''
+
+  const deleteCardHandler = (card: Card) => {
+    setOpenDeleteCardModal(true)
+    setCurrentCard(card)
+  }
+
+  const updateCardHandler = (card: Card) => {
+    setOpenUpdateCardModal(true)
+    setCurrentCard(card)
+  }
 
   return (
     <Table className={className}>
@@ -116,10 +138,10 @@ export const CardsTable = ({ cards, className, myPack, setSorting, sorting }: Pr
               {myPack && (
                 <TableCell className={s.TableCell}>
                   <button>
-                    <Edit onClick={() => {}} />
+                    <Edit onClick={() => updateCardHandler(card)} />
                   </button>
                   <button>
-                    <Delete onClick={() => {}} />
+                    <Delete onClick={() => deleteCardHandler(card)} />
                   </button>
                 </TableCell>
               )}

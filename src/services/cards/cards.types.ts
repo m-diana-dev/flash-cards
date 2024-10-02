@@ -29,3 +29,21 @@ export type CardsListResponse = {
   items: Card[]
   pagination: Pagination
 }
+
+export type CreateCardArgs = {
+  answer: string
+  answerImg?: File | null
+  answerVideo?: string
+  deckId: string
+  question: string
+  questionImg?: File | null
+  questionVideo?: string
+}
+
+export type DeleteCardArgs = {
+  id: string
+}
+
+export type UpdateCardArgs = {
+  id: string
+} & Partial<Omit<CreateCardArgs, 'deckId'>>
