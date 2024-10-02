@@ -66,7 +66,11 @@ export const DeckPage = () => {
         onOpenChange={setOpenDeleteDeckModal}
         open={openDeleteDeckModal}
       />
-      <AddCardModal onOpenChange={setOpenAddCardModal} open={openAddCardModal} />
+      <AddCardModal
+        deckId={deck?.id ?? ''}
+        onOpenChange={setOpenAddCardModal}
+        open={openAddCardModal}
+      />
       <div className={s.DeckPage}>
         <Button className={s.DeckPageButton} onClick={() => navigate('/')} variant={'link'}>
           <ArrowBack />
@@ -79,6 +83,7 @@ export const DeckPage = () => {
           removeSearchParam={removeSearchParam}
           search={search}
           setCurrentPage={setCurrentPage}
+          setOpenAddCardModal={setOpenAddCardModal}
           setOpenDeleteModal={setOpenDeleteDeckModal}
           setOpenUpdateModal={setOpenUpdateDeckModal}
           setSearchParam={setSearchParam}

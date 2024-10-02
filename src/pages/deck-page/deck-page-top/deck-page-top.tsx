@@ -22,6 +22,7 @@ type Props = {
   removeSearchParam: () => void
   search: string
   setCurrentPage: (count: null | number) => void
+  setOpenAddCardModal: (open: boolean) => void
   setOpenDeleteModal: (open: boolean) => void
   setOpenUpdateModal: (open: boolean) => void
   setSearchParam: (value: string) => void
@@ -33,6 +34,7 @@ export const DeckPageTop = ({
   removeSearchParam,
   search,
   setCurrentPage,
+  setOpenAddCardModal,
   setOpenDeleteModal,
   setOpenUpdateModal,
   setSearchParam,
@@ -85,7 +87,7 @@ export const DeckPageTop = ({
           )}
         </div>
         {myPack
-          ? !emptyPack && <Button>Add New Card</Button>
+          ? !emptyPack && <Button onClick={() => setOpenAddCardModal(true)}>Add New Card</Button>
           : !emptyPack && (
               <Button as={Link} to={`/decks/${deck?.id}/learn`}>
                 Learn to Pack

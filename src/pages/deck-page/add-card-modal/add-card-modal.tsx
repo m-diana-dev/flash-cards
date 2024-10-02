@@ -11,6 +11,7 @@ import { ModalFooter } from '@/components/ui/modal/modalFooter/modalFooter'
 import { ModalMain } from '@/components/ui/modal/modalMain/modalMain'
 import { ModalTitle } from '@/components/ui/modal/modalTitle/modalTitle'
 import { Typography } from '@/components/ui/typography'
+import { useCreateCardMutation } from '@/services/cards/cards.service'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -23,9 +24,11 @@ const addCardSchema = z.object({
   question: questionCardSchema,
 })
 
-type Props = {} & ComponentPropsWithoutRef<typeof Modal>
+type Props = {
+  deckId: string
+} & ComponentPropsWithoutRef<typeof Modal>
 
-export const AddCardModal = ({ onOpenChange, ...rest }: Props) => {
+export const AddCardModal = ({ deckId, onOpenChange, ...rest }: Props) => {
   const [coverQuestion, setCoverQuestion] = useState<File | null>(null)
   const [previewQuestion, setPreviewQuestion] = useState<string>('')
   const [coverAnswer, setCoverAnswer] = useState<File | null>(null)
@@ -57,6 +60,8 @@ export const AddCardModal = ({ onOpenChange, ...rest }: Props) => {
     }
   }, [coverAnswer])
 
+  const [createCard] = useCreateCardMutation()
+
   const { control, handleSubmit, reset } = useForm<addCardEditValues>({
     defaultValues: {
       answer: '',
@@ -71,6 +76,13 @@ export const AddCardModal = ({ onOpenChange, ...rest }: Props) => {
   }
 
   const onSubmitForm = handleSubmit(data => {
+    createCard({
+      answer: data.answer,
+      answerImg: coverAnswer,
+      deckId: deckId,
+      question: data.question,
+      questionImg: coverQuestion,
+    })
     onOpenChange?.(false)
     reset()
   })
