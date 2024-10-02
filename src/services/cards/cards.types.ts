@@ -43,3 +43,7 @@ export type CreateCardArgs = {
 export type DeleteCardArgs = {
   id: string
 }
+
+export type UpdateCardArgs = {
+  id: string
+} & Partial<Omit<CreateCardArgs, 'deckId'>>

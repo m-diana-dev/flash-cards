@@ -4,6 +4,7 @@ import {
   CreateCardArgs,
   DeleteCardArgs,
   GetCardsArgs,
+  UpdateCardArgs,
 } from '@/services/cards/cards.types'
 import { flashcardsApi } from '@/services/flashcards-api'
 
@@ -67,7 +68,7 @@ export const cardsService = flashcardsApi.injectEndpoints({
             patchResults.push(
               dispatch(
                 cardsService.util.updateQueryData('getCards', originalArgs, draft => {
-                  const itemToDelete = draft.items.findIndex(deck => deck.id === id)
+                  const itemToDelete = draft.items.findIndex(card => card.id === id)
 
                   if (itemToDelete === -1) {
                     return
@@ -100,8 +101,70 @@ export const cardsService = flashcardsApi.injectEndpoints({
           url: `v1/decks/${id}/cards`,
         }),
       }),
+      updateCard: builder.mutation<Card, UpdateCardArgs>({
+        invalidatesTags: ['Cards'],
+        async onQueryStarted({ id, ...args }, { dispatch, getState, queryFulfilled }) {
+          const invalidateBy = cardsService.util.selectInvalidatedBy(getState(), ['Cards'])
+
+          const patchResults: any[] = []
+
+          invalidateBy.forEach(({ originalArgs }) => {
+            patchResults.push(
+              dispatch(
+                cardsService.util.updateQueryData('getCards', originalArgs, draft => {
+                  const itemToUpdate = draft.items.findIndex(card => card.id === id)
+
+                  if (itemToUpdate === -1) {
+                    return
+                  }
+                  Object.assign(draft.items[itemToUpdate], args)
+                })
+              )
+            )
+          })
+
+          try {
+            await queryFulfilled
+          } catch (e) {
+            patchResults.forEach(patchResult => {
+              patchResult.undo()
+            })
+          }
+        },
+        query: ({ id, ...args }) => {
+          const formData = new FormData()
+
+          if (args.answer) {
+            formData.append('answer', args.answer)
+          }
+          if (args.question) {
+            formData.append('question', args.question)
+          }
+          if (args.answerImg) {
+            formData.append('answerImg', args.answerImg)
+          } else if (args.answerImg === null) {
+            formData.append('answerImg', '')
+          }
+          if (args.questionImg) {
+            formData.append('questionImg', args.questionImg)
+          } else if (args.questionImg === null) {
+            formData.append('questionImg', '')
+          }
+
+          return {
+            body: formData,
+            method: 'PATCH',
+            url: `v1/cards/${id}`,
+          }
+        },
+      }),
     }
   },
 })
 
-export const { useCreateCardMutation, useDeleteCardMutation, useGetCardsQuery } = cardsService
+export const {
+  useCreateCardMutation,
+  useDeleteCardMutation,
+  useGetCardsQuery,
+  useUpdateCardMutation,
+} = cardsService

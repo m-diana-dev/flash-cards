@@ -9,14 +9,14 @@ import { useDeleteCardMutation } from '@/services/cards/cards.service'
 import { Card } from '@/services/cards/cards.types'
 
 type Props = {
-  card: Card
+  card: Card | null
 } & ComponentPropsWithoutRef<typeof Modal>
 
 export const DeleteCardModal = ({ card, onOpenChange, ...rest }: Props) => {
   const [deleteCard] = useDeleteCardMutation()
 
   const deleteCardHandler = () => {
-    deleteCard({ id: card.id })
+    deleteCard({ id: card?.id ?? '' })
     onOpenChange?.(false)
   }
 
