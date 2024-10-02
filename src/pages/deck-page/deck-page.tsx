@@ -8,11 +8,13 @@ import { Typography } from '@/components/ui/typography'
 import { AddCardModal } from '@/pages/deck-page/add-card-modal/add-card-modal'
 import { CardsTable } from '@/pages/deck-page/cards-table'
 import { DeckPageTop } from '@/pages/deck-page/deck-page-top/deck-page-top'
+import { DeleteCardModal } from '@/pages/deck-page/delete-card-modal/delete-card-modal'
 import { useCards } from '@/pages/deck-page/use-cards'
 import { DeleteDecksModal } from '@/pages/decks-page/delete-deck-modal/delete-decks-modal'
 import { UpdateDeckModal } from '@/pages/decks-page/update-deck-modal/update-deck-modal'
 import { useMeQuery } from '@/services/auth/auth.services'
 import { useGetCardsQuery } from '@/services/cards/cards.service'
+import { Card } from '@/services/cards/cards.types'
 import { useGetDeckQuery } from '@/services/decks/decks.service'
 
 import s from './deck-page.module.scss'
@@ -23,6 +25,8 @@ export const DeckPage = () => {
   const [openUpdateDeckModal, setOpenUpdateDeckModal] = useState<boolean>(false)
   const [openDeleteDeckModal, setOpenDeleteDeckModal] = useState<boolean>(false)
   const [openAddCardModal, setOpenAddCardModal] = useState<boolean>(false)
+  const [openDeleteCardModal, setOpenDeleteCardModal] = useState<boolean>(false)
+  const [currentCard, setCurrentCard] = useState<Card | null>(null)
 
   const {
     currentPage,
@@ -71,6 +75,11 @@ export const DeckPage = () => {
         onOpenChange={setOpenAddCardModal}
         open={openAddCardModal}
       />
+      <DeleteCardModal
+        card={currentCard}
+        onOpenChange={setOpenDeleteCardModal}
+        open={openDeleteCardModal}
+      />
       <div className={s.DeckPage}>
         <Button className={s.DeckPageButton} onClick={() => navigate('/')} variant={'link'}>
           <ArrowBack />
@@ -101,6 +110,8 @@ export const DeckPage = () => {
               cards={cards?.items}
               className={s.CardTable}
               myPack={myPack}
+              setCurrentCard={setCurrentCard}
+              setOpenDeleteCardModal={setOpenDeleteCardModal}
               setSorting={setSorting}
               sorting={sorting}
             />
