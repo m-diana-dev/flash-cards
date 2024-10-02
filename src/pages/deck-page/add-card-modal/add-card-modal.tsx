@@ -73,6 +73,10 @@ export const AddCardModal = ({ deckId, onOpenChange, ...rest }: Props) => {
   const onClose = () => {
     onOpenChange?.(false)
     reset()
+    setCoverQuestion(null)
+    setPreviewQuestion('')
+    setCoverAnswer(null)
+    setPreviewAnswer('')
   }
 
   const onSubmitForm = handleSubmit(data => {
@@ -85,6 +89,10 @@ export const AddCardModal = ({ deckId, onOpenChange, ...rest }: Props) => {
     })
     onOpenChange?.(false)
     reset()
+    setCoverQuestion(null)
+    setPreviewQuestion('')
+    setCoverAnswer(null)
+    setPreviewAnswer('')
   })
 
   return (
