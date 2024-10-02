@@ -2,9 +2,11 @@ import { Card } from '@/services/cards/cards.types'
 import {
   AnswerCardArgs,
   CreateDeckArgs,
+  CreateFavoriteArgs,
   Deck,
   DecksListResponse,
   DeleteDeckArgs,
+  DeleteFavoriteArgs,
   GetDeckArgs,
   GetDecksArgs,
   LearDeckArgs,
@@ -66,6 +68,14 @@ export const decksService = flashcardsApi.injectEndpoints({
           }
         },
       }),
+      createFavoriteDeck: builder.mutation<void, CreateFavoriteArgs>({
+        invalidatesTags: ['Decks'],
+        query: args => ({
+          body: args,
+          method: 'POST',
+          url: `v1/decks/${args.id}/favorite`,
+        }),
+      }),
       deleteDeck: builder.mutation<void, DeleteDeckArgs>({
         invalidatesTags: ['Decks'],
         async onQueryStarted({ id }, { dispatch, getState, queryFulfilled }) {
@@ -102,10 +112,17 @@ export const decksService = flashcardsApi.injectEndpoints({
           url: `v1/decks/${args.id}`,
         }),
       }),
+      deleteFavoriteDeck: builder.mutation<void, DeleteFavoriteArgs>({
+        invalidatesTags: ['Decks'],
+        query: args => ({
+          body: args,
+          method: 'DELETE',
+          url: `v1/decks/${args.id}/favorite`,
+        }),
+      }),
       getCardLearn: builder.query<Card, LearDeckArgs>({
         query: ({ id }) => `v1/decks/${id}/learn`,
       }),
-
       getDeck: builder.query<Deck, GetDeckArgs>({
         providesTags: ['Deck'],
         query: ({ id }) => `v1/decks/${id}`,
@@ -180,7 +197,9 @@ export const decksService = flashcardsApi.injectEndpoints({
 export const {
   useAnswerCardMutation,
   useCreateDeckMutation,
+  useCreateFavoriteDeckMutation,
   useDeleteDeckMutation,
+  useDeleteFavoriteDeckMutation,
   useGetCardLearnQuery,
   useGetDeckQuery,
   useGetDecksQuery,

@@ -16,6 +16,7 @@ export interface Deck {
   cover?: string
   created: string
   id: string
+  isFavorite: boolean
   isPrivate: boolean
   name: string
   updated: string
@@ -39,6 +40,7 @@ export type AnswerCardArgs = {
 export interface GetDecksArgs {
   authorId?: string
   currentPage?: number
+  favoritedBy?: string
   itemsPerPage?: number
   maxCardsCount?: number
   minCardsCount?: number
@@ -66,5 +68,12 @@ export type UpdateDeckArgs = {
 } & Partial<CreateDeckArgs>
 
 export type LearDeckArgs = {
+  id: string
+}
+export type CreateFavoriteArgs = {
+  id: string
+}
+
+export type DeleteFavoriteArgs = {
   id: string
 }

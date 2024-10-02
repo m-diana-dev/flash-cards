@@ -77,6 +77,7 @@ export const DecksFilters = ({
           onValueChange={handleChangeTabs}
           tabs={[
             { title: 'My Cards', value: 'my' },
+            { title: 'Favorite', value: 'favorite' },
             { title: 'All Cards', value: '' },
           ]}
           value={show}

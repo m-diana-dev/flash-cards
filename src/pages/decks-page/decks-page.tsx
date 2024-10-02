@@ -39,10 +39,12 @@ export function DecksPage() {
   const { data: me } = useMeQuery()
 
   const authorId = show === 'my' ? me?.id : undefined
+  const authorIdFavorited = show === 'favorite' ? me?.id : undefined
 
   const { currentData, data, error, isLoading } = useGetDecksQuery({
     authorId: authorId,
     currentPage: +currentPage,
+    favoritedBy: authorIdFavorited,
     itemsPerPage: +itemsPerPage,
     maxCardsCount: +maxCount,
     minCardsCount: +minCount,
