@@ -24,6 +24,7 @@ type Props = {
   myPack: boolean
   setCurrentCard: (card: Card) => void
   setOpenDeleteCardModal: (open: boolean) => void
+  setOpenUpdateCardModal: (open: boolean) => void
   setSorting: (sorting: string) => void
   sorting: null | string
 } & ComponentPropsWithoutRef<'table'>
@@ -33,6 +34,7 @@ export const CardsTable = ({
   myPack,
   setCurrentCard,
   setOpenDeleteCardModal,
+  setOpenUpdateCardModal,
   setSorting,
   sorting,
 }: Props) => {
@@ -48,6 +50,11 @@ export const CardsTable = ({
 
   const deleteCardHandler = (card: Card) => {
     setOpenDeleteCardModal(true)
+    setCurrentCard(card)
+  }
+
+  const updateCardHandler = (card: Card) => {
+    setOpenUpdateCardModal(true)
     setCurrentCard(card)
   }
 
@@ -131,7 +138,7 @@ export const CardsTable = ({
               {myPack && (
                 <TableCell className={s.TableCell}>
                   <button>
-                    <Edit onClick={() => {}} />
+                    <Edit onClick={() => updateCardHandler(card)} />
                   </button>
                   <button>
                     <Delete onClick={() => deleteCardHandler(card)} />

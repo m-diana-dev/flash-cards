@@ -9,6 +9,7 @@ import { AddCardModal } from '@/pages/deck-page/add-card-modal/add-card-modal'
 import { CardsTable } from '@/pages/deck-page/cards-table'
 import { DeckPageTop } from '@/pages/deck-page/deck-page-top/deck-page-top'
 import { DeleteCardModal } from '@/pages/deck-page/delete-card-modal/delete-card-modal'
+import { UpdateCardModal } from '@/pages/deck-page/update-card-modal/update-card-modal'
 import { useCards } from '@/pages/deck-page/use-cards'
 import { DeleteDecksModal } from '@/pages/decks-page/delete-deck-modal/delete-decks-modal'
 import { UpdateDeckModal } from '@/pages/decks-page/update-deck-modal/update-deck-modal'
@@ -26,6 +27,7 @@ export const DeckPage = () => {
   const [openDeleteDeckModal, setOpenDeleteDeckModal] = useState<boolean>(false)
   const [openAddCardModal, setOpenAddCardModal] = useState<boolean>(false)
   const [openDeleteCardModal, setOpenDeleteCardModal] = useState<boolean>(false)
+  const [openUpdateCardModal, setOpenUpdateCardModal] = useState<boolean>(false)
   const [currentCard, setCurrentCard] = useState<Card | null>(null)
 
   const {
@@ -80,6 +82,12 @@ export const DeckPage = () => {
         onOpenChange={setOpenDeleteCardModal}
         open={openDeleteCardModal}
       />
+      <UpdateCardModal
+        card={currentCard}
+        deckId={deck?.id ?? ''}
+        onOpenChange={setOpenUpdateCardModal}
+        open={openUpdateCardModal}
+      />
       <div className={s.DeckPage}>
         <Button className={s.DeckPageButton} onClick={() => navigate('/')} variant={'link'}>
           <ArrowBack />
@@ -112,6 +120,7 @@ export const DeckPage = () => {
               myPack={myPack}
               setCurrentCard={setCurrentCard}
               setOpenDeleteCardModal={setOpenDeleteCardModal}
+              setOpenUpdateCardModal={setOpenUpdateCardModal}
               setSorting={setSorting}
               sorting={sorting}
             />
