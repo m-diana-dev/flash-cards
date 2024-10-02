@@ -1,4 +1,10 @@
-import { Card, CardsListResponse, CreateCardArgs, GetCardsArgs } from '@/services/cards/cards.types'
+import {
+  Card,
+  CardsListResponse,
+  CreateCardArgs,
+  DeleteCardArgs,
+  GetCardsArgs,
+} from '@/services/cards/cards.types'
 import { flashcardsApi } from '@/services/flashcards-api'
 
 export const cardsService = flashcardsApi.injectEndpoints({
@@ -50,6 +56,42 @@ export const cardsService = flashcardsApi.injectEndpoints({
           }
         },
       }),
+      deleteCard: builder.mutation<void, DeleteCardArgs>({
+        invalidatesTags: ['Deck'],
+        async onQueryStarted({ id }, { dispatch, getState, queryFulfilled }) {
+          const invalidateBy = cardsService.util.selectInvalidatedBy(getState(), ['Cards'])
+
+          const patchResults: any[] = []
+
+          invalidateBy.forEach(({ originalArgs }) => {
+            patchResults.push(
+              dispatch(
+                cardsService.util.updateQueryData('getCards', originalArgs, draft => {
+                  const itemToDelete = draft.items.findIndex(deck => deck.id === id)
+
+                  if (itemToDelete === -1) {
+                    return
+                  }
+                  draft.items.splice(itemToDelete, 1)
+                })
+              )
+            )
+          })
+
+          try {
+            await queryFulfilled
+          } catch (e) {
+            patchResults.forEach(patchResult => {
+              patchResult.undo()
+            })
+          }
+        },
+        query: args => ({
+          body: args,
+          method: 'DELETE',
+          url: `v1/cards/${args.id}`,
+        }),
+      }),
       getCards: builder.query<CardsListResponse, GetCardsArgs>({
         providesTags: ['Cards'],
 
@@ -62,4 +104,4 @@ export const cardsService = flashcardsApi.injectEndpoints({
   },
 })
 
-export const { useCreateCardMutation, useGetCardsQuery } = cardsService
+export const { useCreateCardMutation, useDeleteCardMutation, useGetCardsQuery } = cardsService

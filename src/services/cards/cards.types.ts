@@ -39,3 +39,7 @@ export type CreateCardArgs = {
   questionImg?: File | null
   questionVideo?: string
 }
+
+export type DeleteCardArgs = {
+  id: string
+}
