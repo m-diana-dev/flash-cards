@@ -125,24 +125,32 @@ export const DeckPage = () => {
           </div>
         ) : (
           <>
-            <CardsTable
-              cards={cards?.items}
-              className={s.CardTable}
-              myPack={myPack}
-              setCurrentCard={setCurrentCard}
-              setOpenDeleteCardModal={setOpenDeleteCardModal}
-              setOpenUpdateCardModal={setOpenUpdateCardModal}
-              setSorting={setSorting}
-              sorting={sorting}
-            />
-            <Pagination
-              changeItemsPerPage={handleItemPerPage}
-              currentPage={+currentPage}
-              handlePageChange={setCurrentPage}
-              itemsPerPage={+itemsPerPage}
-              totalItems={cards?.pagination.totalItems}
-              totalPages={cards?.pagination.totalPages}
-            />
+            {cards?.items.length ? (
+              <>
+                <CardsTable
+                  cards={cards?.items}
+                  className={s.CardTable}
+                  myPack={myPack}
+                  setCurrentCard={setCurrentCard}
+                  setOpenDeleteCardModal={setOpenDeleteCardModal}
+                  setOpenUpdateCardModal={setOpenUpdateCardModal}
+                  setSorting={setSorting}
+                  sorting={sorting}
+                />
+                <Pagination
+                  changeItemsPerPage={handleItemPerPage}
+                  currentPage={+currentPage}
+                  handlePageChange={setCurrentPage}
+                  itemsPerPage={+itemsPerPage}
+                  totalItems={cards?.pagination.totalItems}
+                  totalPages={cards?.pagination.totalPages}
+                />
+              </>
+            ) : (
+              <Typography as={'div'} className={s.DeckPageResult}>
+                No result for the given parameters :(
+              </Typography>
+            )}
           </>
         )}
       </div>

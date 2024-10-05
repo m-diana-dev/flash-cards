@@ -1,3 +1,4 @@
+import Delete from '@/assets/images/icons/Delete'
 import { Button } from '@/components/ui/button'
 import { Page } from '@/components/ui/page/page'
 import { Pagination } from '@/components/ui/pagination'
@@ -90,21 +91,35 @@ export function DecksPage() {
         setShowParam={setShowParam}
         show={show}
       />
-      <DecksTable
-        cleanFilter={cleanFilter}
-        decks={decks?.items}
-        setSorting={setSorting}
-        sorting={sorting}
-        userId={me?.id}
-      />
-      <Pagination
-        changeItemsPerPage={handleItemPerPage}
-        currentPage={+currentPage}
-        handlePageChange={setCurrentPage}
-        itemsPerPage={+itemsPerPage}
-        totalItems={decks?.pagination.totalItems}
-        totalPages={decks?.pagination.totalPages}
-      />
+      {decks?.items.length ? (
+        <>
+          <DecksTable
+            cleanFilter={cleanFilter}
+            decks={decks?.items}
+            setSorting={setSorting}
+            sorting={sorting}
+            userId={me?.id}
+          />
+          <Pagination
+            changeItemsPerPage={handleItemPerPage}
+            currentPage={+currentPage}
+            handlePageChange={setCurrentPage}
+            itemsPerPage={+itemsPerPage}
+            totalItems={decks?.pagination.totalItems}
+            totalPages={decks?.pagination.totalPages}
+          />
+        </>
+      ) : (
+        <>
+          <Typography as={'div'} className={s.PageEmpty}>
+            No result for the given parameters :(
+          </Typography>
+          <Button className={s.PageEmptyBtn} onClick={cleanFilter} variant={'secondary'}>
+            <Delete />
+            Clear Filter
+          </Button>
+        </>
+      )}
     </Page>
   )
 }
