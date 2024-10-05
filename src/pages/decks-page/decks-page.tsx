@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button'
 import { Page } from '@/components/ui/page/page'
 import { Pagination } from '@/components/ui/pagination'
 import { Preloader } from '@/components/ui/preloader'
+import { PreloaderLine } from '@/components/ui/preloader-line'
 import { Typography } from '@/components/ui/typography'
 import { AddDeckModal } from '@/pages/decks-page/add-deck-modal/add-deck-modal'
 import { DecksFilters } from '@/pages/decks-page/decks-filters/decks-filters'
@@ -41,7 +42,7 @@ export function DecksPage() {
   const authorId = show === 'my' ? me?.id : undefined
   const authorIdFavorited = show === 'favorite' ? me?.id : undefined
 
-  const { currentData, data, error, isLoading } = useGetDecksQuery({
+  const { currentData, data, error, isFetching, isLoading } = useGetDecksQuery({
     authorId: authorId,
     currentPage: +currentPage,
     favoritedBy: authorIdFavorited,
@@ -69,6 +70,7 @@ export function DecksPage() {
 
   return (
     <Page>
+      {isFetching && <PreloaderLine />}
       <div className={s.PageTop}>
         <Typography as={'h1'} variant={'h1'}>
           Decks list

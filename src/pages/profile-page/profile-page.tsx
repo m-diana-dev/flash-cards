@@ -4,6 +4,7 @@ import ArrowBack from '@/assets/images/icons/ArrowBack'
 import { PersonalInformation } from '@/components/profile/persolan-information/personal-information'
 import { Button } from '@/components/ui/button'
 import { Preloader } from '@/components/ui/preloader'
+import { PreloaderLine } from '@/components/ui/preloader-line'
 import {
   useDeleteMeMutation,
   useLogoutMutation,
@@ -14,7 +15,7 @@ import {
 import s from './profile-page.module.scss'
 
 export const ProfilePage = () => {
-  const { data, error, isLoading } = useMeQuery()
+  const { data, error, isFetching, isLoading } = useMeQuery()
   const [updateUser] = useUserUpdateMutation()
   const [logout] = useLogoutMutation()
   const [deleteAccount] = useDeleteMeMutation()
@@ -31,6 +32,7 @@ export const ProfilePage = () => {
 
   return (
     <div className={s.Page}>
+      {isFetching && <PreloaderLine />}
       <Button className={s.PageButton} onClick={() => navigate(-1)} variant={'link'}>
         <ArrowBack />
         Back to Previous Page

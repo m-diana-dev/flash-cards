@@ -7,6 +7,8 @@ import { gradeCardSchema } from '@/components/auth/forms-schems'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { FormRadio } from '@/components/ui/form/form-radio'
+import { Preloader } from '@/components/ui/preloader'
+import { PreloaderLine } from '@/components/ui/preloader-line'
 import { Typography } from '@/components/ui/typography'
 import {
   useAnswerCardMutation,
@@ -28,13 +30,13 @@ export const LearnPage = () => {
   const navigate = useNavigate()
   const location = useLocation()
 
-  const { data: cardRandom } = useGetCardLearnQuery({
+  const { data: cardRandom, isLoading } = useGetCardLearnQuery({
     id: location.pathname.replace('/decks/', '').replace('/learn', ''),
   })
 
   const { data: deck } = useGetDeckQuery({ id: cardRandom?.deckId ?? '' })
 
-  const [answerCard, { data: newCard }] = useAnswerCardMutation()
+  const [answerCard, { data: newCard, isLoading: isLoadingNewCard }] = useAnswerCardMutation()
 
   const card = newCard ?? cardRandom
 
@@ -45,8 +47,13 @@ export const LearnPage = () => {
     setShowAnswer(false)
   })
 
+  if (isLoading) {
+    return <Preloader />
+  }
+
   return (
     <div className={s.LearnPage}>
+      {isLoadingNewCard && <PreloaderLine />}
       <Button className={s.LearnPageButton} onClick={() => navigate('/')} variant={'link'}>
         <ArrowBack />
         Back to Decks List

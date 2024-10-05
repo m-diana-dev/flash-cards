@@ -18,18 +18,20 @@ export function useAuthContext() {
 
 type Props = ComponentPropsWithoutRef<'div'>
 export const Layout = forwardRef<ElementRef<'div'>, Props>(({ children, ...restProps }, ref) => {
-  const { data, isError } = useMeQuery()
+  const { data, isError, isLoading } = useMeQuery()
 
   const isAuthenticated = !isError
 
   return (
     <div ref={ref} {...restProps}>
-      <Header
-        avatar={data?.avatar}
-        email={data?.email}
-        isAuthenticated={isAuthenticated}
-        name={data?.name}
-      />
+      {!isLoading && (
+        <Header
+          avatar={data?.avatar}
+          email={data?.email}
+          isAuthenticated={isAuthenticated}
+          name={data?.name}
+        />
+      )}
       <main className={s.Main}>
         <Container>
           <Outlet context={{ isAuthenticated: isAuthenticated } satisfies AuthContext} />
