@@ -26,6 +26,7 @@ const createLearnCardSchema = z.object({
 })
 
 export const LearnPage = () => {
+  const [isFirstQuestion, setIsFirstQuestion] = useState(true)
   const [showAnswer, setShowAnswer] = useState<boolean>(false)
   const navigate = useNavigate()
   const location = useLocation()
@@ -38,13 +39,22 @@ export const LearnPage = () => {
 
   const [answerCard, { data: newCard, isLoading: isLoadingNewCard }] = useAnswerCardMutation()
 
-  const card = newCard ?? cardRandom
+  const card = isFirstQuestion ? cardRandom : newCard
 
-  const { control, handleSubmit } = useForm()
+  const {
+    control,
+    formState: { isDirty },
+    handleSubmit,
+    reset,
+  } = useForm({ mode: 'onChange' })
 
   const onSubmitForm = handleSubmit(data => {
     answerCard({ cardId: card?.id ?? '', grade: +data.grade as 1 | 2 | 3 | 4 | 5 })
     setShowAnswer(false)
+    reset()
+    if (isFirstQuestion) {
+      setIsFirstQuestion(false)
+    }
   })
 
   if (isLoading) {
@@ -108,7 +118,9 @@ export const LearnPage = () => {
                 ]}
                 name={'grade'}
               />
-              <Button fullWidth>Next Question</Button>
+              <Button disabled={!isDirty} fullWidth>
+                Next Question
+              </Button>
             </form>
           </>
         )}
