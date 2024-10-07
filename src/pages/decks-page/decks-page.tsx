@@ -43,7 +43,7 @@ export function DecksPage() {
   const authorId = show === 'my' ? me?.id : undefined
   const authorIdFavorited = show === 'favorite' ? me?.id : undefined
 
-  const { currentData, data, error, isFetching, isLoading } = useGetDecksQuery({
+  const { currentData, data, isFetching, isLoading } = useGetDecksQuery({
     authorId: authorId,
     currentPage: +currentPage,
     favoritedBy: authorIdFavorited,
@@ -65,9 +65,9 @@ export function DecksPage() {
     return <Preloader />
   }
 
-  if (error) {
-    return <div>Error: {JSON.stringify(error)}</div>
-  }
+  // if (error) {
+  //   return <div>Error: {JSON.stringify(error)}</div>
+  // }
 
   return (
     <Page>

@@ -11,6 +11,7 @@ import { ModalFooter } from '@/components/ui/modal/modalFooter/modalFooter'
 import { ModalMain } from '@/components/ui/modal/modalMain/modalMain'
 import { ModalTitle } from '@/components/ui/modal/modalTitle/modalTitle'
 import { Typography } from '@/components/ui/typography'
+import { errorHandler } from '@/helpers/errorHandler'
 import { useCreateCardMutation } from '@/services/cards/cards.service'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -60,7 +61,13 @@ export const AddCardModal = ({ deckId, onOpenChange, ...rest }: Props) => {
     }
   }, [coverAnswer])
 
-  const [createCard] = useCreateCardMutation()
+  const [createCard, { error }] = useCreateCardMutation()
+
+  useEffect(() => {
+    if (error) {
+      errorHandler(error)
+    }
+  }, [error])
 
   const { control, handleSubmit, reset } = useForm<addCardEditValues>({
     defaultValues: {

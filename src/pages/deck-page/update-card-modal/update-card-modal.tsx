@@ -11,6 +11,7 @@ import { ModalFooter } from '@/components/ui/modal/modalFooter/modalFooter'
 import { ModalMain } from '@/components/ui/modal/modalMain/modalMain'
 import { ModalTitle } from '@/components/ui/modal/modalTitle/modalTitle'
 import { Typography } from '@/components/ui/typography'
+import { errorHandler } from '@/helpers/errorHandler'
 import { useUpdateCardMutation } from '@/services/cards/cards.service'
 import { Card } from '@/services/cards/cards.types'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -81,7 +82,7 @@ export const UpdateCardModal = ({ card, deckId, onOpenChange, ...rest }: Props) 
     }
   }, [coverAnswer])
 
-  const [updateCard] = useUpdateCardMutation()
+  const [updateCard, { error }] = useUpdateCardMutation()
 
   const { control, handleSubmit, reset } = useForm<updateCardEditValues>({
     defaultValues: {
@@ -90,6 +91,12 @@ export const UpdateCardModal = ({ card, deckId, onOpenChange, ...rest }: Props) 
     },
     resolver: zodResolver(updateCardSchema),
   })
+
+  useEffect(() => {
+    if (error) {
+      errorHandler(error)
+    }
+  }, [error])
 
   const onClose = () => {
     onOpenChange?.(false)

@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef } from 'react'
+import { ComponentPropsWithoutRef, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import { Modal } from '@/components/ui/modal'
@@ -6,6 +6,7 @@ import { ModalFooter } from '@/components/ui/modal/modalFooter/modalFooter'
 import { ModalMain } from '@/components/ui/modal/modalMain/modalMain'
 import { ModalTitle } from '@/components/ui/modal/modalTitle/modalTitle'
 import { Typography } from '@/components/ui/typography'
+import { errorHandler } from '@/helpers/errorHandler'
 import { isStringIncludeValue } from '@/helpers/isStringIncludeValue'
 import { useDeleteDeckMutation } from '@/services/decks/decks.service'
 import { Deck } from '@/services/decks/decks.types'
@@ -18,7 +19,14 @@ export const DeleteDecksModal = ({ deck, onOpenChange, ...rest }: Props) => {
   const location = useLocation()
   const navigate = useNavigate()
 
-  const [deleteDeck] = useDeleteDeckMutation()
+  const [deleteDeck, { error, isSuccess }] = useDeleteDeckMutation()
+
+  useEffect(() => {
+    if (error) {
+      errorHandler(error)
+    }
+  }, [error])
+
   const onClose = () => {
     onOpenChange?.(false)
   }
@@ -27,8 +35,10 @@ export const DeleteDecksModal = ({ deck, onOpenChange, ...rest }: Props) => {
     onClose()
     if (deck) {
       deleteDeck({ id: deck.id }).then(() => {
-        if (isStringIncludeValue(location.pathname, '/decks/')) {
-          navigate('/')
+        if (isSuccess) {
+          if (isStringIncludeValue(location.pathname, '/decks/')) {
+            navigate('/')
+          }
         }
       })
     }

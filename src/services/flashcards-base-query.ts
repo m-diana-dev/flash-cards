@@ -6,30 +6,34 @@ import {
   FetchArgs,
   FetchBaseQueryError,
   fetchBaseQuery,
+  retry,
 } from '@reduxjs/toolkit/query/react'
 import { Mutex } from 'async-mutex'
 
 // create a new mutex
 const mutex = new Mutex()
-const baseQuery = fetchBaseQuery({
-  baseUrl: 'https://api.flashcards.andrii.es',
-  // credentials: 'include',
-  // prepareHeaders: headers => {
-  //   headers.append('x-auth-skip', 'true')
-  // },
-  prepareHeaders: headers => {
-    const token = localStorage.getItem('accessToken')
+const baseQuery = retry(
+  fetchBaseQuery({
+    baseUrl: 'https://api.flashcards.andrii.es',
+    // credentials: 'include',
+    // prepareHeaders: headers => {
+    //   headers.append('x-auth-skip', 'true')
+    // },
+    prepareHeaders: headers => {
+      const token = localStorage.getItem('accessToken')
 
-    if (headers.get('Authorization')) {
+      if (headers.get('Authorization')) {
+        return headers
+      }
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`)
+      }
+
       return headers
-    }
-    if (token) {
-      headers.set('Authorization', `Bearer ${token}`)
-    }
-
-    return headers
-  },
-})
+    },
+  }),
+  { maxRetries: 0 }
+)
 
 export const baseQueryWithReauth: BaseQueryFn<
   FetchArgs | string,
