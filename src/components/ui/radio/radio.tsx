@@ -16,7 +16,7 @@ export const Radio = forwardRef<ElementRef<typeof RadioGroup.Root>, RadioProps>(
   ({ className, defaultValue, items, ...restProps }, ref) => (
     <RadioGroup.Root
       className={clsx(s.RadioGroup, className)}
-      defaultValue={defaultValue || items[0].value.toString()}
+      defaultValue={defaultValue}
       ref={ref}
       {...restProps}
     >
