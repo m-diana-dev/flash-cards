@@ -4,6 +4,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import ArrowBack from '@/assets/images/icons/ArrowBack'
 import { Button } from '@/components/ui/button'
 import { Pagination } from '@/components/ui/pagination'
+import { Preloader } from '@/components/ui/preloader'
+import { PreloaderLine } from '@/components/ui/preloader-line'
 import { Typography } from '@/components/ui/typography'
 import { AddCardModal } from '@/pages/deck-page/add-card-modal/add-card-modal'
 import { CardsTable } from '@/pages/deck-page/cards-table'
@@ -44,7 +46,11 @@ export const DeckPage = () => {
 
   const { data: deck } = useGetDeckQuery({ id: id || '' })
   const { data: me } = useMeQuery()
-  const { data: cards } = useGetCardsQuery({
+  const {
+    data: cards,
+    isFetching,
+    isLoading,
+  } = useGetCardsQuery({
     currentPage: +currentPage,
     id: id || '',
     itemsPerPage: +itemsPerPage,
@@ -60,8 +66,13 @@ export const DeckPage = () => {
     setCurrentPage(null)
   }
 
+  if (isLoading) {
+    return <Preloader />
+  }
+
   return (
     <>
+      {isFetching && <PreloaderLine />}
       <UpdateDeckModal
         deck={deck ?? null}
         onOpenChange={setOpenUpdateDeckModal}
@@ -114,24 +125,32 @@ export const DeckPage = () => {
           </div>
         ) : (
           <>
-            <CardsTable
-              cards={cards?.items}
-              className={s.CardTable}
-              myPack={myPack}
-              setCurrentCard={setCurrentCard}
-              setOpenDeleteCardModal={setOpenDeleteCardModal}
-              setOpenUpdateCardModal={setOpenUpdateCardModal}
-              setSorting={setSorting}
-              sorting={sorting}
-            />
-            <Pagination
-              changeItemsPerPage={handleItemPerPage}
-              currentPage={+currentPage}
-              handlePageChange={setCurrentPage}
-              itemsPerPage={+itemsPerPage}
-              totalItems={cards?.pagination.totalItems}
-              totalPages={cards?.pagination.totalPages}
-            />
+            {cards?.items.length ? (
+              <>
+                <CardsTable
+                  cards={cards?.items}
+                  className={s.CardTable}
+                  myPack={myPack}
+                  setCurrentCard={setCurrentCard}
+                  setOpenDeleteCardModal={setOpenDeleteCardModal}
+                  setOpenUpdateCardModal={setOpenUpdateCardModal}
+                  setSorting={setSorting}
+                  sorting={sorting}
+                />
+                <Pagination
+                  changeItemsPerPage={handleItemPerPage}
+                  currentPage={+currentPage}
+                  handlePageChange={setCurrentPage}
+                  itemsPerPage={+itemsPerPage}
+                  totalItems={cards?.pagination.totalItems}
+                  totalPages={cards?.pagination.totalPages}
+                />
+              </>
+            ) : (
+              <Typography as={'div'} className={s.DeckPageResult}>
+                No result for the given parameters :(
+              </Typography>
+            )}
           </>
         )}
       </div>

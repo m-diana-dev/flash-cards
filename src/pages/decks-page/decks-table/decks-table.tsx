@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 import ArrowDown from '@/assets/images/icons/ArrowDown'
 import Delete from '@/assets/images/icons/Delete'
 import Edit from '@/assets/images/icons/Edit'
+import Heart from '@/assets/images/icons/Heart'
+import HeartFull from '@/assets/images/icons/HeartFull'
 import Play from '@/assets/images/icons/Play'
 import {
   Table,
@@ -16,6 +18,10 @@ import {
 import { isStringIncludeValue } from '@/helpers/isStringIncludeValue'
 import { DeleteDecksModal } from '@/pages/decks-page/delete-deck-modal/delete-decks-modal'
 import { UpdateDeckModal } from '@/pages/decks-page/update-deck-modal/update-deck-modal'
+import {
+  useCreateFavoriteDeckMutation,
+  useDeleteFavoriteDeckMutation,
+} from '@/services/decks/decks.service'
 import { Deck } from '@/services/decks/decks.types'
 import clsx from 'clsx'
 
@@ -33,6 +39,9 @@ export const DecksTable = ({ cleanFilter, decks, setSorting, sorting, userId }: 
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false)
   const [openUpdateModal, setOpenUpdateModal] = useState<boolean>(false)
   const [activeDeck, setActiveDeck] = useState<Deck | null>(null)
+
+  const [createFavoriteDeck] = useCreateFavoriteDeckMutation()
+  const [deleteFavoriteDeck] = useDeleteFavoriteDeckMutation()
 
   const handleSort = (sort: string) => {
     if (!isStringIncludeValue(sorting, 'asc') || sorting === null) {
@@ -156,6 +165,17 @@ export const DecksTable = ({ cleanFilter, decks, setSorting, sorting, userId }: 
                       </button>
                     </>
                   )}
+                  <>
+                    {deck.isFavorite ? (
+                      <button>
+                        <HeartFull onClick={() => deleteFavoriteDeck({ id: deck.id })} />
+                      </button>
+                    ) : (
+                      <button>
+                        <Heart onClick={() => createFavoriteDeck({ id: deck.id })} />
+                      </button>
+                    )}
+                  </>
                 </TableCell>
               </TableRow>
             )

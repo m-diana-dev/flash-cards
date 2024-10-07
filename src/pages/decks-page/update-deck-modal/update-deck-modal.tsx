@@ -11,6 +11,7 @@ import { Modal } from '@/components/ui/modal'
 import { ModalFooter } from '@/components/ui/modal/modalFooter/modalFooter'
 import { ModalMain } from '@/components/ui/modal/modalMain/modalMain'
 import { ModalTitle } from '@/components/ui/modal/modalTitle/modalTitle'
+import { errorHandler } from '@/helpers/errorHandler'
 import { useUpdateDeckMutation } from '@/services/decks/decks.service'
 import { Deck } from '@/services/decks/decks.types'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -61,10 +62,16 @@ export const UpdateDeckModal = ({ cleanFilter, deck, onOpenChange, open, ...rest
     }
   }, [cover])
 
-  const [updateDeck] = useUpdateDeckMutation()
+  const [updateDeck, { error }] = useUpdateDeckMutation()
   const { control, handleSubmit, reset } = useForm<updateDeckEditValues>({
     resolver: zodResolver(updateDeckSchema),
   })
+
+  useEffect(() => {
+    if (error) {
+      errorHandler(error)
+    }
+  }, [error])
 
   const onSubmitForm = handleSubmit(data => {
     if (deck) {

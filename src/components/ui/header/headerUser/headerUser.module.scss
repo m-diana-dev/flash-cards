@@ -13,6 +13,11 @@
     bottom: 0;
     left: 0;
   }
+  span {
+    @media (max-width: 480px) {
+      font-size: 0.8rem;
+    }
+  }
 }
 
 .headerUserNoAvatar {

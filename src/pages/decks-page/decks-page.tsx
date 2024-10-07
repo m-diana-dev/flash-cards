@@ -1,7 +1,9 @@
+import Delete from '@/assets/images/icons/Delete'
 import { Button } from '@/components/ui/button'
 import { Page } from '@/components/ui/page/page'
 import { Pagination } from '@/components/ui/pagination'
 import { Preloader } from '@/components/ui/preloader'
+import { PreloaderLine } from '@/components/ui/preloader-line'
 import { Typography } from '@/components/ui/typography'
 import { AddDeckModal } from '@/pages/decks-page/add-deck-modal/add-deck-modal'
 import { DecksFilters } from '@/pages/decks-page/decks-filters/decks-filters'
@@ -39,10 +41,12 @@ export function DecksPage() {
   const { data: me } = useMeQuery()
 
   const authorId = show === 'my' ? me?.id : undefined
+  const authorIdFavorited = show === 'favorite' ? me?.id : undefined
 
-  const { currentData, data, error, isLoading } = useGetDecksQuery({
+  const { currentData, data, isFetching, isLoading } = useGetDecksQuery({
     authorId: authorId,
     currentPage: +currentPage,
+    favoritedBy: authorIdFavorited,
     itemsPerPage: +itemsPerPage,
     maxCardsCount: +maxCount,
     minCardsCount: +minCount,
@@ -61,12 +65,13 @@ export function DecksPage() {
     return <Preloader />
   }
 
-  if (error) {
-    return <div>Error: {JSON.stringify(error)}</div>
-  }
+  // if (error) {
+  //   return <div>Error: {JSON.stringify(error)}</div>
+  // }
 
   return (
     <Page>
+      {isFetching && <PreloaderLine />}
       <div className={s.PageTop}>
         <Typography as={'h1'} variant={'h1'}>
           Decks list
@@ -86,21 +91,35 @@ export function DecksPage() {
         setShowParam={setShowParam}
         show={show}
       />
-      <DecksTable
-        cleanFilter={cleanFilter}
-        decks={decks?.items}
-        setSorting={setSorting}
-        sorting={sorting}
-        userId={me?.id}
-      />
-      <Pagination
-        changeItemsPerPage={handleItemPerPage}
-        currentPage={+currentPage}
-        handlePageChange={setCurrentPage}
-        itemsPerPage={+itemsPerPage}
-        totalItems={decks?.pagination.totalItems}
-        totalPages={decks?.pagination.totalPages}
-      />
+      {decks?.items.length ? (
+        <>
+          <DecksTable
+            cleanFilter={cleanFilter}
+            decks={decks?.items}
+            setSorting={setSorting}
+            sorting={sorting}
+            userId={me?.id}
+          />
+          <Pagination
+            changeItemsPerPage={handleItemPerPage}
+            currentPage={+currentPage}
+            handlePageChange={setCurrentPage}
+            itemsPerPage={+itemsPerPage}
+            totalItems={decks?.pagination.totalItems}
+            totalPages={decks?.pagination.totalPages}
+          />
+        </>
+      ) : (
+        <>
+          <Typography as={'div'} className={s.PageEmpty}>
+            No result for the given parameters :(
+          </Typography>
+          <Button className={s.PageEmptyBtn} onClick={cleanFilter} variant={'secondary'}>
+            <Delete />
+            Clear Filter
+          </Button>
+        </>
+      )}
     </Page>
   )
 }
