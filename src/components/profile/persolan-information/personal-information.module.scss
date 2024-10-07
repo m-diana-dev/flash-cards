@@ -1,6 +1,9 @@
 .PersonalInformation {
   padding: 33px 36px 40px;
   align-items: center;
+  @media (max-width: 485px) {
+    padding: 30px 15px;
+  }
 }
 .Title {
   margin-bottom: 27px;

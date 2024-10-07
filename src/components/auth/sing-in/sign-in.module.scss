@@ -1,5 +1,9 @@
 .card {
   padding: 33px 36px 25px;
+
+  @media (max-width: 485px) {
+    padding: 30px 15px 25px;
+  }
 }
 
 .title {
