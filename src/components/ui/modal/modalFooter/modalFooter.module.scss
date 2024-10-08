@@ -3,4 +3,18 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media (max-width: 485px) {
+    padding: 10px 0;
+    flex-direction: column;
+  }
+  button {
+    @media (max-width: 485px) {
+      width: 100%;
+    }
+    &:not(:last-child) {
+      @media (max-width: 485px) {
+        margin-bottom: 10px;
+      }
+    }
+  }
 }
