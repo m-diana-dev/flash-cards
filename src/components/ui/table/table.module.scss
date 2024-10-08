@@ -19,6 +19,7 @@
   line-height: var(--line-height-m);
   font-weight: var(--font-weight-bold);
   text-align: left;
+  white-space: nowrap;
   svg {
     margin-left: 5px;
   }
@@ -27,11 +28,6 @@
 .td {
   font-size: var(--font-size-s);
   line-height: var(--line-height-m);
-  button {
-    &:not(:last-child) {
-      margin-right: 10px;
-    }
-  }
 }
 
 .th,
