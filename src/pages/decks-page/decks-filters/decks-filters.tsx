@@ -95,7 +95,7 @@ export const DecksFilters = ({
           value={rangeValue}
         />
       </div>
-      <Button onClick={cleanFilter} variant={'secondary'}>
+      <Button className={s.PageBtn} onClick={cleanFilter} variant={'secondary'}>
         <Delete />
         Clear Filter
       </Button>

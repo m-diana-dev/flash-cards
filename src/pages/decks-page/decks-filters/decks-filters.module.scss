@@ -3,6 +3,9 @@
   align-items: flex-end;
   justify-content: space-between;
   margin-bottom: 36px;
+  @media (max-width: 991px) {
+    flex-wrap: wrap;
+  }
   &Label {
     display: block;
     margin-bottom: 5px;
@@ -12,14 +15,46 @@
 .PageInput {
   max-width: 250px;
   width: 100%;
+  @media (max-width: 991px) {
+    max-width: calc(100% - 170px);
+    order: 3;
+  }
+  @media (max-width: 480px) {
+    max-width: 100%;
+    margin-bottom: 10px;
+  }
 }
 
 .PageTabs {
   max-width: 285px;
   width: 100%;
+  @media (max-width: 991px) {
+    margin-bottom: 10px;
+    order: 2;
+  }
+  @media (max-width: 480px) {
+    max-width: 100%;
+  }
 }
 
 .PageSlider {
   max-width: 250px;
   width: 100%;
+  @media (max-width: 991px) {
+    order: 1;
+    max-width: calc(100% - 300px);
+    margin-bottom: 10px;
+  }
+  @media (max-width: 480px) {
+    max-width: 100%;
+  }
+}
+
+.PageBtn {
+  @media (max-width: 991px) {
+    order: 4;
+  }
+  @media (max-width: 480px) {
+    width: 100%;
+  }
 }
