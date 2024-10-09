@@ -1,8 +1,9 @@
-import { ComponentPropsWithoutRef } from 'react'
+import { ComponentPropsWithoutRef, useEffect, useState } from 'react'
 
 import ArrowDown from '@/assets/images/icons/ArrowDown'
 import Delete from '@/assets/images/icons/Delete'
 import Edit from '@/assets/images/icons/Edit'
+import { CardItem } from '@/components/ui/card-item'
 import { Rating } from '@/components/ui/rating'
 import {
   Table,
@@ -38,6 +39,18 @@ export const CardsTable = ({
   setSorting,
   sorting,
 }: Props) => {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+
+  const handleResize = () => {
+    setWindowWidth(window.innerWidth)
+  }
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize)
+
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
   const handleSort = (sort: string) => {
     if (!isStringIncludeValue(sorting, 'asc') || sorting === null) {
       setSorting(sort + '-' + 'asc')
@@ -59,96 +72,115 @@ export const CardsTable = ({
   }
 
   return (
-    <Table className={className}>
-      <TableHeader className={s.TableHeader}>
-        <TableRow>
-          <TableHeadCell
-            className={clsx(
-              s.TableCell,
-              cellStyle,
-              isStringIncludeValue(sorting, 'question') && sorting !== null ? s.active : ''
-            )}
-            onClick={() => handleSort('question')}
-          >
-            Question
-            <ArrowDown height={10} width={8} />
-          </TableHeadCell>
-          <TableHeadCell
-            className={clsx(
-              s.TableCell,
-              cellStyle,
-              isStringIncludeValue(sorting, 'answer') && sorting !== null ? s.active : ''
-            )}
-            onClick={() => handleSort('answer')}
-          >
-            Answer
-            <ArrowDown height={10} width={8} />
-          </TableHeadCell>
-          <TableHeadCell
-            className={clsx(
-              s.TableCell,
-              cellStyle,
-              isStringIncludeValue(sorting, 'updated') ? s.active : ''
-            )}
-            onClick={() => handleSort('updated')}
-          >
-            Last Updated
-            <ArrowDown height={10} width={8} />
-          </TableHeadCell>
-          <TableHeadCell
-            className={clsx(
-              s.TableCell,
-              cellStyle,
-              isStringIncludeValue(sorting, 'grade') && sorting !== null ? s.active : ''
-            )}
-            onClick={() => handleSort('grade')}
-          >
-            Grade
-            <ArrowDown height={10} width={8} />
-          </TableHeadCell>
-          {myPack && <TableHeadCell className={clsx(s.TableCell, cellStyle)}></TableHeadCell>}
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {cards?.map(card => {
-          const updatedAt = new Date(card.updated).toLocaleDateString('ru-RU')
-
-          return (
-            <TableRow key={card.id}>
-              <TableCell className={s.TableCell}>
-                <Typography as={'span'} variant={'body2'}>
-                  {card.question}
-                </Typography>
-                {card.questionImg && (
-                  <img alt={'img'} className={s.TableCellImg} src={card.questionImg} />
+    <>
+      {windowWidth >= 768 ? (
+        <Table className={className}>
+          <TableHeader className={s.TableHeader}>
+            <TableRow>
+              <TableHeadCell
+                className={clsx(
+                  s.TableCell,
+                  cellStyle,
+                  isStringIncludeValue(sorting, 'question') && sorting !== null ? s.active : ''
                 )}
-              </TableCell>
-              <TableCell className={s.TableCell}>
-                <Typography as={'span'} variant={'body2'}>
-                  {card.answer}
-                </Typography>
-                {card.answerImg && (
-                  <img alt={'img'} className={s.TableCellImg} src={card.answerImg} />
+                onClick={() => handleSort('question')}
+              >
+                Question
+                <ArrowDown height={10} width={8} />
+              </TableHeadCell>
+              <TableHeadCell
+                className={clsx(
+                  s.TableCell,
+                  cellStyle,
+                  isStringIncludeValue(sorting, 'answer') && sorting !== null ? s.active : ''
                 )}
-              </TableCell>
-              <TableCell className={s.TableCell}>{updatedAt}</TableCell>
-              <TableCell className={s.TableCell}>
-                <Rating value={card.grade} />
-              </TableCell>
-              {myPack && (
-                <TableCell className={s.TableCell}>
-                  <button>
-                    <Edit onClick={() => updateCardHandler(card)} />
-                  </button>
-                  <button>
-                    <Delete onClick={() => deleteCardHandler(card)} />
-                  </button>
-                </TableCell>
-              )}
+                onClick={() => handleSort('answer')}
+              >
+                Answer
+                <ArrowDown height={10} width={8} />
+              </TableHeadCell>
+              <TableHeadCell
+                className={clsx(
+                  s.TableCell,
+                  cellStyle,
+                  isStringIncludeValue(sorting, 'updated') ? s.active : ''
+                )}
+                onClick={() => handleSort('updated')}
+              >
+                Last Updated
+                <ArrowDown height={10} width={8} />
+              </TableHeadCell>
+              <TableHeadCell
+                className={clsx(
+                  s.TableCell,
+                  cellStyle,
+                  isStringIncludeValue(sorting, 'grade') && sorting !== null ? s.active : ''
+                )}
+                onClick={() => handleSort('grade')}
+              >
+                Grade
+                <ArrowDown height={10} width={8} />
+              </TableHeadCell>
+              {myPack && <TableHeadCell className={clsx(s.TableCell, cellStyle)}></TableHeadCell>}
             </TableRow>
-          )
-        })}
-      </TableBody>
-    </Table>
+          </TableHeader>
+          <TableBody>
+            {cards?.map(card => {
+              const updatedAt = new Date(card.updated).toLocaleDateString('ru-RU')
+
+              return (
+                <TableRow key={card.id}>
+                  <TableCell className={s.TableCell}>
+                    <Typography as={'span'} variant={'body2'}>
+                      {card.question}
+                    </Typography>
+                    {card.questionImg && (
+                      <img alt={'img'} className={s.TableCellImg} src={card.questionImg} />
+                    )}
+                  </TableCell>
+                  <TableCell className={s.TableCell}>
+                    <Typography as={'span'} variant={'body2'}>
+                      {card.answer}
+                    </Typography>
+                    {card.answerImg && (
+                      <img alt={'img'} className={s.TableCellImg} src={card.answerImg} />
+                    )}
+                  </TableCell>
+                  <TableCell className={s.TableCell}>{updatedAt}</TableCell>
+                  <TableCell className={s.TableCell}>
+                    <Rating value={card.grade} />
+                  </TableCell>
+                  {myPack && (
+                    <TableCell className={s.TableCell}>
+                      <button>
+                        <Edit onClick={() => updateCardHandler(card)} />
+                      </button>
+                      <button>
+                        <Delete onClick={() => deleteCardHandler(card)} />
+                      </button>
+                    </TableCell>
+                  )}
+                </TableRow>
+              )
+            })}
+          </TableBody>
+        </Table>
+      ) : (
+        <div className={s.CardItems}>
+          {cards?.map(card => {
+            return (
+              <CardItem
+                card={card}
+                className={s.CardItem}
+                deleteCardHandler={deleteCardHandler}
+                key={card.id}
+                myPack={myPack}
+                updateCardHandler={updateCardHandler}
+              />
+            )
+          })}
+        </div>
+      )}
+    </>
   )
 }
