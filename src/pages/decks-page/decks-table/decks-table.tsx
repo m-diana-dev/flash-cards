@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import ArrowDown from '@/assets/images/icons/ArrowDown'
@@ -27,6 +27,8 @@ import clsx from 'clsx'
 
 import s from './decks-table.module.scss'
 
+import { DeckItem } from '../../../components/ui/deck-item'
+
 type Props = {
   cleanFilter: () => void
   decks: Deck[] | undefined
@@ -36,6 +38,18 @@ type Props = {
 }
 
 export const DecksTable = ({ cleanFilter, decks, setSorting, sorting, userId }: Props) => {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+
+  const handleResize = () => {
+    setWindowWidth(window.innerWidth)
+  }
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize)
+
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false)
   const [openUpdateModal, setOpenUpdateModal] = useState<boolean>(false)
   const [activeDeck, setActiveDeck] = useState<Deck | null>(null)
@@ -77,111 +91,130 @@ export const DecksTable = ({ cleanFilter, decks, setSorting, sorting, userId }: 
         onOpenChange={setOpenUpdateModal}
         open={openUpdateModal}
       />
-      <Table className={s.PageTable}>
-        <TableHeader className={s.PageTableHeader}>
-          <TableRow>
-            <TableHeadCell
-              className={clsx(
-                s.PageTableCell,
-                cellStyle,
-                isStringIncludeValue(sorting, 'name') &&
-                  !isStringIncludeValue(sorting, 'author') &&
-                  sorting !== null
-                  ? s.active
-                  : ''
-              )}
-              onClick={() => handleSort('name')}
-            >
-              Name
-              <ArrowDown height={10} width={8} />
-            </TableHeadCell>
-            <TableHeadCell
-              className={clsx(
-                s.PageTableCell,
-                cellStyle,
-                isStringIncludeValue(sorting, 'cardsCount') && sorting !== null ? s.active : ''
-              )}
-              onClick={() => handleSort('cardsCount')}
-            >
-              Cards
-              <ArrowDown height={10} width={8} />
-            </TableHeadCell>
-            <TableHeadCell
-              className={clsx(
-                s.PageTableCell,
-                cellStyle,
-                isStringIncludeValue(sorting, 'updated') ? s.active : ''
-              )}
-              onClick={() => handleSort('updated')}
-            >
-              Last Updated
-              <ArrowDown height={10} width={8} />
-            </TableHeadCell>
-            <TableHeadCell
-              className={clsx(
-                s.PageTableCell,
-                cellStyle,
-                isStringIncludeValue(sorting, 'author.name') && sorting !== null ? s.active : ''
-              )}
-              onClick={() => handleSort('author.name')}
-            >
-              Created By
-              <ArrowDown height={10} width={8} />
-            </TableHeadCell>
-            <TableHeadCell className={s.PageTableCell}></TableHeadCell>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {decks?.map(deck => {
-            const updatedAt = new Date(deck.updated).toLocaleDateString('ru-RU')
+      {windowWidth >= 768 ? (
+        <Table className={s.PageTable}>
+          <TableHeader className={s.PageTableHeader}>
+            <TableRow>
+              <TableHeadCell
+                className={clsx(
+                  s.PageTableCell,
+                  cellStyle,
+                  isStringIncludeValue(sorting, 'name') &&
+                    !isStringIncludeValue(sorting, 'author') &&
+                    sorting !== null
+                    ? s.active
+                    : ''
+                )}
+                onClick={() => handleSort('name')}
+              >
+                Name
+                <ArrowDown height={10} width={8} />
+              </TableHeadCell>
+              <TableHeadCell
+                className={clsx(
+                  s.PageTableCell,
+                  cellStyle,
+                  isStringIncludeValue(sorting, 'cardsCount') && sorting !== null ? s.active : ''
+                )}
+                onClick={() => handleSort('cardsCount')}
+              >
+                Cards
+                <ArrowDown height={10} width={8} />
+              </TableHeadCell>
+              <TableHeadCell
+                className={clsx(
+                  s.PageTableCell,
+                  cellStyle,
+                  isStringIncludeValue(sorting, 'updated') ? s.active : ''
+                )}
+                onClick={() => handleSort('updated')}
+              >
+                Last Updated
+                <ArrowDown height={10} width={8} />
+              </TableHeadCell>
+              <TableHeadCell
+                className={clsx(
+                  s.PageTableCell,
+                  cellStyle,
+                  isStringIncludeValue(sorting, 'author.name') && sorting !== null ? s.active : ''
+                )}
+                onClick={() => handleSort('author.name')}
+              >
+                Created By
+                <ArrowDown height={10} width={8} />
+              </TableHeadCell>
+              <TableHeadCell className={s.PageTableCell}></TableHeadCell>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {decks?.map(deck => {
+              const updatedAt = new Date(deck.updated).toLocaleDateString('ru-RU')
 
-            return (
-              <TableRow key={deck.id}>
-                <TableCell className={s.PageTableCell}>
-                  <Link className={s.PageTableCellLink} to={`/decks/${deck.id}`}>
-                    {deck.cover && (
-                      <img alt={'cover'} className={s.PageTableCover} src={deck.cover} />
-                    )}
-                    <span>{deck.name}</span>
-                  </Link>
-                </TableCell>
-                <TableCell className={s.PageTableCell}>{deck.cardsCount}</TableCell>
-                <TableCell className={s.PageTableCell}>{updatedAt}</TableCell>
-                <TableCell className={s.PageTableCell}>{deck.author.name}</TableCell>
-                <TableCell className={s.PageTableCell}>
-                  {deck.cardsCount !== 0 && (
-                    <Link to={`/decks/${deck.id}/learn`}>
-                      <Play />
+              return (
+                <TableRow key={deck.id}>
+                  <TableCell className={s.PageTableCell}>
+                    <Link className={s.PageTableCellLink} to={`/decks/${deck.id}`}>
+                      {deck.cover && (
+                        <img alt={'cover'} className={s.PageTableCover} src={deck.cover} />
+                      )}
+                      <span>{deck.name}</span>
                     </Link>
-                  )}
-
-                  {userId === deck.author.id && (
-                    <>
-                      <button>
-                        <Edit onClick={() => updateDeckHandler(deck)} />
-                      </button>
-                      <button>
-                        <Delete onClick={() => deleteDeckHandler(deck)} />
-                      </button>
-                    </>
-                  )}
-                  <>
-                    {deck.isFavorite ? (
-                      <button>
-                        <HeartFull onClick={() => deleteFavoriteDeck({ id: deck.id })} />
-                      </button>
-                    ) : (
-                      <button>
-                        <Heart onClick={() => createFavoriteDeck({ id: deck.id })} />
-                      </button>
+                  </TableCell>
+                  <TableCell className={s.PageTableCell}>{deck.cardsCount}</TableCell>
+                  <TableCell className={s.PageTableCell}>{updatedAt}</TableCell>
+                  <TableCell className={s.PageTableCell}>{deck.author.name}</TableCell>
+                  <TableCell className={s.PageTableCell}>
+                    {deck.cardsCount !== 0 && (
+                      <Link to={`/decks/${deck.id}/learn`}>
+                        <Play />
+                      </Link>
                     )}
-                  </>
-                </TableCell>
-              </TableRow>
+
+                    {userId === deck.author.id && (
+                      <>
+                        <button>
+                          <Edit onClick={() => updateDeckHandler(deck)} />
+                        </button>
+                        <button>
+                          <Delete onClick={() => deleteDeckHandler(deck)} />
+                        </button>
+                      </>
+                    )}
+                    <>
+                      {deck.isFavorite ? (
+                        <button>
+                          <HeartFull onClick={() => deleteFavoriteDeck({ id: deck.id })} />
+                        </button>
+                      ) : (
+                        <button>
+                          <Heart onClick={() => createFavoriteDeck({ id: deck.id })} />
+                        </button>
+                      )}
+                    </>
+                  </TableCell>
+                </TableRow>
+              )
+            })}
+          </TableBody>
+        </Table>
+      ) : (
+        <div className={s.CardItems}>
+          {decks?.map(deck => {
+            return (
+              <DeckItem
+                className={s.CardItem}
+                createFavoriteDeck={createFavoriteDeck}
+                deck={deck}
+                deleteDeckHandler={deleteDeckHandler}
+                deleteFavoriteDeck={deleteFavoriteDeck}
+                key={deck.id}
+                updateDeckHandler={updateDeckHandler}
+                userId={userId}
+              />
             )
           })}
-        </TableBody>
-      </Table>
+        </div>
+      )}
     </>
   )
 }

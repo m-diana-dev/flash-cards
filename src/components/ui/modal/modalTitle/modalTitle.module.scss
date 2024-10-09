@@ -11,6 +11,10 @@
       left: -24px;
       bottom: 0;
       background-color: var(--color-dark-500);
+      @media (max-width: 485px) {
+        width: calc(100% + 60px);
+        left: -15px;
+      }
     }
   }
 }

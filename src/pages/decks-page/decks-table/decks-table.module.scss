@@ -38,6 +38,15 @@
     }
     &:last-child {
       text-align: right;
+      vertical-align: middle;
+      button,
+      a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 25px;
+        height: 25px;
+      }
     }
     &Link {
       display: flex;
@@ -54,4 +63,14 @@
       margin-right: 10px;
     }
   }
+}
+
+.CardItems {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+.CardItem {
+  margin-bottom: 10px;
 }

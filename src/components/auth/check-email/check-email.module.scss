@@ -1,5 +1,8 @@
 .Card {
   padding: 36px 36px 44px;
+  @media (max-width: 485px) {
+    padding: 30px 15px 25px;
+  }
 }
 .Title {
   text-align: center;

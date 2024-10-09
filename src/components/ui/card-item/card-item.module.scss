@@ -1,0 +1,34 @@
+.CardItem {
+  border: 1px solid var(--color-dark-500);
+  border-radius: 4px;
+  padding: 12px;
+  width: 100%;
+}
+.CardItemRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+  &:not(:last-child) {
+    margin-bottom: 6px;
+  }
+  span {
+    &:first-child {
+      width: 100px;
+    }
+    &:last-child {
+      width: calc(100% - 100px);
+      text-align: right;
+      > div {
+        justify-content: flex-end;
+      }
+    }
+  }
+}
+.CardItemImg {
+  display: block;
+  width: 118px;
+  height: 48px;
+  object-fit: cover;
+  margin: 10px 0 0 auto;
+}
