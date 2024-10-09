@@ -37,6 +37,14 @@
     }
     &:last-child {
       width: 10%;
+      //text-align: right;
+      button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 25px;
+        height: 25px;
+      }
     }
     &Img {
       display: block;
